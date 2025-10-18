@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-10-17T20:37:51.027967",
+  "indexer_status": {},
+  "index_statistics": {},
+  "storage_usage": {
+    "total_size_bytes": 1579822882,
+    "total_size_mb": 1506.6365070343018,
+    "blob_count": 1916,
+    "file_types": {
+      ".pdf": 1476,
+      ".json": 26,
+      ".md": 60,
+      ".txt": 15,
+      ".docx": 167,
+      ".xlsx": 114,
+      ".csv": 11,
+      ".xls": 3,
+      ".doc": 13,
+      ".msg": 27,
+      ".html": 4
+    },
+    "container_name": "training-data"
+  },
+  "search_functionality": true,
+  "health_score": 50,
+  "health_status": "Warning"
+}

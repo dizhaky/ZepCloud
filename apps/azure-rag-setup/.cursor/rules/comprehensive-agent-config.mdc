@@ -1,0 +1,283 @@
+---
+description: Comprehensive agent configuration for auto-run everything and browser automation
+globs: **/*
+alwaysApply: true
+---
+
+# Comprehensive Agent Configuration
+
+## YOLO Mode & Auto-Run Everything
+
+This configuration enables the Cursor agent to automatically run everything without confirmation dialogs, following the user's preference for autonomous operation.
+
+### Core Auto-Run Settings
+
+```json
+{
+  "cursor.yoloMode": true,
+  "cursor.agent.autoAccept": true,
+  "cursor.ai.autoApplyChanges": true,
+  "cursor.agent.confirmationMode": "auto",
+  "cursor.ai.confirmationMode": "auto",
+  "cursor.agent.skipConfirmation": true,
+  "cursor.ai.skipConfirmation": true,
+  "cursor.agent.requireConfirmation": false,
+  "cursor.ai.requireConfirmation": false,
+  "cursor.agent.showDiff": false,
+  "cursor.ai.showDiff": false,
+  "cursor.agent.showConfirmationDialog": false,
+  "cursor.ai.showConfirmationDialog": false,
+  "cursor.composer.autoAccept": true,
+  "cursor.composer.skipConfirmation": true,
+  "cursor.composer.requireConfirmation": false,
+  "cursor.composer.showConfirmationDialog": false
+}
+```
+
+### Auto-Execute Commands
+
+```json
+{
+  "cursor.agent.autoRunCommands": true,
+  "cursor.ai.autoRunCommands": true,
+  "cursor.agent.commandApproval": false,
+  "cursor.ai.commandApproval": false,
+  "cursor.agent.requireCommandApproval": false,
+  "cursor.ai.requireCommandApproval": false,
+  "cursor.agent.autoExecuteCommands": true,
+  "cursor.ai.autoExecuteCommands": true,
+  "cursor.terminal.autoApprove": true,
+  "cursor.terminal.skipConfirmation": true
+}
+```
+
+### Auto-Save Configuration
+
+```json
+{
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "files.autoSaveWhenNoErrors": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  }
+}
+```
+
+## Browser Automation Defaults
+
+### Auto-Activate Browser
+
+The browser button in the agent window is automatically activated by default, ensuring browser automation is always enabled.
+
+```json
+{
+  "cursor.browser.autoActivate": true,
+  "cursor.browser.defaultEnabled": true,
+  "cursor.browser.autoStart": true,
+  "cursor.browser.persistent": true,
+  "cursor.browser.autoRecover": true,
+  "cursor.agent.autoActivateBrowser": true,
+  "cursor.agent.browserDefaultState": "enabled"
+}
+```
+
+### MCP Browser Integration
+
+The MCP configuration includes browser automation tools with auto-activation:
+
+```json
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest", "--isolated"],
+      "env": {
+        "BROWSER": "Comet",
+        "BROWSER_PATH": "/Applications/Comet.app/Contents/MacOS/Comet",
+        "CHROME_DEBUG_PORT": "9222",
+        "CHROME_HEADLESS": "false",
+        "AUTO_ACTIVATE": "true",
+        "PERSISTENT": "true",
+        "AUTO_RECOVER": "true"
+      }
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-38757db8d3c444189782b01cd59f3afe",
+        "BROWSER": "Comet",
+        "BROWSER_PATH": "/Applications/Comet.app/Contents/MacOS/Comet",
+        "FIRECRAWL_BROWSER": "Comet",
+        "FIRECRAWL_BROWSER_PATH": "/Applications/Comet.app/Contents/MacOS/Comet",
+        "AUTO_ACTIVATE": "true",
+        "PERSISTENT": "true"
+      }
+    },
+    "cursor-browser-extension": {
+      "command": "npx",
+      "args": ["-y", "cursor-browser-extension-mcp"],
+      "env": {
+        "AUTO_ACTIVATE": "true",
+        "DEFAULT_ENABLED": "true",
+        "PERSISTENT": "true"
+      }
+    }
+  }
+}
+```
+
+## Project-Specific Context
+
+### Azure RAG Setup Project
+
+This project integrates:
+
+- **Azure Search** for enterprise search capabilities
+- **Microsoft 365** (SharePoint, Teams, OneDrive, Calendar, Contacts)
+- **ZepCloud Memory Management** for persistent AI memory
+- **TypingMind Integration** for AI chat interface
+- **Railway Backend** at https://dans-knowledge-production.up.railway.app
+- **Browser Automation** via Kapture MCP for end-to-end testing
+
+### Development Preferences
+
+1. **Backend Development:** Prefer Python for all backend services
+2. **API Integration:** Use FastAPI for REST endpoints
+3. **Memory Management:** All integrations leverage ZepCloud for persistent memory
+4. **Code Style:** Follow existing patterns in the codebase
+5. **Browser Testing:** Use Kapture MCP for comprehensive testing
+
+### AI Assistant Guidelines
+
+When generating code or suggestions:
+
+1. **Check existing patterns** in the codebase first
+2. **Maintain consistency** with current architecture
+3. **Consider ZepCloud integration** for all AI features
+4. **Include error handling** and logging
+5. **Add type hints** for Python code
+6. **Use async/await** for API calls
+7. **Follow established project structure**
+
+## Auto-Accept Rules
+
+### Always Auto-Accept
+
+✅ **Code quality improvements** and linting fixes
+✅ **Bug fixes** and error resolution
+✅ **Refactoring** and optimization
+✅ **Documentation updates**
+✅ **Configuration changes**
+✅ **AI agent-generated changes**
+✅ **Browser automation** setup and testing
+✅ **MCP server** configuration changes
+✅ **Environment variable** updates
+✅ **Test script** modifications
+
+### Require Approval (Critical Only)
+
+❌ **Breaking changes** affecting functionality
+❌ **Security-related** modifications
+❌ **Database schema** changes
+❌ **API breaking** changes
+❌ **Critical system** configuration changes
+❌ **Production deployment** changes
+❌ **Authentication** system modifications
+
+## Command Execution Policy
+
+### Auto-Execute Commands
+
+✅ **Build commands** (npm run build, pytest, etc.)
+✅ **Test commands** (npm test, pytest, jest, etc.)
+✅ **Linting commands** (eslint, ruff, black, etc.)
+✅ **Installation commands** (npm install, pip install, etc.)
+✅ **Git commands** (git status, git log, git diff, etc.)
+✅ **File operations** (mkdir, cp, mv, etc.)
+✅ **Browser automation** commands
+✅ **MCP server** startup commands
+✅ **Environment validation** scripts
+
+### Require Approval
+
+❌ **Destructive git operations** (git push --force, git reset --hard)
+❌ **System-wide installations** (sudo commands)
+❌ **Database drops** (DROP DATABASE, etc.)
+❌ **File deletions** affecting critical files
+❌ **Production deployments**
+❌ **API key rotations**
+❌ **Service restarts** in production
+
+## Browser Automation Features
+
+### Auto-Navigation
+
+- **Navigate to URLs** automatically when provided
+- **Handle redirects** and authentication flows
+- **Maintain session state** across interactions
+
+### Auto-Testing
+
+- **Screenshot capture** during testing phases
+- **DOM content extraction** for verification
+- **User interaction automation** (click, type, select)
+- **Data flow verification** across services
+
+### Integration Testing
+
+- **TypingMind → Railway → ZepCloud** full data flow
+- **Azure Search** functionality testing
+- **Microsoft 365** service integration testing
+- **End-to-end** workflow verification
+
+## Quality Standards
+
+### Code Quality
+
+- **Python:** Type hints, docstrings, PEP 8 compliance
+- **JavaScript:** ESLint config, Prettier formatting
+- **Error Handling:** Try-catch with comprehensive logging
+- **Comments:** Explain "why", not "what"
+
+### Testing Standards
+
+- **Unit tests** for new functionality
+- **Integration tests** for API endpoints
+- **End-to-end tests** with browser automation
+- **Performance tests** for critical paths
+
+### Documentation Standards
+
+- **Update README** for user-facing changes
+- **Add docstrings** to functions
+- **Keep API documentation** current
+- **Document configuration** changes
+
+## Benefits of This Configuration
+
+### Development Efficiency
+
+- **No interruption** from confirmation dialogs
+- **Continuous operation** without manual intervention
+- **Automatic file saving** prevents data loss
+- **Browser always ready** for testing
+
+### Quality Assurance
+
+- **Comprehensive testing** with browser automation
+- **Automatic error detection** and fixing
+- **Consistent code formatting** and linting
+- **Real-time validation** of changes
+
+### Project Integration
+
+- **Seamless Azure RAG** development workflow
+- **Automatic ZepCloud** memory integration
+- **Microsoft 365** service testing
+- **End-to-end verification** of all components
+
+This configuration ensures the Cursor agent operates in full autonomous mode while maintaining quality and safety standards for the Azure RAG Setup project.

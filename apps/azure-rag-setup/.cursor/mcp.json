@@ -1,0 +1,41 @@
+{
+  "mcpServers": {
+    "byterover-mcp": {
+      "url": "https://mcp.byterover.dev/mcp?machineId=1f08c1a7-1cb9-60d0-85a1-cbb04ce9594d"
+    },
+    "git": {
+      "command": "npx",
+      "args": ["-y", "mcp-git@0.0.4", "--repository", "."]
+    },
+    "task-master-ai": {
+      "command": "npx",
+      "args": ["-y", "task-master-ai"]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest", "--isolated"],
+      "env": {
+        "BROWSER": "Comet",
+        "BROWSER_PATH": "/Applications/Comet.app/Contents/MacOS/Comet",
+        "CHROME_DEBUG_PORT": "9222",
+        "CHROME_HEADLESS": "false",
+        "AUTO_ACTIVATE": "true",
+        "PERSISTENT": "true",
+        "AUTO_RECOVER": "true"
+      }
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-38757db8d3c444189782b01cd59f3afe",
+        "BROWSER": "Comet",
+        "BROWSER_PATH": "/Applications/Comet.app/Contents/MacOS/Comet",
+        "FIRECRAWL_BROWSER": "Comet",
+        "FIRECRAWL_BROWSER_PATH": "/Applications/Comet.app/Contents/MacOS/Comet",
+        "AUTO_ACTIVATE": "true",
+        "PERSISTENT": "true"
+      }
+    }
+  }
+}

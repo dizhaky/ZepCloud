@@ -1,0 +1,44 @@
+{
+  "plugin_name": "Local M365 Search (RAG)",
+  "search_service_name": "local-m365-search",
+  "index_name": "m365-local-index",
+  "query_key": "local-search-key-12345",
+  "api_version": "2023-11-01",
+  "endpoint": "http://localhost:5001",
+  "search_endpoint": "http://localhost:5001/search",
+  "health_endpoint": "http://localhost:5001/health",
+  "stats_endpoint": "http://localhost:5001/stats",
+  "configuration_notes": {
+    "created_at": "2025-10-18T21:30:00.000000",
+    "description": "Local M365 Search RAG plugin for TypingMind",
+    "usage": "Enable this plugin in TypingMind to search your M365 data locally",
+    "data_source": "Microsoft Graph API + Local Storage",
+    "storage_location": "/Volumes/Express 1M2/m365_local_storage",
+    "cost": "$0/month (FREE)",
+    "documents_available": 178,
+    "sources": ["SharePoint", "OneDrive", "Exchange"]
+  },
+  "search_parameters": {
+    "top": 10,
+    "skip": 0,
+    "count": true,
+    "highlight": true,
+    "facets": ["source", "file_extension", "user_name"]
+  },
+  "filter_settings": {
+    "default_filters": [],
+    "supported_filters": [
+      "source",
+      "file_extension",
+      "user_name",
+      "created_date_time",
+      "last_modified_date_time"
+    ]
+  },
+  "response_formatting": {
+    "include_metadata": true,
+    "include_highlights": true,
+    "include_facets": true,
+    "max_response_length": 2000
+  }
+}

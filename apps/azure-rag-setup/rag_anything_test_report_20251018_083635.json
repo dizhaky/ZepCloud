@@ -1,0 +1,44 @@
+{
+  "timestamp": "2025-10-18T08:36:33.586424",
+  "tests": [
+    {
+      "name": "Graph Builder",
+      "status": "pass",
+      "message": "Successfully created document relationships",
+      "details": {}
+    },
+    {
+      "name": "Azure Schema",
+      "status": "pass",
+      "message": "Schema has 40 fields including all enhanced fields",
+      "details": {}
+    },
+    {
+      "name": "Enhanced Indexer",
+      "status": "pass",
+      "message": "All components initialized and working",
+      "details": {}
+    },
+    {
+      "name": "Orchestrator",
+      "status": "pass",
+      "message": "Orchestrator working correctly",
+      "details": {}
+    },
+    {
+      "name": "Multimodal Detection",
+      "status": "pass",
+      "message": "Content detection functions working",
+      "details": {}
+    },
+    {
+      "name": "End-to-End Flow",
+      "status": "pass",
+      "message": "All pipeline components present",
+      "details": {}
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "warnings": 0
+}

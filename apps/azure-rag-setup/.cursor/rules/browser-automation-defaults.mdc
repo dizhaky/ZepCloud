@@ -1,0 +1,103 @@
+---
+description: Enable browser automation by default for all agent interactions
+globs: **/*
+alwaysApply: true
+---
+
+# Browser Automation Defaults
+
+## Auto-Activate Browser
+
+The browser button in the agent window should always be **automatically clicked/activated by default**, ensuring browser automation is always enabled without manual intervention.
+
+## Browser Configuration
+
+```json
+{
+  "cursor.browser.autoActivate": true,
+  "cursor.browser.defaultEnabled": true,
+  "cursor.browser.autoStart": true,
+  "cursor.browser.persistent": true,
+  "cursor.browser.autoRecover": true
+}
+```
+
+## MCP Browser Integration
+
+The MCP configuration should include browser automation tools by default:
+
+```json
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest", "--isolated"],
+      "env": {
+        "BROWSER": "Comet",
+        "BROWSER_PATH": "/Applications/Comet.app/Contents/MacOS/Comet",
+        "CHROME_DEBUG_PORT": "9222",
+        "CHROME_HEADLESS": "false"
+      }
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-38757db8d3c444189782b01cd59f3afe",
+        "BROWSER": "Comet",
+        "BROWSER_PATH": "/Applications/Comet.app/Contents/MacOS/Comet",
+        "FIRECRAWL_BROWSER": "Comet",
+        "FIRECRAWL_BROWSER_PATH": "/Applications/Comet.app/Contents/MacOS/Comet"
+      }
+    }
+  }
+}
+```
+
+## Browser Automation Features
+
+- **Auto-navigation:** Automatically navigate to URLs when provided
+- **Auto-screenshots:** Capture screenshots during testing
+- **Auto-interaction:** Click, type, and interact with web elements
+- **Auto-extraction:** Extract data from web pages
+- **Auto-verification:** Verify web application functionality
+
+## Default Browser Settings
+
+- **Browser:** Comet (primary)
+- **Debug Port:** 9222
+- **Headless Mode:** false (visible browser)
+- **Auto-recovery:** Enabled
+- **Persistent sessions:** Enabled
+
+## Integration with Azure RAG Setup
+
+This project integrates with:
+
+- **TypingMind:** Browser automation for testing AI integrations
+- **Railway API:** Browser testing for backend endpoints
+- **ZepCloud Dashboard:** Browser automation for memory management
+- **Azure Search:** Browser testing for search functionality
+
+## Auto-Activation Script
+
+```bash
+#!/bin/bash
+# Auto-activate browser button in Cursor agent
+# This script ensures browser automation is always enabled
+
+# Check if browser button is active
+if ! pgrep -f "chrome-devtools-mcp" > /dev/null; then
+    echo "Starting browser automation..."
+    # Auto-click browser button (implementation depends on Cursor's API)
+    # This would be handled by Cursor's internal automation
+fi
+```
+
+## Benefits
+
+- **Seamless Testing:** No manual browser activation required
+- **Continuous Automation:** Browser always ready for testing
+- **Error Recovery:** Auto-recovery if browser closes
+- **Persistent State:** Maintains browser state across sessions
+- **Zero Configuration:** Works out of the box

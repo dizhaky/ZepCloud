@@ -1,0 +1,119 @@
+---
+description: Enable agent to automatically run everything without confirmation dialogs
+globs: **/*
+alwaysApply: true
+---
+
+# Auto-Run Everything Configuration
+
+## Core Principles
+
+- **Auto-accept all changes** without confirmation dialogs
+- **Auto-execute all commands** without user approval
+- **Auto-save all files** after edits
+- **Auto-activate browser** for automation
+- **Eliminate "Keep All" button** and confirmation dialogs
+
+## YOLO Mode Settings
+
+```json
+{
+  "cursor.yoloMode": true,
+  "cursor.agent.autoAccept": true,
+  "cursor.ai.autoApplyChanges": true,
+  "cursor.agent.confirmationMode": "auto",
+  "cursor.ai.confirmationMode": "auto",
+  "cursor.agent.skipConfirmation": true,
+  "cursor.ai.skipConfirmation": true,
+  "cursor.agent.requireConfirmation": false,
+  "cursor.ai.requireConfirmation": false,
+  "cursor.agent.showDiff": false,
+  "cursor.ai.showDiff": false,
+  "cursor.agent.showConfirmationDialog": false,
+  "cursor.ai.showConfirmationDialog": false,
+  "cursor.composer.autoAccept": true,
+  "cursor.composer.skipConfirmation": true,
+  "cursor.composer.requireConfirmation": false,
+  "cursor.composer.showConfirmationDialog": false,
+  "cursor.agent.autoApply": true,
+  "cursor.ai.autoApply": true,
+  "cursor.agent.autoConfirm": true,
+  "cursor.ai.autoConfirm": true,
+  "cursor.agent.autoAcceptChanges": true,
+  "cursor.ai.autoAcceptChanges": true,
+  "cursor.agent.disableConfirmation": true,
+  "cursor.ai.disableConfirmation": true,
+  "cursor.agent.silentMode": true,
+  "cursor.ai.silentMode": true
+}
+```
+
+## Auto-Execute Commands
+
+```json
+{
+  "cursor.agent.autoRunCommands": true,
+  "cursor.ai.autoRunCommands": true,
+  "cursor.agent.commandApproval": false,
+  "cursor.ai.commandApproval": false,
+  "cursor.agent.requireCommandApproval": false,
+  "cursor.ai.requireCommandApproval": false,
+  "cursor.agent.autoExecuteCommands": true,
+  "cursor.ai.autoExecuteCommands": true,
+  "cursor.terminal.autoApprove": true,
+  "cursor.terminal.skipConfirmation": true
+}
+```
+
+## Auto-Save Configuration
+
+```json
+{
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "files.autoSaveWhenNoErrors": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  }
+}
+```
+
+## When to Apply YOLO Mode
+
+✅ **Auto-accept for:**
+
+- Code quality improvements and linting fixes
+- Bug fixes and error resolution
+- Refactoring and optimization
+- Documentation updates
+- Configuration changes
+- AI agent-generated changes
+
+❌ **Require approval for:**
+
+- Breaking changes affecting functionality
+- Security-related modifications
+- Database schema changes
+- API breaking changes
+- Critical system configuration changes
+
+## Command Execution Policy
+
+✅ **Auto-execute:**
+
+- Build commands (npm run build, pytest, etc.)
+- Test commands (npm test, pytest, jest, etc.)
+- Linting commands (eslint, ruff, black, etc.)
+- Installation commands (npm install, pip install, etc.)
+- Git commands (git status, git log, git diff, etc.)
+- File operations (mkdir, cp, mv, etc.)
+
+❌ **Require approval for:**
+
+- Destructive git operations (git push --force, git reset --hard)
+- System-wide installations (sudo commands)
+- Database drops (DROP DATABASE, etc.)
+- File deletions affecting critical files
+- Production deployments

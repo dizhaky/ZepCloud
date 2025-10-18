@@ -1,0 +1,547 @@
+{
+  "timestamp": "2025-10-17T23:09:33.472571",
+  "indexer_status": {
+    "status": "running",
+    "last_result": {
+      "status": "success",
+      "errorMessage": null,
+      "startTime": "2025-10-18T02:55:20.596Z",
+      "endTime": "2025-10-18T02:55:21.028Z",
+      "itemsProcessed": 0,
+      "itemsFailed": 0,
+      "initialTrackingState": "{\r\n  \"lastFullEnumerationStartTime\": \"2025-10-18T01:54:51.645Z\",\r\n  \"lastAttemptedEnumerationStartTime\": \"2025-10-18T02:55:20.618Z\",\r\n  \"nameHighWaterMark\": null\r\n}",
+      "finalTrackingState": "{\"LastFullEnumerationStartTime\":\"2025-10-18T02:54:50.6187912+00:00\",\"LastAttemptedEnumerationStartTime\":\"2025-10-18T02:54:50.6187912+00:00\",\"NameHighWaterMark\":null}",
+      "errors": [],
+      "warnings": [],
+      "metrics": null
+    },
+    "execution_history": [
+      {
+        "status": "success",
+        "errorMessage": null,
+        "startTime": "2025-10-18T02:55:20.596Z",
+        "endTime": "2025-10-18T02:55:21.028Z",
+        "itemsProcessed": 0,
+        "itemsFailed": 0,
+        "initialTrackingState": "{\r\n  \"lastFullEnumerationStartTime\": \"2025-10-18T01:54:51.645Z\",\r\n  \"lastAttemptedEnumerationStartTime\": \"2025-10-18T02:55:20.618Z\",\r\n  \"nameHighWaterMark\": null\r\n}",
+        "finalTrackingState": "{\"LastFullEnumerationStartTime\":\"2025-10-18T02:54:50.6187912+00:00\",\"LastAttemptedEnumerationStartTime\":\"2025-10-18T02:54:50.6187912+00:00\",\"NameHighWaterMark\":null}",
+        "errors": [],
+        "warnings": [],
+        "metrics": null
+      },
+      {
+        "status": "success",
+        "errorMessage": null,
+        "startTime": "2025-10-18T01:55:21.625Z",
+        "endTime": "2025-10-18T01:55:33.948Z",
+        "itemsProcessed": 3,
+        "itemsFailed": 0,
+        "initialTrackingState": "{\r\n  \"lastFullEnumerationStartTime\": \"2025-10-18T00:54:52.893Z\",\r\n  \"lastAttemptedEnumerationStartTime\": \"2025-10-18T01:55:21.645Z\",\r\n  \"nameHighWaterMark\": null\r\n}",
+        "finalTrackingState": "{\"LastFullEnumerationStartTime\":\"2025-10-18T01:54:51.6454304+00:00\",\"LastAttemptedEnumerationStartTime\":\"2025-10-18T01:54:51.6454304+00:00\",\"NameHighWaterMark\":null}",
+        "errors": [],
+        "warnings": [],
+        "metrics": null
+      },
+      {
+        "status": "success",
+        "errorMessage": null,
+        "startTime": "2025-10-18T00:55:22.871Z",
+        "endTime": "2025-10-18T00:56:06.952Z",
+        "itemsProcessed": 410,
+        "itemsFailed": 0,
+        "initialTrackingState": "{\r\n  \"lastFullEnumerationStartTime\": \"2025-10-18T00:36:30.888Z\",\r\n  \"lastAttemptedEnumerationStartTime\": \"2025-10-18T00:55:22.893Z\",\r\n  \"nameHighWaterMark\": null\r\n}",
+        "finalTrackingState": "{\"LastFullEnumerationStartTime\":\"2025-10-18T00:54:52.8934271+00:00\",\"LastAttemptedEnumerationStartTime\":\"2025-10-18T00:54:52.8934271+00:00\",\"NameHighWaterMark\":null}",
+        "errors": [],
+        "warnings": [
+          {
+            "key": "localId=F-PU-01-02+Purchasing+File+Approval+Page+Rev+9-28-21+-+signed.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fProcurement%2520-%2520Documents%2fGeneral%2fVendor%2fBaltimore%2520Facility%2fStormwater%2520Maintenance%2c%2520LLC%2520(SMC)%2fF-PU-01-02%2520Purchasing%2520File%2520Approval%2520Page%2520Rev%25209-28-21%2520-%2520signed.pdf",
+            "name": "DocumentExtraction.azureblob.F-PU-01-02 Purchasing File Approval Page Rev 9-28-21 - signed.pdf",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          }
+        ],
+        "metrics": null
+      },
+      {
+        "status": "success",
+        "errorMessage": null,
+        "startTime": "2025-10-18T00:39:31.058Z",
+        "endTime": "2025-10-18T00:40:59.446Z",
+        "itemsProcessed": 889,
+        "itemsFailed": 0,
+        "initialTrackingState": "{\r\n  \"lastFullEnumerationStartTime\": \"0001-01-01T00:00:00Z\",\r\n  \"lastAttemptedEnumerationStartTime\": \"2025-10-18T00:37:00.888Z\",\r\n  \"nameHighWaterMark\": \"https://tmstorage0731039.blob.core.windows.net/training-data/Users/danizhaky/Library/CloudStorage/OneDrive-UnitedSafetyTechnologyInc/Email%20attachments%20from%20Flow/AMMA%20Hill%20Visit%20Schedule%20(Updated).pdf\"\r\n}",
+        "finalTrackingState": "{\"LastFullEnumerationStartTime\":\"2025-10-18T00:36:30.8883159+00:00\",\"LastAttemptedEnumerationStartTime\":\"2025-10-18T00:36:30.8883159+00:00\",\"NameHighWaterMark\":null}",
+        "errors": [],
+        "warnings": [
+          {
+            "key": "localId=Raindrop.io-Export.html&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fRaindrop.io-Export.html",
+            "name": "DocumentExtraction.azureblob.Raindrop.io-Export.html",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=activity.xlsx&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fMicrosoft%2520Teams%2520Chat%2520Files%2factivity.xlsx",
+            "name": "DocumentExtraction.azureblob.activity.xlsx",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=imp.pdf&documentKey=Users%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fMicrosoft+Teams+Chat+Files%2fimp.pdf",
+            "name": "DocumentExtraction.blob.imp.pdf",
+            "message": "Document is '17114321' bytes, which exceeds the maximum size '16777216' bytes for document extraction for your current service tier. To ignore this error and continue indexing storage metadata of oversized blobs, set the 'indexStorageMetadataOnlyForOversizedDocuments' configuration parameter to true.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=TY+2023+USTI+Federal+and+State+Tax+Returns+-+CLIENT+COPY.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fMicrosoft%2520Teams%2520Chat%2520Files%2fTY%25202023%2520USTI%2520Federal%2520and%2520State%2520Tax%2520Returns%2520-%2520CLIENT%2520COPY.pdf",
+            "name": "DocumentExtraction.azureblob.TY 2023 USTI Federal and State Tax Returns - CLIENT COPY.pdf",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=Zheng+Petition+to+Vacate+Arbitrator%27s+Discovery+Order(1).pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fEmail%2520attachments%2520from%2520Flow%2fZheng%2520Petition%2520to%2520Vacate%2520Arbitrator%27s%2520Discovery%2520Order(1).pdf",
+            "name": "DocumentExtraction.azureblob.Zheng Petition to Vacate Arbitrator's Discovery Order(1).pdf",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=Severance+-+2-28-2024.xlsx&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fEmail%2520attachments%2520from%2520Flow%2fSeverance%2520-%25202-28-2024.xlsx",
+            "name": "DocumentExtraction.azureblob.Severance - 2-28-2024.xlsx",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document could not be processed -it may be encrypted or password protected, or its contents may be exceeding size limits.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=Readwise+Highlights+1.docx&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fReadwise%2520Highlights%25201.docx",
+            "name": "DocumentExtraction.azureblob.Readwise Highlights 1.docx",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=Receipt_2024-04-29_153220.pdf&documentKey=Users%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fEmail+attachments+from+Flow%2fReceipt_2024-04-29_153220.pdf",
+            "name": "DocumentExtraction.blob.Receipt_2024-04-29_153220.pdf",
+            "message": "Document is '23883896' bytes, which exceeds the maximum size '16777216' bytes for document extraction for your current service tier. To ignore this error and continue indexing storage metadata of oversized blobs, set the 'indexStorageMetadataOnlyForOversizedDocuments' configuration parameter to true.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=InboxRules.txt&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fEmail%2520attachments%2520from%2520Flow%2fInboxRules.txt",
+            "name": "DocumentExtraction.azureblob.InboxRules.txt",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=Raindrop.io-Export.csv&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fRaindrop.io-Export.csv",
+            "name": "DocumentExtraction.azureblob.Raindrop.io-Export.csv",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=Cai%2c+Mia_full_ex_CERTIFIED_COPY_(REDWHITE).pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fEmail%2520attachments%2520from%2520Flow%2fCai%2c%2520Mia_full_ex_CERTIFIED_COPY_(REDWHITE).pdf",
+            "name": "DocumentExtraction.azureblob.Cai, Mia_full_ex_CERTIFIED_COPY_(REDWHITE).pdf",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          }
+        ],
+        "metrics": null
+      },
+      {
+        "status": "transientFailure",
+        "errorMessage": "Indexing was stopped because indexer execution time quota of 2 minutes has been reached. Current run with batch size 1000 has processed 1100 documents, where 1000 documents has been successfully updated and 100 documents need to be re-computed. For information on service quotas, see https://docs.microsoft.com/azure/search/search-limits-quotas-capacity",
+        "startTime": "2025-10-18T00:37:30.888Z",
+        "endTime": "2025-10-18T00:39:30.894Z",
+        "itemsProcessed": 1100,
+        "itemsFailed": 0,
+        "initialTrackingState": "{\r\n  \"lastFullEnumerationStartTime\": \"0001-01-01T00:00:00Z\",\r\n  \"lastAttemptedEnumerationStartTime\": \"2025-10-18T00:37:30.911Z\",\r\n  \"nameHighWaterMark\": null\r\n}",
+        "finalTrackingState": "{\"LastFullEnumerationStartTime\":\"0001-01-01T00:00:00+00:00\",\"LastAttemptedEnumerationStartTime\":\"2025-10-18T00:37:00.8883159+00:00\",\"NameHighWaterMark\":\"https://tmstorage0731039.blob.core.windows.net/training-data/Users/danizhaky/Library/CloudStorage/OneDrive-UnitedSafetyTechnologyInc/Email%20attachments%20from%20Flow/AMMA%20Hill%20Visit%20Schedule%20(Updated).pdf\"}",
+        "errors": [],
+        "warnings": [
+          {
+            "key": "localId=4+Workpaper+-+Payments+to+Law+Firms+by+UST+v11-22-2024REVISED.xlsx&documentKey=Users%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fEmail+attachments+from+Flow%2f4+Workpaper+-+Payments+to+Law+Firms+by+UST+v11-22-2024REVISED.xlsx",
+            "name": "DocumentExtraction.blob.4 Workpaper - Payments to Law Firms by UST v11-22-2024REVISED.xlsx",
+            "message": "Document is '19667186' bytes, which exceeds the maximum size '16777216' bytes for document extraction for your current service tier. To ignore this error and continue indexing storage metadata of oversized blobs, set the 'indexStorageMetadataOnlyForOversizedDocuments' configuration parameter to true.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=4+Workpaper+-+Payments+to+Law+Firms+by+UST+v11-22-2024REVISED-c.xlsx&documentKey=Users%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fEmail+attachments+from+Flow%2f4+Workpaper+-+Payments+to+Law+Firms+by+UST+v11-22-2024REVISED-c.xlsx",
+            "name": "DocumentExtraction.blob.4 Workpaper - Payments to Law Firms by UST v11-22-2024REVISED-c.xlsx",
+            "message": "Document is '19664744' bytes, which exceeds the maximum size '16777216' bytes for document extraction for your current service tier. To ignore this error and continue indexing storage metadata of oversized blobs, set the 'indexStorageMetadataOnlyForOversizedDocuments' configuration parameter to true.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_Respiratory+Protection+Portfolio+-+Meltblown.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fMask%2520Design%2fMaterials%2fMOVED_Respiratory%2520Protection%2520Portfolio%2520-%2520Meltblown.pdf",
+            "name": "DocumentExtraction.azureblob.MOVED_Respiratory Protection Portfolio - Meltblown.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'image/jpeg'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_acsnano.0c03972.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fMOVED_acsnano.0c03972.pdf",
+            "name": "DocumentExtraction.azureblob.MOVED_acsnano.0c03972.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'image/jpeg'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_Faclilities+and+wave.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fMOVED_Faclilities%2520and%2520wave.pdf",
+            "name": "DocumentExtraction.azureblob.MOVED_Faclilities and wave.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'image/jpeg'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_NJMEP_BIO_PHARM_Med_Device_Companies.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fMOVED_NJMEP_BIO_PHARM_Med_Device_Companies.pdf",
+            "name": "DocumentExtraction.azureblob.MOVED_NJMEP_BIO_PHARM_Med_Device_Companies.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/x-msdownload'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_CDC+Covid-19+report.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fMOVED_CDC%2520Covid-19%2520report.pdf",
+            "name": "DocumentExtraction.azureblob.MOVED_CDC Covid-19 report.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'image/jpeg'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_3M+letter+to+AG+BARR.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fMOVED_3M%2520letter%2520to%2520AG%2520BARR.pdf",
+            "name": "DocumentExtraction.azureblob.MOVED_3M letter to AG BARR.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'image/jpeg'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_20200417_HeiQ+Viroblock.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fMOVED_20200417_HeiQ%2520Viroblock.pdf",
+            "name": "DocumentExtraction.azureblob.MOVED_20200417_HeiQ Viroblock.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'image/jpeg'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_06-001-Questionnaire-for-ProspectiveApplicants.R1+(002).doc&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fMOVED_06-001-Questionnaire-for-ProspectiveApplicants.R1%2520(002).doc",
+            "name": "DocumentExtraction.azureblob.MOVED_06-001-Questionnaire-for-ProspectiveApplicants.R1 (002).doc",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'image/jpeg'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_protected-upload.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fHR%2fResumes%2fMOVED_protected-upload.pdf",
+            "name": "DocumentExtraction.azureblob.MOVED_protected-upload.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'image/jpeg'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_Glen_Tran.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fHR%2fMOVED_Glen_Tran.pdf",
+            "name": "DocumentExtraction.azureblob.MOVED_Glen_Tran.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'image/jpeg'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=Includes+Reps+and+Certs+redline+from+MD.msg&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fProcurement%2520-%2520Documents%2fGeneral%2fJackie%2520Latest%2520Important%2520Emails%2fMark%2520Dynamics%2fIncludes%2520Reps%2520and%2520Certs%2520redline%2520from%2520MD.msg",
+            "name": "DocumentExtraction.azureblob.Includes Reps and Certs redline from MD.msg",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=From+SPX+attorney.msg&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fProcurement%2520-%2520Documents%2fGeneral%2fJackie%2520Latest%2520Important%2520Emails%2fCooling%2520Tower%2520-%2520SPX%2fFrom%2520SPX%2520attorney.msg",
+            "name": "DocumentExtraction.azureblob.From SPX attorney.msg",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=MOVED_Proposal+For+Medical+Device+Support+28June2020+-+Source+PPE.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fMOVED_Proposal%2520For%2520Medical%2520Device%2520Support%252028June2020%2520-%2520Source%2520PPE.pdf",
+            "name": "DocumentExtraction.azureblob.MOVED_Proposal For Medical Device Support 28June2020 - Source PPE.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'image/jpeg'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_N95+Raw+Materials+(5.19.2020).pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fN95%2520Factory%2fMOVED_N95%2520Raw%2520Materials%2520(5.19.2020).pdf",
+            "name": "DocumentExtraction.azureblob.MOVED_N95 Raw Materials (5.19.2020).pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'image/jpeg'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=MOVED_CIIAA+with+Arbitration+Provision+(NY)%5b96%5d.DOCX.docx&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fMOVED_CIIAA%2520with%2520Arbitration%2520Provision%2520(NY)%5b96%5d.DOCX.docx",
+            "name": "DocumentExtraction.azureblob.MOVED_CIIAA with Arbitration Provision (NY)[96].DOCX.docx",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=UST+RFP_0822RZYV0085.pdf&documentKey=Users%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fProcurement+-+Documents%2fGeneral%2fPotential+Vendors%2fUtilities%2fChillers%2fCarrier%2fProposal%2fUST+RFP_0822RZYV0085.pdf",
+            "name": "DocumentExtraction.blob.UST RFP_0822RZYV0085.pdf",
+            "message": "Document is '28226000' bytes, which exceeds the maximum size '16777216' bytes for document extraction for your current service tier. To ignore this error and continue indexing storage metadata of oversized blobs, set the 'indexStorageMetadataOnlyForOversizedDocuments' configuration parameter to true.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=AXG+Magnetic+Flowmeter+GS.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fProcurement%2520-%2520Documents%2fGeneral%2fPotential%2520Vendors%2fEquipment%2fFlowmeters%2fCem%2520Tech%2520Energy%2fAXG%2520Magnetic%2520Flowmeter%2520GS.pdf",
+            "name": "DocumentExtraction.azureblob.AXG Magnetic Flowmeter GS.pdf",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=Email+to+Wong+and+Larry.msg&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fProcurement%2520-%2520Documents%2fGeneral%2fJackie%2520Latest%2520Important%2520Emails%2fCooling%2520Tower%2520-%2520SPX%2fEmail%2520to%2520Wong%2520and%2520Larry.msg",
+            "name": "DocumentExtraction.azureblob.Email to Wong and Larry.msg",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=MOVED_2021-07-06+Control+Risks+UST+Mutual+NDA.docx&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fMOVED_2021-07-06%2520Control%2520Risks%2520UST%2520Mutual%2520NDA.docx",
+            "name": "DocumentExtraction.azureblob.MOVED_2021-07-06 Control Risks UST Mutual NDA.docx",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=Cai%2c+Mia_full_ex_CERTIFIED_COPY_(REDWHITE).pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fEmail%2520attachments%2520from%2520Flow%2fCai%2c%2520Mia_full_ex_CERTIFIED_COPY_(REDWHITE).pdf",
+            "name": "DocumentExtraction.azureblob.Cai, Mia_full_ex_CERTIFIED_COPY_(REDWHITE).pdf",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=MOVED_United+Safety+Technologies+-+Government+Compliance+Obligations+(WR+Edits)%5b63%5d.docx&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-UnitedSafetyTechnologyInc%2fDocuments%2fMOVED_United%2520Safety%2520Technologies%2520-%2520Government%2520Compliance%2520Obligations%2520(WR%2520Edits)%5b63%5d.docx",
+            "name": "DocumentExtraction.azureblob.MOVED_United Safety Technologies - Government Compliance Obligations (WR Edits)[63].docx",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=acOnline+Return+Center-DAN-HP-DESKTOP.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2facOnline%2520Return%2520Center-DAN-HP-DESKTOP.pdf",
+            "name": "DocumentExtraction.azureblob.acOnline Return Center-DAN-HP-DESKTOP.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=United+Safety+Technology+at+TPA+-+Lease+Agreement+Cold+Mill+%5b12-31-21+Proposed+Executable%5d.pdf&documentKey=Users%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fUnited+Safety+Technology+at+TPA+-+Lease+Agreement+Cold+Mill+%5b12-31-21+Proposed+Executable%5d.pdf",
+            "name": "DocumentExtraction.blob.United Safety Technology at TPA - Lease Agreement Cold Mill [12-31-21 Proposed Executable].pdf",
+            "message": "Document is '22440953' bytes, which exceeds the maximum size '16777216' bytes for document extraction for your current service tier. To ignore this error and continue indexing storage metadata of oversized blobs, set the 'indexStorageMetadataOnlyForOversizedDocuments' configuration parameter to true.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=GL_+Property_+WC-+Chubb+BOR+-DAN-HP-DESKTOP.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fGL_%2520Property_%2520WC-%2520Chubb%2520BOR%2520-DAN-HP-DESKTOP.pdf",
+            "name": "DocumentExtraction.azureblob.GL_ Property_ WC- Chubb BOR -DAN-HP-DESKTOP.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=GL+-+Nautilus+BOR+-DAN-HP-DESKTOP.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fGL%2520-%2520Nautilus%2520BOR%2520-DAN-HP-DESKTOP.pdf",
+            "name": "DocumentExtraction.azureblob.GL - Nautilus BOR -DAN-HP-DESKTOP.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=DAV21A48.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fDAV21A48.pdf",
+            "name": "DocumentExtraction.azureblob.DAV21A48.pdf",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=jhj+fido+app.pdf&documentKey=Users%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fjhj+fido+app.pdf",
+            "name": "DocumentExtraction.blob.jhj fido app.pdf",
+            "message": "Document is '29353504' bytes, which exceeds the maximum size '16777216' bytes for document extraction for your current service tier. To ignore this error and continue indexing storage metadata of oversized blobs, set the 'indexStorageMetadataOnlyForOversizedDocuments' configuration parameter to true.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=CHUBB+-+DO+App+7.20.22-DAN-HP-DESKTOP.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fCHUBB%2520-%2520DO%2520App%25207.20.22-DAN-HP-DESKTOP.pdf",
+            "name": "DocumentExtraction.azureblob.CHUBB - DO App 7.20.22-DAN-HP-DESKTOP.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=Business+Auto+-+BOR-DAN-HP-DESKTOP.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fBusiness%2520Auto%2520-%2520BOR-DAN-HP-DESKTOP.pdf",
+            "name": "DocumentExtraction.azureblob.Business Auto - BOR-DAN-HP-DESKTOP.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=zhang+passport.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fzhang%2520passport.pdf",
+            "name": "DocumentExtraction.azureblob.zhang passport.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=HHS+DUA-DAN-HP-DESKTOP.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fHHS%2520DUA-DAN-HP-DESKTOP.pdf",
+            "name": "DocumentExtraction.azureblob.HHS DUA-DAN-HP-DESKTOP.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=GL+%26+Property+-+Northfield+BOR+-DAN-HP-DESKTOP.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fGL%2520%26%2520Property%2520-%2520Northfield%2520BOR%2520-DAN-HP-DESKTOP.pdf",
+            "name": "DocumentExtraction.azureblob.GL & Property - Northfield BOR -DAN-HP-DESKTOP.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=FA853321C0003P00003-DAN-HP-DESKTOP.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fFA853321C0003P00003-DAN-HP-DESKTOP.pdf",
+            "name": "DocumentExtraction.azureblob.FA853321C0003P00003-DAN-HP-DESKTOP.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=Daniel+Izhaky+Trust+-+Complete-1.pdf&documentKey=Users%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fDaniel+Izhaky+Trust+-+Complete-1.pdf",
+            "name": "DocumentExtraction.blob.Daniel Izhaky Trust - Complete-1.pdf",
+            "message": "Document is '70122119' bytes, which exceeds the maximum size '16777216' bytes for document extraction for your current service tier. To ignore this error and continue indexing storage metadata of oversized blobs, set the 'indexStorageMetadataOnlyForOversizedDocuments' configuration parameter to true.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=Cyber+Liability+-+BOR+-DAN-HP-DESKTOP.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2fCyber%2520Liability%2520-%2520BOR%2520-DAN-HP-DESKTOP.pdf",
+            "name": "DocumentExtraction.azureblob.Cyber Liability - BOR -DAN-HP-DESKTOP.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=99-101+Warren+Street+Purchase+Application+Current.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2f99-101%2520Warren%2520Street%2520Purchase%2520Application%2520Current.pdf",
+            "name": "DocumentExtraction.azureblob.99-101 Warren Street Purchase Application Current.pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document has unsupported content type 'application/octet-stream'. Blob metadata was indexed, but content extraction was skipped.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=2023.06.6+DanielI.Zhaky_Depo+Transcript.pdf&documentKey=Users%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2f2023.06.6+DanielI.Zhaky_Depo+Transcript.pdf",
+            "name": "DocumentExtraction.blob.2023.06.6 DanielI.Zhaky_Depo Transcript.pdf",
+            "message": "Document is '82653711' bytes, which exceeds the maximum size '16777216' bytes for document extraction for your current service tier. To ignore this error and continue indexing storage metadata of oversized blobs, set the 'indexStorageMetadataOnlyForOversizedDocuments' configuration parameter to true.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=2022+Tax+Return+Documents+(IZHAKY+DANIEL+-+Client+Copy)%5b94%5d.pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2f2022%2520Tax%2520Return%2520Documents%2520(IZHAKY%2520DANIEL%2520-%2520Client%2520Copy)%5b94%5d.pdf",
+            "name": "DocumentExtraction.azureblob.2022 Tax Return Documents (IZHAKY DANIEL - Client Copy)[94].pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document could not be processed -it may be encrypted or password protected, or its contents may be exceeding size limits.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=2018+Tax+Return+Documents+(IZHAKY+DANIEL+-+Client+Copy).pdf&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fPDFs%2f2018%2520Tax%2520Return%2520Documents%2520(IZHAKY%2520DANIEL%2520-%2520Client%2520Copy).pdf",
+            "name": "DocumentExtraction.azureblob.2018 Tax Return Documents (IZHAKY DANIEL - Client Copy).pdf",
+            "message": "Could not extract content or metadata from your document. ",
+            "details": "Document could not be processed -it may be encrypted or password protected, or its contents may be exceeding size limits.",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=jhj+fido+app.pdf&documentKey=Users%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fDocuments%2fJHJ+Formation%2fjhj+fido+app.pdf",
+            "name": "DocumentExtraction.blob.jhj fido app.pdf",
+            "message": "Document is '29353504' bytes, which exceeds the maximum size '16777216' bytes for document extraction for your current service tier. To ignore this error and continue indexing storage metadata of oversized blobs, set the 'indexStorageMetadataOnlyForOversizedDocuments' configuration parameter to true.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2104227"
+          },
+          {
+            "key": "localId=9429ffc2-c7bc-43f8-8482-dd9f96cbc6d0.json&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fCursorSettings1%2fagent-history%2fraw-json%2f9429ffc2-c7bc-43f8-8482-dd9f96cbc6d0.json",
+            "name": "DocumentExtraction.azureblob.9429ffc2-c7bc-43f8-8482-dd9f96cbc6d0.json",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=444d9285-5d8a-4366-a11d-fc3a5f2a22c4.json&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fCursorSettings1%2fagent-history%2fraw-json%2f444d9285-5d8a-4366-a11d-fc3a5f2a22c4.json",
+            "name": "DocumentExtraction.azureblob.444d9285-5d8a-4366-a11d-fc3a5f2a22c4.json",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=e0db45ac-0662-471a-b39d-391bab4a54f7.json&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fCursorSettings1%2fagent-history%2fraw-json%2fe0db45ac-0662-471a-b39d-391bab4a54f7.json",
+            "name": "DocumentExtraction.azureblob.e0db45ac-0662-471a-b39d-391bab4a54f7.json",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          },
+          {
+            "key": "localId=3b19dd22-fc8a-4ff6-ab01-975989bf38f7.json&documentKey=https%3a%2f%2ftmstorage0731039.blob.core.windows.net%2ftraining-data%2fUsers%2fdanizhaky%2fLibrary%2fCloudStorage%2fOneDrive-Personal%2fCursorSettings1%2fagent-history%2fraw-json%2f3b19dd22-fc8a-4ff6-ab01-975989bf38f7.json",
+            "name": "DocumentExtraction.azureblob.3b19dd22-fc8a-4ff6-ab01-975989bf38f7.json",
+            "message": "Truncated extracted text to '262144' characters.",
+            "details": "",
+            "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2110011"
+          }
+        ],
+        "metrics": null
+      }
+    ]
+  },
+  "index_statistics": {
+    "document_count": 2252,
+    "storage_size_bytes": 49358207,
+    "vector_index_size": 0,
+    "search_verified_count": 2252,
+    "last_updated": "2025-10-17T23:09:36.264380"
+  },
+  "storage_usage": {
+    "total_size_bytes": 1832834195,
+    "total_size_mb": 1747.9268980026245,
+    "blob_count": 2277,
+    "file_types": {
+      ".pdf": 1771,
+      ".json": 26,
+      ".md": 60,
+      ".txt": 15,
+      ".docx": 192,
+      ".xlsx": 128,
+      ".csv": 12,
+      ".xls": 3,
+      ".doc": 15,
+      ".msg": 50,
+      ".html": 4,
+      ".pptx": 1
+    },
+    "container_name": "training-data"
+  },
+  "search_functionality": true,
+  "m365_status": {
+    "sharepoint": {
+      "last_sync": null,
+      "sites_processed": 0,
+      "total_documents": 0,
+      "processed_documents": 0
+    },
+    "onedrive": {
+      "last_sync": null,
+      "users_processed": 0,
+      "total_documents": 0,
+      "processed_documents": 0
+    },
+    "exchange": {
+      "last_sync": null,
+      "users_processed": 0,
+      "total_emails": 0,
+      "total_attachments": 0,
+      "processed_attachments": 0
+    },
+    "overall_status": "No services synced"
+  },
+  "health_score": 75,
+  "health_status": "Healthy"
+}

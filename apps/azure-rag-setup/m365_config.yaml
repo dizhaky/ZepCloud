@@ -1,0 +1,201 @@
+# Microsoft 365 Integration Configuration
+# This file contains settings for M365 data indexing
+
+# Authentication settings
+auth:
+  # These should be set in .env file:
+  # M365_CLIENT_ID=your_app_client_id
+  # M365_CLIENT_SECRET=your_app_client_secret
+  # M365_TENANT_ID=your_tenant_id
+  token_cache_file: "m365_token_cache.json"
+
+# SharePoint settings
+sharepoint:
+  # File types to index (extensions without dots)
+  supported_extensions:
+    - pdf
+    - docx
+    - doc
+    - xlsx
+    - xls
+    - pptx
+    - ppt
+    - txt
+    - md
+    - json
+    - csv
+    - html
+    - htm
+    - rtf
+    - xml
+    - msg
+    - eml
+
+  # Maximum file size to download (in MB)
+  max_file_size_mb: 100
+
+  # Batch size for processing
+  batch_size: 25
+
+  # Progress tracking
+  progress_file: "sharepoint_progress.json"
+
+# OneDrive settings
+onedrive:
+  # File types to index
+  supported_extensions:
+    - pdf
+    - docx
+    - doc
+    - xlsx
+    - xls
+    - pptx
+    - ppt
+    - txt
+    - md
+    - json
+    - csv
+    - html
+    - htm
+    - rtf
+    - xml
+    - msg
+    - eml
+
+  # Maximum file size to download (in MB)
+  max_file_size_mb: 100
+
+  # Batch size for processing
+  batch_size: 25
+
+  # Progress tracking
+  progress_file: "onedrive_progress.json"
+
+  # User filtering (optional)
+  # include_users: []  # Empty = all users
+  # exclude_users: []  # Users to skip
+
+# Exchange settings
+exchange:
+  # Email date range (days back from now)
+  # Set to null to index all emails
+  date_range_days: null
+
+  # Maximum emails per user (for testing)
+  max_emails_per_user: 1000
+
+  # Include email attachments
+  include_attachments: true
+
+  # Attachment file types to index
+  attachment_extensions:
+    - pdf
+    - docx
+    - doc
+    - xlsx
+    - xls
+    - pptx
+    - ppt
+    - txt
+    - md
+    - json
+    - csv
+    - html
+    - htm
+    - rtf
+    - xml
+
+  # Progress tracking
+  progress_file: "exchange_progress.json"
+
+  # User filtering (optional)
+  # include_users: []  # Empty = all users
+  # exclude_users: []  # Users to skip
+
+# Azure Blob Storage settings
+azure_storage:
+  # Container name for uploaded files
+  container_name: "training-data"
+
+  # Blob path prefixes
+  paths:
+    sharepoint: "sharepoint"
+    onedrive: "onedrive"
+    exchange: "exchange"
+
+  # Upload settings
+  upload:
+    timeout_seconds: 300
+    chunk_size_mb: 4
+    max_retries: 3
+
+# Sync settings
+sync:
+  # Incremental sync settings
+  incremental:
+    enabled: true
+    # Only sync files modified in last N days
+    days_back: 7
+
+  # Rate limiting (requests per minute)
+  rate_limit:
+    sharepoint: 100
+    onedrive: 100
+    exchange: 50
+
+  # Retry settings
+  retry:
+    max_attempts: 3
+    base_delay_seconds: 2
+    max_delay_seconds: 30
+
+# Monitoring settings
+monitoring:
+  # Enable detailed logging
+  verbose_logging: true
+
+  # Log file location
+  log_file: "m365_indexer.log"
+
+  # Progress reporting interval (seconds)
+  progress_interval: 30
+
+  # Health check settings
+  health_check:
+    enabled: true
+    interval_minutes: 60
+    timeout_seconds: 30
+
+# Exclusion rules
+exclusions:
+  # File patterns to exclude (glob patterns)
+  file_patterns:
+    - "*.tmp"
+    - "*.temp"
+    - "~*"
+    - "._*"
+    - ".DS_Store"
+
+  # Folder patterns to exclude
+  folder_patterns:
+    - "*/_vti_*"
+    - "*/Forms"
+    - "*/Master Page Gallery"
+    - "*/Site Collection Images"
+    - "*/Style Library"
+
+  # File size limits (bytes)
+  size_limits:
+    min_size: 1024 # 1KB minimum
+    max_size: 104857600 # 100MB maximum
+
+  # Content filtering
+  content:
+    # Skip files with certain keywords in name
+    skip_keywords:
+      - "draft"
+      - "template"
+      - "backup"
+
+    # Skip files older than N days
+    max_age_days: 3650 # 10 years

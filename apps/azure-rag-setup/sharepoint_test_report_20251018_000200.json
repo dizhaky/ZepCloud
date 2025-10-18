@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-10-18T00:02:00.802000",
+  "tests": [
+    {
+      "name": "Environment Variables",
+      "status": "fail",
+      "message": "Missing required variables",
+      "details": {}
+    }
+  ],
+  "passed": 0,
+  "failed": 1,
+  "warnings": 0
+}

@@ -1,0 +1,22 @@
+{
+  "name": "typingmind-mcp-server",
+  "version": "1.0.0",
+  "description": "TypingMind MCP Server for Railway deployment",
+  "scripts": {
+    "start": "npx @typingmind/mcp p1Lhz4LCAH_uooyVkeLDH",
+    "dev": "npx @typingmind/mcp p1Lhz4LCAH_uooyVkeLDH"
+  },
+  "dependencies": {
+    "@typingmind/mcp": "^1.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "typingmind",
+    "railway"
+  ],
+  "author": "ZepCloud",
+  "license": "MIT"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "typingmind-mcp-local",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "PORT=8080 npx @typingmind/mcp p1Lhz4LCAH_uooyVkeLDH",
+    "dev": "PORT=8080 npx @typingmind/mcp p1Lhz4LCAH_uooyVkeLDH",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@typingmind/mcp": "^1.2.1"
+  },
+  "devDependencies": {}
+}

@@ -1,0 +1,234 @@
+---
+description: Comprehensive project context and rules for Azure RAG Setup with ZepCloud integration
+globs: **/*
+alwaysApply: true
+---
+
+# Azure RAG Setup Project Context
+
+## Project Overview
+
+This is a comprehensive Azure RAG (Retrieval-Augmented Generation) setup project that integrates multiple AI platforms and services for enterprise knowledge management.
+
+### Core Components
+
+- **Azure Search:** Enterprise search capabilities with cognitive services
+- **Microsoft 365 Integration:** SharePoint, Teams, OneDrive, Calendar, Contacts
+- **ZepCloud Memory Management:** Persistent AI memory across platforms
+- **TypingMind Integration:** AI chat interface with context
+- **Railway Backend:** Production API at https://dans-knowledge-production.up.railway.app
+- **Browser Automation:** Kapture MCP for end-to-end testing
+
+### Project Architecture
+
+```
+Frontend (Port 3000) ← → Railway API (Port 5001) ← → Azure Search
+     ↓                           ↓
+TypingMind ← → ZepCloud Memory ← → M365 Services
+     ↓
+Browser Automation (Kapture MCP)
+```
+
+## Development Preferences
+
+### Backend Development
+
+- **Primary Language:** Python for all backend services
+- **API Framework:** FastAPI for REST endpoints
+- **Memory Management:** All integrations leverage ZepCloud for persistent memory
+- **Code Style:** Follow existing patterns in the codebase
+
+### AI Assistant Guidelines
+
+When generating code or suggestions:
+
+1. **Check existing patterns** in the codebase first
+2. **Maintain consistency** with current architecture
+3. **Consider ZepCloud integration** for all AI features
+4. **Include error handling** and logging
+5. **Add type hints** for Python code
+6. **Use async/await** for API calls
+7. **Follow established project structure**
+
+## Key Integration Patterns
+
+### API Endpoints
+
+- `/context` - Retrieve user context from ZepCloud
+- `/health` - Health check endpoint
+- `/store` - Store new information in ZepCloud
+- `/search` - Azure Search integration
+
+### Memory Integration Pattern
+
+```python
+from zep_cloud import Zep
+
+client = Zep(api_key=ZEP_API_KEY)
+# Use client for memory operations
+```
+
+### Browser Extensions
+
+- **Manifest v3** for all Chrome extensions
+- **Auto-inject context** into chat interfaces
+- **Beautiful gradient UI** for context cards
+
+## Testing & Verification
+
+### End-to-End Testing
+
+- **Kapture MCP:** Browser automation for testing integrations
+- **TypingMind → Railway → ZepCloud:** Full data flow verification
+- **Azure Search:** Search functionality testing
+- **M365 Services:** Data synchronization testing
+
+### Test Scripts
+
+- `run_interactive_e2e_test.sh` - Full interactive browser control
+- `run_full_e2e_test_http.sh` - HTTP API test runner
+- `test_typingmind.py` - TypingMind integration testing
+- `test_sharepoint.py` - SharePoint integration testing
+
+## Configuration Files
+
+### Environment Variables
+
+- `ZEP_API_KEY` - ZepCloud API key
+- `AZURE_SEARCH_KEY` - Azure Search API key
+- `M365_CLIENT_ID` - Microsoft 365 application ID
+- `M365_CLIENT_SECRET` - Microsoft 365 client secret
+- `RAILWAY_API_URL` - Backend API URL
+
+### Key Configuration Files
+
+- `m365_config.yaml` - Microsoft 365 integration settings
+- `typingmind-azure-config.json` - TypingMind configuration
+- `azure-rag-summary.json` - Project summary and status
+
+## Development Workflow
+
+### Code Quality Standards
+
+- **Python:** Type hints, docstrings, PEP 8 compliance
+- **Error Handling:** Try-catch with comprehensive logging
+- **Comments:** Explain "why", not "what"
+- **Testing:** Write tests for new functionality
+- **Documentation:** Update README for user-facing changes
+
+### Git Workflow
+
+- **Commit frequently** with clear messages
+- **Create branches** for features
+- **Follow conventional commits**
+- **Peer review** required for merges
+
+## Browser Automation Context
+
+### Kapture MCP Integration
+
+- **Server Port:** 61822 (HTTP + WebSocket)
+- **Browser:** Comet (primary)
+- **Auto-activation:** Enabled by default
+- **Testing Flow:** TypingMind → Railway → ZepCloud → Azure Search
+
+### Browser Automation Features
+
+- **Auto-navigation:** Navigate to URLs automatically
+- **Auto-screenshots:** Capture during testing
+- **Auto-interaction:** Click, type, interact with elements
+- **Auto-extraction:** Extract data from web pages
+- **Auto-verification:** Verify application functionality
+
+## Error Handling & Monitoring
+
+### Comprehensive Error Monitoring
+
+- **Rate limiting fixes** implemented
+- **Retry logic** for all API calls
+- **Comprehensive logging** with structured output
+- **Health monitoring** with automated reports
+
+### Monitoring Scripts
+
+- `monitor_sync_errors_comprehensive.sh` - Comprehensive error monitoring
+- `check_errors_now.sh` - Quick error check
+- `validate_complete_system.py` - System validation
+
+## Documentation Standards
+
+### Required Documentation
+
+- **Setup guides** for new developers
+- **Integration guides** for each service
+- **API documentation** for endpoints
+- **Troubleshooting guides** for common issues
+
+### Documentation Files
+
+- `README.md` - Main project documentation
+- `QUICK_START.md` - Quick start guide
+- `DEPLOYMENT_GUIDE.md` - Deployment instructions
+- `M365_INTEGRATION_GUIDE.md` - Microsoft 365 integration
+- `TYPINGMIND_INTEGRATION.md` - TypingMind setup
+
+## Security Considerations
+
+### API Key Management
+
+- **1Password integration** for secure key storage
+- **Environment variables** for local development
+- **Never commit secrets** to version control
+- **Regular key rotation** for production
+
+### Data Privacy
+
+- **Microsoft 365 compliance** with enterprise policies
+- **Azure Search security** with proper access controls
+- **ZepCloud data handling** according to privacy policies
+
+## Performance Optimization
+
+### Caching Strategies
+
+- **Azure Search caching** for frequently accessed data
+- **ZepCloud memory optimization** for large datasets
+- **Browser automation optimization** for faster testing
+
+### Monitoring
+
+- **Health reports** generated automatically
+- **Performance metrics** tracked continuously
+- **Error rates** monitored and alerted
+
+## Deployment & Production
+
+### Railway Deployment
+
+- **Production URL:** https://dans-knowledge-production.up.railway.app
+- **Automatic deployments** from main branch
+- **Health checks** for service availability
+- **Rollback procedures** for failed deployments
+
+### Environment Management
+
+- **Development:** Local environment with test data
+- **Staging:** Railway staging environment
+- **Production:** Railway production environment
+
+## Future Enhancements
+
+### Planned Features
+
+- **Advanced AI integrations** with more platforms
+- **Enhanced search capabilities** with semantic search
+- **Real-time synchronization** with Microsoft 365
+- **Advanced analytics** and reporting
+- **Mobile app integration** for mobile access
+
+### Technical Debt
+
+- **Code refactoring** for better maintainability
+- **Test coverage improvement** for all components
+- **Documentation updates** for new features
+- **Performance optimization** for large datasets

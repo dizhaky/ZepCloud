@@ -1,0 +1,152 @@
+{
+  "name": "M365 Elasticsearch with RAG-Anything",
+  "description": "Elasticsearch-based knowledge base with RAG-Anything enhancements",
+  "type": "elasticsearch",
+  "version": "2.0",
+  "endpoints": {
+    "base_url": "http://localhost:5001",
+    "search": "/search",
+    "advanced_search": "/search/advanced",
+    "multimodal_search": "/search/multimodal",
+    "entity_search": "/search/entity",
+    "relationship_search": "/search/relationships",
+    "health": "/health",
+    "stats": "/stats",
+    "recent": "/recent",
+    "enhanced": "/enhanced",
+    "context": "/context",
+    "store": "/store"
+  },
+  "features": {
+    "rag_anything_enabled": true,
+    "olmocr_enabled": true,
+    "multimodal_search": true,
+    "entity_extraction": true,
+    "relationship_graphs": true,
+    "document_relationships": true,
+    "complexity_analysis": true,
+    "sentiment_analysis": true,
+    "topic_clustering": true
+  },
+  "search_capabilities": {
+    "full_text_search": true,
+    "fuzzy_matching": true,
+    "entity_based_search": true,
+    "relationship_search": true,
+    "multimodal_content_search": true,
+    "advanced_filtering": true,
+    "relevance_scoring": true,
+    "highlighting": true
+  },
+  "data_sources": {
+    "sharepoint": {
+      "enabled": true,
+      "description": "SharePoint sites and document libraries"
+    },
+    "onedrive": {
+      "enabled": true,
+      "description": "OneDrive personal files"
+    },
+    "exchange": {
+      "enabled": true,
+      "description": "Email attachments and content"
+    },
+    "teams": {
+      "enabled": true,
+      "description": "Teams chat and files"
+    },
+    "calendar": {
+      "enabled": true,
+      "description": "Calendar events and meetings"
+    },
+    "contacts": {
+      "enabled": true,
+      "description": "Contact information"
+    }
+  },
+  "processing_pipeline": {
+    "olmocr": {
+      "enabled": true,
+      "description": "Advanced OCR for PDFs and images",
+      "target_dimension": 2048
+    },
+    "raganything": {
+      "enabled": true,
+      "description": "Multimodal content detection and relationship extraction",
+      "features": [
+        "entity_extraction",
+        "relationship_building",
+        "topic_clustering",
+        "complexity_analysis",
+        "sentiment_analysis"
+      ]
+    },
+    "tika": {
+      "enabled": true,
+      "description": "Text extraction for standard documents"
+    }
+  },
+  "elasticsearch": {
+    "host": "http://localhost:9200",
+    "index": "m365-documents",
+    "relationship_index": "m365-documents-relationships",
+    "features": [
+      "full_text_search",
+      "fuzzy_matching",
+      "aggregations",
+      "highlighting",
+      "nested_queries",
+      "relationship_queries"
+    ]
+  },
+  "cost_savings": {
+    "previous_solution": "Azure AI Search",
+    "previous_cost": "$599-$1,213/month",
+    "current_solution": "Elasticsearch",
+    "current_cost": "$0-120/month",
+    "annual_savings": "$6,348-$15,156"
+  },
+  "setup_instructions": {
+    "1": "Start Elasticsearch: docker-compose up -d",
+    "2": "Create index: python elasticsearch_setup.py",
+    "3": "Start API server: python api_server.py",
+    "4": "Configure TypingMind to use http://localhost:5000",
+    "5": "Test with: curl http://localhost:5000/health"
+  },
+  "api_examples": {
+    "simple_search": {
+      "url": "POST http://localhost:5000/search",
+      "body": {
+        "query": "quarterly report",
+        "size": 5
+      }
+    },
+    "advanced_search": {
+      "url": "POST http://localhost:5000/search/advanced",
+      "body": {
+        "query": "budget planning",
+        "filters": {
+          "source_type": "sharepoint",
+          "date_from": "2024-01-01"
+        },
+        "size": 10
+      }
+    },
+    "multimodal_search": {
+      "url": "POST http://localhost:5000/search/multimodal",
+      "body": {
+        "query": "sales data",
+        "content_types": ["tables", "charts"],
+        "size": 5
+      }
+    },
+    "entity_search": {
+      "url": "POST http://localhost:5000/search/entity",
+      "body": {
+        "entity_value": "Dan Izhaky",
+        "entity_type": "person",
+        "size": 5
+      }
+    }
+  }
+}

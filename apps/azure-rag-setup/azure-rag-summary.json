@@ -1,0 +1,6 @@
+{
+  "azure_search_service": "typingmind-search-danizhaky",
+  "azure_search_endpoint": "https://typingmind-search-danizhaky.search.windows.net",
+  "azure_search_index": "training-data-index",
+  "configuration_generated": "2025-10-17T20:37:40.682490"
+}

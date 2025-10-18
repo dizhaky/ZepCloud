@@ -1,0 +1,10 @@
+# M365 RAG Sync - Automated scheduling
+# Run full M365 sync every 6 hours
+0 */6 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && ./m365_sync_cron.sh
+
+# Run indexer every hour to process new documents
+0 * * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action run-indexer >> logs/indexer_cron.log 2>&1
+
+# Daily health check at 9 AM
+0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action health >> logs/health_cron.log 2>&1
+

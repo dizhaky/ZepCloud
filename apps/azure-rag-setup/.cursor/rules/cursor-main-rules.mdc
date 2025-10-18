@@ -1,0 +1,1044 @@
+---
+description: Master Cursor AI Rules - COMPLETE Consolidated from ALL project-specific and automation rules
+alwaysApply: true
+globs: **/*
+---
+
+# CURSOR MAIN RULES - Master Configuration
+
+**Last Updated:** October 16, 2025
+**Version:** 2.2 (Complete & Comprehensive - All Files Integrated)
+**Status:** Active & Complete
+**Total Rules Consolidated:** 74+ files from all folders + 6 critical operational rules
+
+This is your primary AI instruction file that consolidates ALL Cursor rules, automation guidelines, project-specific instructions, custom commands, integrations, quality standards, and critical operational rules into one organized resource.
+
+---
+
+## TABLE OF CONTENTS
+
+1. [Core Cursor Instructions](#core-cursor-instructions)
+2. [YOLO Mode & Aggressive Development](#yolo-mode--aggressive-development)
+3. [Auto-Automation Features](#auto-automation-features)
+4. [ByteRover MCP Integration](#byterover-mcp-integration)
+5. [ZepCloud Project Rules](#zepcloud-project-rules)
+6. [TaskMaster Workflow & Reference](#taskmaster-workflow--reference)
+7. [Automation & Microphone Setup](#automation--microphone-setup)
+8. [Agent History Management](#agent-history-management)
+9. [Development Workflow](#development-workflow)
+10. [Quality Standards & Code Review](#quality-standards--code-review)
+11. [Integrations & Specialized Rules](#integrations--specialized-rules)
+12. [Custom Commands Reference](#custom-commands-reference)
+13. [Product & Structure Rules](#product--structure-rules)
+14. [Documentation & Guides](#documentation--guides)
+
+---
+
+## CORE CURSOR INSTRUCTIONS
+
+### Required Rule Structure
+
+All Cursor rules follow this standardized format:
+
+```markdown
+---
+description: Clear, one-line description of what the rule enforces
+globs: path/to/files/*.ext, other/path/**/*
+alwaysApply: boolean
+---
+
+- **Main Points in Bold**
+  - Sub-points with details
+  - Examples and explanations
+```
+
+### File References
+
+- Use `[filename](mdc:path/to/file)` to reference files
+- Example: [prisma.mdc](mdc:.cursor/rules/prisma.mdc) for rule references
+- Example: [schema.prisma](mdc:prisma/schema.prisma) for code references
+
+### Code Examples
+
+Use language-specific code blocks:
+
+```typescript
+// ✅ DO: Show good examples
+const goodExample = true;
+
+// ❌ DON'T: Show anti-patterns
+const badExample = false;
+```
+
+### Rule Content Guidelines
+
+- Start with high-level overview
+- Include specific, actionable requirements
+- Show examples of correct implementation
+- Reference existing code when possible
+- Keep rules DRY by referencing other rules
+
+### Rule Maintenance
+
+- Update rules when new patterns emerge
+- Add examples from actual codebase
+- Remove outdated patterns
+- Cross-reference related rules
+
+### Best Practices
+
+- Use bullet points for clarity
+- Keep descriptions concise
+- Include both DO and DON'T examples
+- Reference actual code over theoretical examples
+- Use consistent formatting across rules
+
+---
+
+## YOLO MODE & AGGRESSIVE DEVELOPMENT
+
+### ⚡ YOLO Mode Overview
+
+**Auto-Accept All Changes**: Automatically accept all file modifications, code edits, and AI-generated changes without showing diffs or confirmation dialogs.
+
+**Core Principles:**
+- ✅ Auto-accept all changes
+- ✅ Auto-save all files
+- ✅ Eliminate confirmation dialogs
+- ✅ Aggressive fix approach
+- ✅ Continuous operation
+- ✅ Batch processing
+
+### YOLO Mode Cursor Settings
+
+```json
+{
+    "cursor.yoloMode": true,
+    "cursor.agent.autoAccept": true,
+    "cursor.ai.autoApplyChanges": true,
+    "cursor.agent.confirmationMode": "auto",
+    "cursor.ai.confirmationMode": "auto",
+    "cursor.agent.skipConfirmation": true,
+    "cursor.ai.skipConfirmation": true,
+    "cursor.agent.requireConfirmation": false,
+    "cursor.ai.requireConfirmation": false,
+    "cursor.agent.showDiff": false,
+    "cursor.ai.showDiff": false,
+    "cursor.agent.showConfirmationDialog": false,
+    "cursor.ai.showConfirmationDialog": false,
+    "cursor.composer.autoAccept": true,
+    "cursor.composer.skipConfirmation": true,
+    "cursor.composer.requireConfirmation": false,
+    "cursor.composer.showConfirmationDialog": false,
+    "cursor.agent.autoApply": true,
+    "cursor.ai.autoApply": true,
+    "cursor.agent.autoConfirm": true,
+    "cursor.ai.autoConfirm": true,
+    "cursor.agent.autoAcceptChanges": true,
+    "cursor.ai.autoAcceptChanges": true,
+    "cursor.agent.disableConfirmation": true,
+    "cursor.ai.disableConfirmation": true,
+    "cursor.agent.silentMode": true,
+    "cursor.ai.silentMode": true
+}
+```
+
+### When to Apply YOLO Mode
+
+- ✅ Code quality improvements and linting fixes
+- ✅ Bug fixes and error resolution
+- ✅ Refactoring and optimization
+- ✅ Documentation updates
+- ✅ Configuration changes
+- ✅ AI agent-generated changes
+
+### When to Pause (Critical Only)
+
+- ❌ Breaking changes affecting functionality
+- ❌ Security-related modifications
+- ❌ Database schema changes
+- ❌ API breaking changes
+- ❌ Critical system configuration changes
+
+---
+
+## AUTO-AUTOMATION FEATURES
+
+### Auto-Accept All File Changes
+
+**Eliminate "Keep All" Button** and all confirmation dialogs for seamless AI-assisted development.
+
+```json
+{
+    "cursor.agent.autoAccept": true,
+    "cursor.ai.autoApplyChanges": true,
+    "cursor.agent.confirmationMode": "auto",
+    "cursor.ai.confirmationMode": "auto",
+    "cursor.agent.skipConfirmation": true,
+    "cursor.ai.skipConfirmation": true,
+    "cursor.agent.requireConfirmation": false,
+    "cursor.ai.requireConfirmation": false,
+    "cursor.agent.showDiff": false,
+    "cursor.ai.showDiff": false,
+    "cursor.agent.showConfirmationDialog": false,
+    "cursor.ai.showConfirmationDialog": false,
+    "cursor.composer.autoAccept": true,
+    "cursor.composer.skipConfirmation": true,
+    "cursor.composer.requireConfirmation": false,
+    "cursor.composer.showConfirmationDialog": false
+}
+```
+
+**Benefits:**
+- No "Keep All" button appears
+- No confirmation dialogs interrupt workflow
+- All changes automatically applied
+- Seamless development workflow
+
+### Auto-Accept Terminal Commands
+
+**Automatically execute all terminal commands** without waiting for user approval.
+
+**Command Execution Policy:**
+- ✅ Build commands (npm run build, pytest, etc.)
+- ✅ Test commands (npm test, pytest, jest, etc.)
+- ✅ Linting commands (eslint, ruff, black, etc.)
+- ✅ Installation commands (npm install, pip install, etc.)
+- ✅ Git commands (git status, git log, git diff, etc.)
+- ✅ File operations (mkdir, cp, mv, etc.)
+
+**Safety Guardrails - Require Approval For:**
+- ❌ Destructive git operations (git push --force, git reset --hard)
+- ❌ System-wide installations (sudo commands)
+- ❌ Database drops (DROP DATABASE, etc.)
+- ❌ File deletions affecting critical files
+- ❌ Production deployments
+
+```json
+{
+    "cursor.agent.autoRunCommands": true,
+    "cursor.ai.autoRunCommands": true,
+    "cursor.agent.commandApproval": false,
+    "cursor.ai.commandApproval": false,
+    "cursor.agent.requireCommandApproval": false,
+    "cursor.ai.requireCommandApproval": false,
+    "cursor.agent.autoExecuteCommands": true,
+    "cursor.ai.autoExecuteCommands": true,
+    "cursor.terminal.autoApprove": true,
+    "cursor.terminal.skipConfirmation": true
+}
+```
+
+### Auto-Save All Files
+
+**Automatically save all files after edits** with 1-second delay.
+
+```json
+{
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "files.autoSaveWhenNoErrors": true,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+        "source.organizeImports": true
+    }
+}
+```
+
+**Auto-Save Triggers:**
+- ✅ After every edit (1 second delay)
+- ✅ When switching files
+- ✅ When closing files
+- ✅ When errors are fixed
+- ✅ During AI edits
+
+### Auto-Activate Browser Button
+
+The browser button in the agent window should always be **automatically clicked/activated by default**, ensuring browser automation is always enabled without manual intervention.
+
+**Configuration:**
+- Browser button automatically clicked on startup
+- Default state: Active/enabled
+- Persistent across sessions
+- Auto-recovery if browser closes
+
+**LaunchAgent Configuration:**
+```bash
+/Users/danizhaky/Library/CloudStorage/OneDrive-Personal/CursorSettings/scripts/auto-activate-browser.sh
+```
+
+---
+
+## BYTEROVER MCP INTEGRATION
+
+[byterover-mcp]
+
+You are given two tools from Byterover MCP server:
+
+### 1. `byterover-store-knowledge`
+
+**MUST use this tool when:**
+- Learning new patterns, APIs, or architectural decisions from the codebase
+- Encountering error solutions or debugging techniques
+- Finding reusable code patterns or utility functions
+- Completing any significant task or plan implementation
+
+### 2. `byterover-retrieve-knowledge`
+
+**MUST use this tool when:**
+- Starting any new task or implementation to gather relevant context
+- Before making architectural decisions to understand existing patterns
+- When debugging issues to check for previous solutions
+- Working with unfamiliar parts of the codebase
+
+**Key Actions:**
+- Always retrieve knowledge at task start
+- Store patterns and solutions after implementation
+- Use both tools together for best results
+- Keep knowledge focused and reusable
+
+---
+
+## ZEPCLOUD PROJECT RULES
+
+### Project Context
+
+This project integrates ZepCloud memory management with various AI platforms (ChatGPT, Claude, TypingMind, Grok).
+
+**Key Information:**
+- Backend API: https://dans-knowledge-production.up.railway.app
+- Frontend Port: 3000
+- Backend Port: 5001
+- Primary Language: Python (backend), JavaScript/TypeScript (extensions)
+
+### Development Preferences
+
+1. **Backend Development:** Prefer Python for all backend services
+2. **API Integration:** Use FastAPI for REST endpoints
+3. **Memory Management:** All integrations should leverage ZepCloud for persistent memory
+4. **Code Style:** Follow existing patterns in the codebase
+
+### Architecture Patterns
+
+#### API Endpoints
+- `/context` - Retrieve user context
+- `/health` - Health check endpoint
+- `/store` - Store new information
+
+#### Memory Integration
+
+```python
+from zep_cloud import Zep
+
+client = Zep(api_key=ZEP_API_KEY)
+# Use client for memory operations
+```
+
+#### Browser Extensions
+- Manifest v3 for all Chrome extensions
+- Auto-inject context into chat interfaces
+- Beautiful gradient UI for context cards
+
+### AI Assistant Guidelines
+
+When generating code or suggestions:
+1. Check existing patterns in the codebase first
+2. Maintain consistency with current architecture
+3. Consider ZepCloud integration for all AI features
+4. Include error handling and logging
+5. Add type hints for Python code
+6. Use async/await for API calls
+7. Follow the established project structure
+
+### Testing & Documentation
+
+- Test Railway API endpoint availability
+- Verify browser extension functionality
+- Check MCP server configurations
+- Validate environment variables
+- Update markdown files when making changes
+- Keep setup guides current
+- Document all new integrations
+
+---
+
+## TASKMASTER WORKFLOW & REFERENCE
+
+TaskMaster provides powerful task management via MCP tools and CLI commands.
+
+### Quick Reference
+
+| Operation | MCP Tool | CLI Command |
+|-----------|----------|------------|
+| Initialize | `initialize_project` | `task-master init` |
+| Parse PRD | `parse_prd` | `task-master parse-prd` |
+| List tasks | `get_tasks` | `task-master list` |
+| Next task | `next_task` | `task-master next` |
+| Add task | `add_task` | `task-master add-task` |
+| Update task | `update_task` | `task-master update-task` |
+| Set status | `set_task_status` | `task-master set-status` |
+| Expand task | `expand_task` | `task-master expand` |
+| Show complexity | `complexity_report` | `task-master complexity-report` |
+
+### Key Principles
+
+- **AI-Powered:** Most commands use AI for intelligent suggestions
+- **Research Mode:** Enable `--research` flag for informed decisions
+- **Tagged Lists:** Use tags for multi-context task management
+- **Dependency Tracking:** Define prerequisites for task ordering
+- **Progress Logging:** Use `update_subtask` to log implementation journey
+
+### Common Workflows
+
+**Starting a New Project:**
+```bash
+task-master init --name "project" --yes
+# Create PRD in .taskmaster/templates/example_prd.txt
+task-master parse-prd prd.txt --research
+task-master expand --all
+```
+
+**During Development:**
+```bash
+task-master next
+# Work on current task
+task-master update-subtask -i "5.2" -p "Found issue with API..."
+task-master set-status -i "5" -s "done"
+```
+
+**After Major Changes:**
+```bash
+task-master update --from "10" --prompt "Changed architecture..."
+task-master analyze-complexity --threshold 6
+task-master expand -i "15" --research
+```
+
+### Task Statuses
+
+- `pending` - Not yet started
+- `in-progress` - Currently being worked on
+- `review` - Ready for review
+- `done` - Completed
+- `deferred` - Postponed
+- `cancelled` - No longer needed
+
+### Environment Setup
+
+API keys must be set in `.env` (CLI) or `mcp.json` (MCP):
+- `ANTHROPIC_API_KEY`
+- `OPENAI_API_KEY`
+- `OPENROUTER_API_KEY`
+- Other provider-specific keys as needed
+
+---
+
+## AUTOMATION & MICROPHONE SETUP
+
+### Microphone Auto-Activation
+
+The microphone is configured to automatically activate in the Cursor agent window.
+
+**Configuration File:**
+`~/Library/CloudStorage/OneDrive-Personal/CursorSettings/configs/microphone-auto-activation.json`
+
+**Features:**
+- Auto-enable on startup
+- Voice input with noise suppression
+- Echo cancellation
+- Persistent state
+
+**Verification:**
+```bash
+launchctl list | grep microphone
+```
+
+### LaunchAgent Automation
+
+**Location:** `~/.LaunchAgents/`
+
+**Configuration:**
+- Daily organization at 2:00 AM
+- Cursor history sync at 3:00 AM
+- Auto-update tasks on changes
+
+**Check Status:**
+```bash
+launchctl list | grep cursor
+```
+
+### Settings Organization
+
+**Automated Sync:**
+- Runs daily at 5-second intervals
+- Syncs to OneDrive
+- Creates backups
+- Maintains archive directory
+
+**Directory Structure:**
+```
+CursorSettings/
+├── settings.json (generic)
+├── keybindings.json (generic)
+├── rules/ (organized by category)
+├── configs/ (automation configs)
+├── agent-history/ (conversation exports)
+└── archive/ (backups)
+```
+
+---
+
+## AGENT HISTORY MANAGEMENT
+
+### Exported History
+
+Your Cursor agent conversations are automatically exported and synced.
+
+**Local Location:**
+`/Users/danizhaky/Dev/ZepCloud/agent-history/`
+
+**Cloud Location:**
+`~/Library/CloudStorage/OneDrive-Personal/CursorSettings/agent-history/`
+
+**Contents:**
+- 5 exported conversations (readable .txt format)
+- INDEX.md with navigation
+- Raw JSON backups
+- Complete documentation
+
+### Sync Configuration
+
+**Automatic Sync:**
+- Time: 3:00 AM daily
+- Trigger: LaunchAgent
+- Script: `~/bin/sync-cursor-history.sh`
+
+**Manual Sync:**
+```bash
+sync-cursor-history-now
+```
+
+**View Sync Status:**
+```bash
+tail /tmp/cursor-history-sync.log
+```
+
+### Access From Any Device
+
+- **This Mac:** Finder or terminal
+- **Other Mac:** OneDrive app or web
+- **iOS/Android:** OneDrive app
+- **Browser:** https://onedrive.live.com
+
+---
+
+## DEVELOPMENT WORKFLOW
+
+### Version Control
+
+- Use Git for all changes
+- Commit frequently with clear messages
+- Create branches for features
+- Follow conventional commits
+
+### Testing
+
+- Write tests for new functionality
+- Run linters before committing
+- Validate configuration changes
+- Test cross-platform compatibility
+
+### Code Review
+
+- Peer review required for merges
+- Automated linting checks
+- Security scanning
+- Performance validation
+
+### Documentation
+
+- Update README for user-facing changes
+- Add docstrings to functions
+- Keep API documentation current
+- Document configuration changes
+
+### CI/CD
+
+- Automated tests on push
+- Build validation
+- Deployment automation
+- Rollback procedures
+
+---
+
+## QUALITY STANDARDS & CODE REVIEW
+
+### Comprehensive Code Quality
+
+**Code Quality Standards:**
+- **Python:** Type hints, docstrings, PEP 8
+- **JavaScript:** ESLint config, Prettier formatting
+- **Error Handling:** Try-catch with logging
+- **Comments:** Explain "why", not "what"
+
+### Linting & Cleanup Rules
+
+Follow these rules when asked to clean up diagnostics and linting:
+
+**Goal:** ZERO Problems + ZERO linter violations + prevention settings configured
+
+**Targets:** JS/TS + Python monorepos
+
+**Discovery Phase:**
+1. Detect stacks:
+   - JS/TS: presence of package.json, tsconfig*.json, .eslintrc*, .prettierrc*
+   - Python: pyproject.toml or requirements.txt, ruff.toml, .pylintrc, pyproject tool.* sections
+2. Inventory diagnostics: read Problems panel and group by category
+3. Identify patterns: repeated files, modules, rule IDs, or misconfigurations
+
+**Execution Strategy:**
+1. Configs first (non-breaking)
+2. Autofix and style
+3. Types and linking
+4. Verify and iterate
+
+**Acceptance Criteria:**
+- Problems panel is empty
+- npm run lint / npx eslint . == 0 errors, 0 warnings
+- ruff check . == 0 violations
+- npx tsc --noEmit and/or pyright or mypy == clean
+- Project builds and tests pass
+- Prevention settings are active (hooks, CI, editor)
+
+### Mandatory Code Review Process
+
+**Before Any Code Changes:**
+- Analyze existing code patterns in target files
+- Review related files for consistency
+- Check for existing tests
+- Validate against project architecture
+- Retrieve related context using ByteRover
+
+**During Implementation:**
+- Cross-reference with existing rules
+- Verify type safety
+- Check security implications
+- Ensure performance considerations
+- Apply YOLO mode for continuous development
+
+**After Implementation:**
+- Double-check all changes against requirements
+- Validate against project standards
+- Review for potential bugs/edge cases
+- Ensure documentation is updated
+- Store implementation details in ByteRover
+
+### Code Review Checklists
+
+**First Pass Review:**
+- ✅ Logic errors and edge cases
+- ✅ Imports and dependencies
+- ✅ Naming consistency
+- ✅ Type safety
+- ✅ Code compilation
+
+**Second Pass Review:**
+- ✅ Style and formatting
+- ✅ Project consistency
+- ✅ Documentation
+- ✅ Performance considerations
+
+### Performance
+
+- Profile before optimizing
+- Cache when appropriate
+- Minimize API calls
+- Use lazy loading
+
+### Security
+
+- Validate all inputs
+- Never commit secrets
+- Use environment variables
+- Regular dependency updates
+
+### Accessibility
+
+- WCAG 2.1 AA standard
+- Keyboard navigation
+- Screen reader support
+- Color contrast compliance
+
+### Quality Testing
+
+See `rules/quality/test-gate.mdc` and `rules/quality/consolidated-quality.mdc` for comprehensive testing guidelines.
+
+---
+
+## INTEGRATIONS & SPECIALIZED RULES
+
+### Integration Patterns
+
+**Location:** `rules/integrations/`
+
+#### Linear Integration
+- Project management integration
+- Ticket creation and updates
+- Status tracking
+- Team coordination
+
+See `linear_integration.mdc` for details.
+
+#### Consolidated Integration
+- Multiple platform support
+- API key management
+- Error handling
+- Rate limiting
+
+See `consolidated-integration.mdc` for details.
+
+### 1Password Integration
+
+For secure API key management:
+
+**Setup Guide:** See `docs/integrations/1PASSWORD_SETUP.md`
+
+**Key Management:**
+- Store API keys in 1Password vaults
+- Reference via `op://` paths
+- Never commit secrets
+- Rotate regularly
+
+**Migration:**
+- See `docs/integrations/API_KEYS_1PASSWORD_MIGRATION.md` for migration steps
+
+---
+
+## KAPTURE MCP BROWSER AUTOMATION
+
+### Overview
+
+Kapture MCP enables browser automation through the Model Context Protocol for testing and verifying end-to-end integrations (TypingMind → Railway → ZepCloud).
+
+**Installation:** `kapture-mcp` (via npm/Homebrew)
+**Server:** Port 61822 (HTTP + WebSocket)
+**Status:** Production Ready
+
+### When to Use Kapture
+
+✅ **Use for:**
+- End-to-end integration testing
+- Browser navigation verification
+- Screenshot capture during tests
+- DOM content extraction
+- User interaction automation
+- Data flow verification
+
+### Quick Start
+
+```bash
+# Start server
+kapture-mcp server
+
+# Run test
+./run_interactive_e2e_test.sh
+```
+
+### Key HTTP API Endpoints
+
+| Command | Method | Endpoint | Purpose |
+|---------|--------|----------|---------|
+| Navigate | POST | /navigate | Open URL |
+| Screenshot | GET | /screenshot | Capture PNG |
+| DOM | GET | /dom | Get HTML |
+| Click | POST | /click | Click element |
+| Type | POST | /type | Type text |
+| Fill | POST | /fill | Fill input |
+| Back | POST | /back | Browser back |
+| Forward | POST | /forward | Browser forward |
+
+### Example Usage
+
+```bash
+# Navigate to URL
+curl -s -X POST http://localhost:61822/navigate \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://typingmind.com"}'
+
+# Take screenshot
+curl -s http://localhost:61822/screenshot > screenshot.png
+
+# Get page DOM
+curl -s http://localhost:61822/dom > page.json
+```
+
+### ZepCloud Integration Pattern
+
+```
+TypingMind (navigate + screenshot)
+    ↓
+Railway API (navigate + screenshot)
+    ↓
+ZepCloud Dashboard (navigate + screenshot)
+    ↓
+Memory Section (DOM extract)
+    ↓
+Data Verification
+```
+
+### Test Scripts
+
+- `run_interactive_e2e_test.sh` - Full interactive browser control
+- `run_full_e2e_test_http.sh` - HTTP API test runner
+- `run_full_e2e_test.sh` - JSON-RPC test runner
+
+### Reference Documentation
+
+**Location:** ZepCloud project
+- `KAPTURE_BROWSER_AUTOMATION_REFERENCE.md` - Complete reference (15+ endpoints)
+- `KAPTURE_QUICK_START.md` - Quick reference
+- `KAPTURE_E2E_TEST_COMPLETE.md` - Test status
+
+### Debugging
+
+```bash
+# Check server status
+curl -s http://localhost:61822/
+
+# List tabs
+curl -s http://localhost:61822/tabs
+
+# Get DOM
+curl -s http://localhost:61822/dom | jq .
+```
+
+---
+
+## CUSTOM COMMANDS REFERENCE
+
+### Code Review Commands
+
+Located in `commands/code-review/`:
+- `code-review.md` - General code review process
+- `accessibility-audit.md` - Accessibility review
+- `security-audit.md` - Security review
+- `security-review.md` - Detailed security checks
+- `light-review-existing-diffs.md` - Quick diff review
+
+### Debugging Commands
+
+Located in `commands/debugging/`:
+- `debug-issue.md` - General debugging process
+- `fix-compile-errors.md` - Compile error fixes
+- `fix-git-issues.md` - Git problem resolution
+
+### Refactoring Commands
+
+Located in `commands/refactoring/`:
+- `add-error-handling.md` - Error handling patterns
+- `address-github-pr-comments.md` - PR feedback resolution
+- `database-migration.md` - Database schema changes
+- `lint-fix.md` - Linting issues
+- `onboard-new-developer.md` - New developer setup
+- `optimize-performance.md` - Performance optimization
+- `refactor-code.md` - General refactoring
+- `run-lint-suite.md` - Comprehensive linting
+- `setup-new-feature.md` - Feature scaffolding
+
+### Testing Commands
+
+Located in `commands/testing/`:
+- `run-all-tests-and-fix.md` - Test execution and fixes
+- `write-unit-tests.md` - Unit test writing
+
+### Deployment Commands
+
+Located in `commands/deployment/`:
+- `create-pr.md` - Pull request creation
+
+### Documentation Commands
+
+Located in `commands/documentation/`:
+- `add-documentation.md` - Documentation writing
+- `generate-api-docs.md` - API documentation generation
+- `generate-pr-description.md` - PR description generation
+
+---
+
+## PRODUCT & STRUCTURE RULES
+
+### Product Guidelines
+
+**Location:** `rules/product.md`
+
+Guidelines for product decisions and feature development.
+
+### Project Structure
+
+**Location:** `rules/project_structure.md`
+
+Organization and structure conventions for the project.
+
+### Code Structure
+
+**Location:** `rules/structure.md`
+
+Code organization and architectural patterns.
+
+### Technology Stack
+
+**Location:** `rules/tech.md`
+
+Technology choices, frameworks, and libraries.
+
+### Kiro Rules
+
+**Location:** `rules/kiro_rules.md`
+
+Specific rules for Kiro AI tool integration.
+
+### Self-Improvement
+
+**Location:** `rules/self_improve.md`
+
+Processes for continuous improvement and refinement.
+
+---
+
+## DOCUMENTATION & GUIDES
+
+### Setup Documentation
+
+Located in `docs/setup/`:
+- `SETUP.md` - Initial setup instructions
+- `SETUP-NEW-COMPUTER.md` - New machine configuration
+- `INSTALLATION_SUMMARY.md` - Installation overview
+- `CURSOR_AUTO_ORGANIZATION_SETUP.md` - Auto-organization setup
+- `AUTO-ORGANIZATION-SUMMARY.md` - Auto-organization summary
+
+### Integration Guides
+
+Located in `docs/integrations/`:
+- `1PASSWORD_SETUP.md` - 1Password integration
+- `API_KEYS_1PASSWORD_MIGRATION.md` - API key migration
+
+### Troubleshooting
+
+**Location:** `docs/troubleshooting/TROUBLESHOOTING.md`
+
+Common issues and solutions.
+
+### Quick Reference
+
+Located in `docs/reference/`:
+- `QUICK_START.md` - Quick start guide
+- `QUICK-REFERENCE.md` - Command reference
+
+### Monitoring & Analysis
+
+Located in `docs/guides/`:
+- `MONITORING_SETUP_GUIDE.md` - Monitoring setup
+- `MONITORING_STRATEGY_SUMMARY.md` - Monitoring strategy
+- `PROACTIVE_MONITORING_PROPOSAL.md` - Proactive monitoring
+- `QUICK_REFERENCE_MONITORING.md` - Monitoring reference
+- `ERROR_ANALYSIS_AND_FIXES.md` - Error analysis
+- `ROOT_CAUSE_AND_PREVENTION.md` - Root cause analysis
+- `WHY_ERRORS_NOT_FLAGGED.md` - Error handling explanation
+- `INDEX_INCIDENT_ANALYSIS.md` - Incident analysis index
+- `API_KEY_VALIDATION_REPORT.md` - API validation
+- `CURSOR_RUN_EVERYTHING_SETUP.md` - Complete setup guide
+- `IMPLEMENTATION_COMPLETE.md` - Implementation status
+
+### Main Documentation
+
+**Location:** `docs/README.md` and `README.md`
+
+Overall documentation index and navigation.
+
+---
+
+## ARCHIVE & REFERENCES
+
+**Archived Rules Location:**
+`/Users/danizhaky/Library/CloudStorage/OneDrive-Personal/CursorSettings/rules/archived/`
+
+**Old Files Preserved:**
+- `old-core/` - Original core rules
+- `old-taskmaster/` - Original TaskMaster rules
+- `old-automation/` - Original automation rules
+- `old-rules/` - Legacy rule files including:
+  - 1password-api-keys.mdc
+  - ai_code_review.mdc
+  - auto-accept-commands.mdc
+  - auto-browser-activation.mdc
+  - auto-save.mdc
+  - browser-automation-defaults.mdc
+  - cleanup-lint.mdc
+  - eliminate-keep-all.mdc
+  - frontend_linting.mdc
+  - yolo-mode.mdc
+  - zepcloud-integration.mdc
+
+**Why Consolidated?**
+- Single source of truth
+- Easier to search
+- Faster to load
+- Better organization
+- No conflicting rules
+- Comprehensive coverage
+
+---
+
+## QUICK COMMAND REFERENCE
+
+```bash
+# Cursor History
+open ~/Library/CloudStorage/OneDrive-Personal/CursorSettings/agent-history
+sync-cursor-history-now
+grep -r "keyword" ~/Library/CloudStorage/OneDrive-Personal/CursorSettings/agent-history/
+
+# TaskMaster
+task-master next
+task-master list --with-subtasks
+task-master expand -i "5" --research
+task-master update-task -i "10" -p "Update details"
+
+# Automation
+launchctl list | grep cursor
+tail /tmp/cursor-history-sync.log
+
+# Git
+git status
+git commit -m "feat: description"
+git push origin feature-branch
+
+# Custom Commands
+# See commands/ directory for available custom commands
+# Use in Cursor with Cmd+Shift+P
+```
+
+---
+
+## COMPLETE FILE INVENTORY
+
+**Total Rules Consolidated: 80+ files**
+
+- **Rules Root:** 10 files
+- **Integrations:** 2 files
+- **Quality Standards:** 2 files
+- **Custom Commands:** 23 files
+- **Documentation:** 23 files
+- **Critical Operational:** 6 files (YOLO, auto-accept, auto-browser, auto-save, eliminate-keep-all, cleanup-lint)
+- **Archived:** 13+ legacy files
+
+---
+
+**This consolidated rules file replaces all previous individual rule files and includes EVERY rule from all CursorSettings folders + all critical operational rules.**
+
+**To update:** Modify this file directly. Changes auto-sync to OneDrive.
+
+**To add new rules:** Add a new section following the template, commit, and notify team.
+
+**To find specific content:** Use Cmd+F to search this file or refer to the specific file locations listed in each section.
+
+**Questions?** Refer to the archived originals or the documentation guides listed above.
