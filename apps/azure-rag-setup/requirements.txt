@@ -4,15 +4,15 @@
 # Core Azure SDK packages
 azure-storage-blob==12.19.0
 azure-search-documents==11.4.0
-azure-identity==1.15.0
+azure-identity==1.16.1
 azure-core==1.29.5
 
 # Environment and configuration
 python-dotenv==1.0.0
 
 # HTTP requests and utilities
-requests==2.31.0
-urllib3==2.0.7
+requests==2.32.4
+urllib3==2.5.0
 
 # Data processing and utilities
 pathlib2==2.3.7.post1
@@ -20,7 +20,7 @@ json5==0.9.14
 
 # Retry and progress tracking
 tenacity==8.2.3
-tqdm==4.66.1
+tqdm==4.66.3
 
 # Microsoft Graph API dependencies
 msal==1.26.0                  # Microsoft Authentication Library
