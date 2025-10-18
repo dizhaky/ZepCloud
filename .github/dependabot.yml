@@ -1,0 +1,38 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/apps/azure-rag-setup"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "dizhaky"
+    assignees:
+      - "dizhaky"
+    commit-message:
+      prefix: "security"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "security"
+    groups:
+      security-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "security"
+      azure-updates:
+        patterns:
+          - "azure-*"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
+      http-updates:
+        patterns:
+          - "requests"
+          - "urllib3"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
