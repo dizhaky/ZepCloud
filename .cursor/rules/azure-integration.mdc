@@ -1,0 +1,309 @@
+---
+description: Azure-specific integration patterns and ZepCloud memory management
+alwaysApply: false
+---
+
+# Azure Integration & ZepCloud Patterns
+
+## Project Overview
+
+This project integrates:
+- **Azure Search**: Enterprise search capabilities
+- **Microsoft 365**: SharePoint, Teams, OneDrive, Calendar, Contacts
+- **ZepCloud Memory Management**: Persistent AI memory across platforms
+- **Railway Backend**: Production API at https://dans-knowledge-production.up.railway.app
+
+## ZepCloud Integration
+
+### Memory Client Setup
+
+```python
+# ✅ CORRECT - ZepCloud client initialization
+from zep_cloud import Zep
+import os
+
+client = Zep(api_key=os.getenv("ZEP_API_KEY"))
+
+# Store memory
+await client.memory.add(
+    session_id="user_session_123",
+    messages=[
+        {"role": "user", "content": "User input here"},
+        {"role": "assistant", "content": "AI response here"}
+    ]
+)
+
+# Retrieve memory
+memory = await client.memory.get(session_id="user_session_123")
+```
+
+### API Endpoints
+
+```python
+# ✅ CORRECT - FastAPI endpoints for ZepCloud
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+
+router = APIRouter()
+
+class ContextRequest(BaseModel):
+    session_id: str
+
+class ContextResponse(BaseModel):
+    context: list[dict]
+    relevant_facts: list[str]
+
+@router.post("/context", response_model=ContextResponse)
+async def get_context(request: ContextRequest):
+    """Retrieve user context from ZepCloud."""
+    try:
+        memory = await client.memory.get(session_id=request.session_id)
+        return ContextResponse(
+            context=memory.messages,
+            relevant_facts=memory.facts
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/store")
+async def store_memory(session_id: str, content: str):
+    """Store new information in ZepCloud."""
+    try:
+        await client.memory.add(
+            session_id=session_id,
+            messages=[{"role": "user", "content": content}]
+        )
+        return {"status": "success"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+```
+
+## Azure Search Integration
+
+### Search Client Setup
+
+```python
+# ✅ CORRECT - Azure Search client
+from azure.search.documents import SearchClient
+from azure.core.credentials import AzureKeyCredential
+
+search_client = SearchClient(
+    endpoint=os.getenv("AZURE_SEARCH_ENDPOINT"),
+    index_name="documents",
+    credential=AzureKeyCredential(os.getenv("AZURE_SEARCH_KEY"))
+)
+
+# Perform search
+async def search_documents(query: str, top: int = 10):
+    results = await search_client.search(
+        search_text=query,
+        top=top,
+        select=["id", "title", "content"]
+    )
+    return [result async for result in results]
+```
+
+## Microsoft 365 Integration
+
+### Graph API Client
+
+```python
+# ✅ CORRECT - Microsoft Graph API integration
+from msgraph import GraphServiceClient
+from azure.identity import ClientSecretCredential
+
+credential = ClientSecretCredential(
+    tenant_id=os.getenv("M365_TENANT_ID"),
+    client_id=os.getenv("M365_CLIENT_ID"),
+    client_secret=os.getenv("M365_CLIENT_SECRET")
+)
+
+graph_client = GraphServiceClient(credential)
+
+# SharePoint integration
+async def get_sharepoint_files(site_id: str):
+    items = await graph_client.sites.by_site_id(site_id).drive.items.get()
+    return items.value
+
+# OneDrive integration
+async def get_user_files(user_id: str):
+    items = await graph_client.users.by_user_id(user_id).drive.items.get()
+    return items.value
+```
+
+## Browser Extension Patterns
+
+### Manifest v3 Configuration
+
+```json
+{
+  "manifest_version": 3,
+  "name": "ZepCloud Context Injector",
+  "version": "1.0.0",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://typingmind.com/*",
+    "https://chatgpt.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://typingmind.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
+```
+
+### Context Injection
+
+```typescript
+// ✅ CORRECT - Inject context into chat interface
+async function injectContext() {
+  try {
+    const response = await fetch(
+      'https://dans-knowledge-production.up.railway.app/context',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: getCurrentSessionId() })
+      }
+    );
+    
+    const { context, relevant_facts } = await response.json();
+    
+    // Display context in beautiful gradient UI
+    displayContextCard(context, relevant_facts);
+  } catch (error) {
+    console.error('Failed to inject context:', error);
+  }
+}
+```
+
+## Environment Configuration
+
+### Required Environment Variables
+
+```bash
+# ZepCloud
+ZEP_API_KEY=your_zep_api_key
+
+# Azure Search
+AZURE_SEARCH_ENDPOINT=https://your-search.search.windows.net
+AZURE_SEARCH_KEY=your_search_key
+
+# Microsoft 365
+M365_TENANT_ID=your_tenant_id
+M365_CLIENT_ID=your_client_id
+M365_CLIENT_SECRET=your_client_secret
+
+# Railway
+RAILWAY_API_URL=https://dans-knowledge-production.up.railway.app
+```
+
+## Error Handling & Monitoring
+
+### Retry Logic for API Calls
+
+```python
+# ✅ CORRECT - Retry logic with exponential backoff
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    wait_exponential,
+    retry_if_exception_type
+)
+import httpx
+
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=2, max=10),
+    retry=retry_if_exception_type(httpx.HTTPError)
+)
+async def call_zepcloud_api(session_id: str):
+    """Call ZepCloud API with retry logic."""
+    return await client.memory.get(session_id=session_id)
+```
+
+### Comprehensive Logging
+
+```python
+# ✅ CORRECT - Structured logging for integrations
+import logging
+
+logger = logging.getLogger(__name__)
+
+async def sync_to_zepcloud(data: dict):
+    logger.info(
+        "Starting ZepCloud sync",
+        extra={
+            "session_id": data["session_id"],
+            "message_count": len(data["messages"])
+        }
+    )
+    
+    try:
+        result = await client.memory.add(**data)
+        logger.info("ZepCloud sync successful", extra={"result": result})
+    except Exception as e:
+        logger.error(
+            "ZepCloud sync failed",
+            extra={"error": str(e)},
+            exc_info=True
+        )
+        raise
+```
+
+## Testing Integration Points
+
+### Mock External Services
+
+```python
+# ✅ CORRECT - Mock ZepCloud for testing
+import pytest
+from unittest.mock import AsyncMock, patch
+
+@pytest.fixture
+def mock_zep_client():
+    with patch('app.services.zep_client') as mock:
+        mock.memory.get = AsyncMock(return_value={
+            "messages": [{"role": "user", "content": "test"}],
+            "facts": ["User prefers Python"]
+        })
+        yield mock
+
+@pytest.mark.asyncio
+async def test_get_context(mock_zep_client):
+    response = await get_context(ContextRequest(session_id="test"))
+    assert len(response.context) > 0
+```
+
+## Security Best Practices
+
+### API Key Management
+
+```python
+# ✅ CORRECT - Secure API key handling
+from pydantic_settings import BaseSettings
+from functools import lru_cache
+
+class Settings(BaseSettings):
+    zep_api_key: str
+    azure_search_key: str
+    m365_client_secret: str
+    
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
+
+@lru_cache()
+def get_settings():
+    return Settings()
+
+# Never log or expose API keys
+settings = get_settings()
+# ❌ FORBIDDEN
+# logger.info(f"Using key: {settings.zep_api_key}")
+```

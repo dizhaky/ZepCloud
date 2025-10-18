@@ -1,0 +1,421 @@
+---
+description: TypeScript and React frontend development standards
+alwaysApply: true
+globs: ["**/*.ts", "**/*.tsx"]
+---
+
+# TypeScript/React Frontend Standards
+
+## Code Style Requirements
+
+- **Use strict TypeScript** - never use 'any' type
+- **Prefer interfaces over types** for object shapes
+- **Use React hooks** (useState, useEffect, useContext) properly
+- **Implement proper error boundaries**
+- **Use async/await for API calls**
+- **Follow React best practices** for component composition
+- **Use proper TypeScript generics** where applicable
+
+## Component Patterns
+
+### Proper Typing
+
+```typescript
+// ✅ CORRECT - Proper typing with interfaces
+interface DocumentCardProps {
+  document: Document;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => Promise<void>;
+  className?: string;
+}
+
+const DocumentCard: React.FC<DocumentCardProps> = ({ 
+  document, 
+  onEdit, 
+  onDelete,
+  className 
+}) => {
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const handleDelete = async () => {
+    setIsLoading(true);
+    try {
+      await onDelete(document.id);
+    } catch (error) {
+      console.error('Failed to delete document', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  return (
+    <div className={className}>
+      {/* Component content */}
+    </div>
+  );
+};
+
+// ❌ FORBIDDEN - Never use 'any' type
+const badExample: any = {}; // This should be avoided
+const BadComponent = (props: any) => { /* ... */ };
+```
+
+### Custom Hooks
+
+```typescript
+// ✅ CORRECT - Custom hook with proper types
+interface UseApiOptions<T> {
+  url: string;
+  initialData?: T;
+}
+
+interface UseApiReturn<T> {
+  data: T | null;
+  loading: boolean;
+  error: Error | null;
+  refetch: () => Promise<void>;
+}
+
+function useApi<T>({ url, initialData }: UseApiOptions<T>): UseApiReturn<T> {
+  const [data, setData] = useState<T | null>(initialData || null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const json = await response.json();
+      setData(json);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('Unknown error'));
+    } finally {
+      setLoading(false);
+    }
+  }, [url]);
+  
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+  
+  return { data, loading, error, refetch: fetchData };
+}
+```
+
+## State Management
+
+### Context API
+
+```typescript
+// ✅ CORRECT - Typed context
+interface AuthContextType {
+  user: User | null;
+  login: (credentials: Credentials) => Promise<void>;
+  logout: () => void;
+  isAuthenticated: boolean;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+  return context;
+};
+
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+  
+  // Implementation...
+  
+  return (
+    <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+```
+
+## Error Handling
+
+### Error Boundaries
+
+```typescript
+// ✅ CORRECT - Error boundary component
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+
+interface Props {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+  error?: Error;
+}
+
+class ErrorBoundary extends Component<Props, State> {
+  public state: State = {
+    hasError: false
+  };
+
+  public static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error };
+  }
+
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Uncaught error:', error, errorInfo);
+  }
+
+  public render() {
+    if (this.state.hasError) {
+      return this.props.fallback || <div>Something went wrong.</div>;
+    }
+
+    return this.props.children;
+  }
+}
+```
+
+## API Integration
+
+### Type-Safe API Calls
+
+```typescript
+// ✅ CORRECT - Type-safe API client
+interface ApiResponse<T> {
+  data: T;
+  status: number;
+  message?: string;
+}
+
+class ApiClient {
+  private baseUrl: string;
+  
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
+  }
+  
+  async get<T>(endpoint: string): Promise<ApiResponse<T>> {
+    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return {
+      data,
+      status: response.status
+    };
+  }
+  
+  async post<T, D>(endpoint: string, body: D): Promise<ApiResponse<T>> {
+    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return {
+      data,
+      status: response.status
+    };
+  }
+}
+
+// Usage
+interface Document {
+  id: string;
+  title: string;
+  content: string;
+}
+
+const api = new ApiClient('https://api.example.com');
+const { data: document } = await api.get<Document>('/documents/123');
+```
+
+## Performance Optimization
+
+### Memoization
+
+```typescript
+// ✅ CORRECT - Use React.memo for expensive components
+interface ExpensiveListProps {
+  items: Item[];
+  onItemClick: (id: string) => void;
+}
+
+export const ExpensiveList = React.memo<ExpensiveListProps>(
+  ({ items, onItemClick }) => {
+    return (
+      <ul>
+        {items.map(item => (
+          <li key={item.id} onClick={() => onItemClick(item.id)}>
+            {item.name}
+          </li>
+        ))}
+      </ul>
+    );
+  },
+  (prevProps, nextProps) => {
+    // Custom comparison function
+    return prevProps.items === nextProps.items;
+  }
+);
+
+// ✅ CORRECT - Use useMemo for expensive calculations
+const sortedItems = useMemo(() => {
+  return items.sort((a, b) => a.priority - b.priority);
+}, [items]);
+
+// ✅ CORRECT - Use useCallback for stable function references
+const handleClick = useCallback((id: string) => {
+  console.log('Clicked item:', id);
+}, []); // Empty deps if function doesn't depend on props/state
+```
+
+## Form Handling
+
+### Controlled Components
+
+```typescript
+// ✅ CORRECT - Typed form with validation
+interface FormData {
+  email: string;
+  password: string;
+}
+
+interface FormErrors {
+  email?: string;
+  password?: string;
+}
+
+const LoginForm: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    email: '',
+    password: ''
+  });
+  
+  const [errors, setErrors] = useState<FormErrors>({});
+  
+  const validate = (): boolean => {
+    const newErrors: FormErrors = {};
+    
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+    
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validate()) {
+      return;
+    }
+    
+    try {
+      await api.post('/auth/login', formData);
+    } catch (error) {
+      console.error('Login failed', error);
+    }
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        value={formData.email}
+        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+      />
+      {errors.email && <span>{errors.email}</span>}
+      
+      <input
+        type="password"
+        value={formData.password}
+        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+      />
+      {errors.password && <span>{errors.password}</span>}
+      
+      <button type="submit">Login</button>
+    </form>
+  );
+};
+```
+
+## Testing Standards
+
+### Component Testing
+
+```typescript
+// ✅ CORRECT - Component test with React Testing Library
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { DocumentCard } from './DocumentCard';
+
+describe('DocumentCard', () => {
+  const mockDocument = {
+    id: '1',
+    title: 'Test Document',
+    content: 'Test content'
+  };
+  
+  it('renders document information', () => {
+    render(
+      <DocumentCard 
+        document={mockDocument} 
+        onEdit={jest.fn()} 
+        onDelete={jest.fn()} 
+      />
+    );
+    
+    expect(screen.getByText('Test Document')).toBeInTheDocument();
+  });
+  
+  it('calls onDelete when delete button is clicked', async () => {
+    const mockDelete = jest.fn().mockResolvedValue(undefined);
+    
+    render(
+      <DocumentCard 
+        document={mockDocument} 
+        onEdit={jest.fn()} 
+        onDelete={mockDelete} 
+      />
+    );
+    
+    fireEvent.click(screen.getByRole('button', { name: /delete/i }));
+    
+    await waitFor(() => {
+      expect(mockDelete).toHaveBeenCalledWith('1');
+    });
+  });
+});
+```

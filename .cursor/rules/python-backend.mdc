@@ -1,0 +1,252 @@
+---
+description: Python backend development standards for FastAPI, SQLAlchemy, and async patterns
+alwaysApply: true
+globs: ["**/*.py"]
+---
+
+# Python Backend Standards
+
+## Code Style Requirements
+
+- **Always use type hints** for function parameters and return values
+- **Use async/await** for database operations and external API calls
+- **Follow FastAPI best practices** with proper dependency injection
+- **Use SQLAlchemy 2.0 style queries** (select(), update(), delete())
+- **Implement comprehensive error handling** with try/catch blocks
+- **Add detailed logging** with appropriate log levels
+- **Use Pydantic models** for request/response validation
+- **Follow PEP 8** with Black formatting (88 character line limit)
+
+## Required Patterns
+
+### Type Hints for All Functions
+
+```python
+# ✅ CORRECT - Type hints for all functions
+from typing import Optional
+from sqlalchemy.ext.asyncio import AsyncSession
+
+async def process_document(
+    session: AsyncSession, 
+    doc_id: int
+) -> DocumentResponse:
+    """Process a document with proper type hints."""
+    # Implementation must include proper type hints
+```
+
+### Error Handling with Specific Exceptions
+
+```python
+# ✅ CORRECT - Error handling with specific exceptions
+from fastapi import HTTPException
+import logging
+
+logger = logging.getLogger(__name__)
+
+try:
+    result = await some_operation()
+    return result
+except ValidationError as e:
+    logger.error(f"Validation failed: {e}")
+    raise HTTPException(status_code=400, detail=str(e))
+except DatabaseError as e:
+    logger.error(f"Database error: {e}")
+    raise HTTPException(status_code=500, detail="Internal server error")
+```
+
+### SQLAlchemy 2.0 Style Queries
+
+```python
+# ✅ CORRECT - SQLAlchemy 2.0 style queries
+from sqlalchemy import select
+
+result = await session.execute(
+    select(Document).where(Document.id == doc_id)
+)
+return result.scalar_one_or_none()
+
+# ❌ FORBIDDEN - Never use old query API
+# document = session.query(Document).filter_by(id=doc_id).first()
+```
+
+### API Endpoint Structure
+
+```python
+# ✅ CORRECT - API endpoint structure
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+
+router = APIRouter()
+
+@router.get("/documents/{doc_id}", response_model=DocumentResponse)
+async def get_document(
+    doc_id: int,
+    session: AsyncSession = Depends(get_session),
+    current_user: User = Depends(get_current_user)
+) -> DocumentResponse:
+    """Get document by ID with proper dependencies."""
+    # Implementation
+```
+
+## Database Standards
+
+### Schema Guidelines
+
+- **Use Alembic for migrations**
+- **Always add proper indexes** for performance
+- **Use foreign key constraints**
+- **Implement soft deletes** where appropriate
+- **Use transactions** for multi-table operations
+
+### Best Practices
+
+```python
+# ✅ CORRECT - Proper indexes on frequently queried fields
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Index
+from datetime import datetime
+
+class Document(Base):
+    __tablename__ = "documents"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)  # Indexed
+    title = Column(String(255), index=True)  # Indexed for search
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    
+    # Composite indexes for common queries
+    __table_args__ = (
+        Index('idx_user_created', 'user_id', 'created_at'),
+    )
+```
+
+## Security Standards
+
+### Input Validation
+
+- **Validate all user inputs** with Pydantic
+- **Sanitize file uploads**
+- **Check file types and sizes**
+- **Prevent path traversal attacks**
+- **Implement proper CORS policies**
+
+### SQL Safety
+
+```python
+# ✅ CORRECT - Parameterized queries (SQLAlchemy handles this)
+result = await session.execute(
+    select(Document).where(Document.id == doc_id)
+)
+
+# ❌ FORBIDDEN - Never use f-strings for SQL
+query = f"SELECT * FROM documents WHERE id = {doc_id}"  # SQL injection risk!
+```
+
+## Testing Standards
+
+### Test Structure
+
+- **Write unit tests** for all business logic
+- **Use pytest fixtures** for test data
+- **Mock external dependencies**
+- **Test error scenarios** and edge cases
+- **Use proper test naming conventions**
+
+### Example Test
+
+```python
+import pytest
+from unittest.mock import AsyncMock
+
+@pytest.mark.asyncio
+async def test_get_document_success():
+    # Arrange
+    doc_id = 1
+    expected_document = Document(id=doc_id, title="Test Doc")
+    mock_session = AsyncMock()
+    
+    # Act
+    result = await get_document(mock_session, doc_id)
+    
+    # Assert
+    assert result == expected_document
+    assert result.title == "Test Doc"
+
+@pytest.mark.asyncio
+async def test_get_document_not_found():
+    # Arrange
+    mock_session = AsyncMock()
+    mock_session.execute.return_value.scalar_one_or_none.return_value = None
+    
+    # Act & Assert
+    with pytest.raises(HTTPException) as exc_info:
+        await get_document(mock_session, 999)
+    assert exc_info.value.status_code == 404
+```
+
+## Async Best Practices
+
+### Database Sessions
+
+```python
+# ✅ CORRECT - Async context manager
+async with get_async_session() as session:
+    result = await session.execute(query)
+    await session.commit()
+
+# ✅ CORRECT - Dependency injection
+async def endpoint(session: AsyncSession = Depends(get_session)):
+    # Use session here
+    pass
+```
+
+### External API Calls
+
+```python
+# ✅ CORRECT - Use async HTTP client
+import httpx
+
+async with httpx.AsyncClient() as client:
+    response = await client.get(url)
+    return response.json()
+```
+
+## Logging Standards
+
+```python
+# ✅ CORRECT - Structured logging
+import logging
+
+logger = logging.getLogger(__name__)
+
+logger.info(
+    "Document processed",
+    extra={
+        "doc_id": doc_id,
+        "user_id": user_id,
+        "duration_ms": duration
+    }
+)
+
+logger.error(
+    "Failed to process document",
+    extra={"doc_id": doc_id},
+    exc_info=True
+)
+```
+
+## Environment Configuration
+
+```python
+# ✅ CORRECT - Use Pydantic settings
+from pydantic_settings import BaseSettings
+
+class Settings(BaseSettings):
+    database_url: str
+    api_key: str
+    debug: bool = False
+    
+    class Config:
+        env_file = ".env"
+
+settings = Settings()
+```
