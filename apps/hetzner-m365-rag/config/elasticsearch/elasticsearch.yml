@@ -19,10 +19,22 @@ bootstrap.memory_lock: true
 # Discovery
 discovery.type: single-node
 
-# Security
+# Security - SSL/TLS Configuration
 xpack.security.enabled: true
-xpack.security.http.ssl.enabled: false  # Enable with proper certificates in production
-xpack.security.transport.ssl.enabled: false
+
+# HTTP SSL (API Communication)
+xpack.security.http.ssl.enabled: true
+xpack.security.http.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch.key
+xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch.crt
+xpack.security.http.ssl.certificate_authorities: /usr/share/elasticsearch/config/certs/ca.crt
+xpack.security.http.ssl.verification_mode: certificate
+
+# Transport SSL (Node-to-Node Communication)
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch.key
+xpack.security.transport.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch.crt
+xpack.security.transport.ssl.certificate_authorities: /usr/share/elasticsearch/config/certs/ca.crt
+xpack.security.transport.ssl.verification_mode: certificate
 
 # Machine Learning
 xpack.ml.enabled: true
@@ -30,8 +42,15 @@ xpack.ml.enabled: true
 # Index defaults
 action.auto_create_index: true
 
-# CORS (if needed for direct access)
-http.cors.enabled: true
-http.cors.allow-origin: "*"
-http.cors.allow-credentials: true
+# CORS Configuration
+# Disabled for security - Elasticsearch is accessed only through internal API
+# All external requests go through Nginx reverse proxy -> API service -> Elasticsearch
+http.cors.enabled: false
+
+# If CORS is needed for development/debugging, use restrictive settings:
+# http.cors.enabled: true
+# http.cors.allow-origin: "http://localhost:3000,http://localhost:9380"
+# http.cors.allow-credentials: false
+# http.cors.allow-methods: OPTIONS, HEAD, GET, POST, PUT, DELETE
+# http.cors.allow-headers: X-Requested-With, Content-Type, Content-Length, Authorization
 

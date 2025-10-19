@@ -32,7 +32,16 @@ services:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms16g -Xmx16g"
       - xpack.security.enabled=true
-      - xpack.security.http.ssl.enabled=false  # Enable in production
+      - xpack.security.http.ssl.enabled=true  # ✅ SSL enabled for security
+      - xpack.security.http.ssl.key=/usr/share/elasticsearch/config/certs/elasticsearch.key
+      - xpack.security.http.ssl.certificate=/usr/share/elasticsearch/config/certs/elasticsearch.crt
+      - xpack.security.http.ssl.certificate_authorities=/usr/share/elasticsearch/config/certs/ca.crt
+      - xpack.security.http.ssl.verification_mode=certificate
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certs/elasticsearch.key
+      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certs/elasticsearch.crt
+      - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certs/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
       - xpack.ml.enabled=true
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD:-changeme}
     ulimits:
@@ -45,6 +54,7 @@ services:
     volumes:
       - es-data:/usr/share/elasticsearch/data
       - ./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./config/elasticsearch/certs:/usr/share/elasticsearch/config/certs:ro
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -52,7 +62,7 @@ services:
       rag-network:
         ipv4_address: 172.28.0.10
     healthcheck:
-      test: ["CMD-SHELL", "curl -s http://localhost:9200/_cluster/health | grep -q '\"status\":\"green\"\\|\"status\":\"yellow\"'"]
+      test: ["CMD-SHELL", "curl -k -s -u elastic:${ELASTIC_PASSWORD:-changeme} https://localhost:9200/_cluster/health | grep -q '\"status\":\"green\"\\|\"status\":\"yellow\"'"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -223,13 +233,20 @@ services:
       - ES_PORT=9200
       - ES_USER=elastic
       - ES_PASSWORD=${ELASTIC_PASSWORD:-changeme}
+      - ES_USE_SSL=true
+      - ES_VERIFY_CERTS=false  # Self-signed certs in Docker network
       - MINIO_ENDPOINT=minio:9000
       - MINIO_ACCESS_KEY=${MINIO_ROOT_USER:-minioadmin}
       - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD:-changeme123}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # M365 Authentication (fallback handled in config_manager.py)
+      - M365_CLIENT_ID=${M365_CLIENT_ID}
+      - M365_CLIENT_SECRET=${M365_CLIENT_SECRET}
+      - M365_TENANT_ID=${M365_TENANT_ID}
       - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
       - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
       - AZURE_TENANT_ID=${AZURE_TENANT_ID}
+      - M365_USE_DELEGATED_AUTH=${M365_USE_DELEGATED_AUTH:-true}
       - JWT_SECRET=${JWT_SECRET:-your-jwt-secret}
       - ENVIRONMENT=production
     volumes:
@@ -356,10 +373,11 @@ services:
     image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
     container_name: elasticsearch-exporter
     command:
-      - '--es.uri=http://elastic:${ELASTIC_PASSWORD:-changeme}@elasticsearch:9200'
+      - '--es.uri=https://elastic:${ELASTIC_PASSWORD:-changeme}@elasticsearch:9200'
       - '--es.all'
       - '--es.indices'
       - '--es.shards'
+      - '--es.ssl-skip-verify'  # Skip verification for self-signed certs
     ports:
       - "9114:9114"
     networks:

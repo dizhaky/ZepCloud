@@ -24,6 +24,27 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+# Load environment variables from .env file
+PROJECT_DIR="/data/m365-rag"
+if [ -f "$PROJECT_DIR/.env" ]; then
+    echo -e "${YELLOW}📝 Loading environment variables...${NC}"
+    set -a  # Automatically export all variables
+    source "$PROJECT_DIR/.env"
+    set +a  # Disable auto-export
+    echo -e "${GREEN}✅ Environment variables loaded${NC}"
+else
+    echo -e "${RED}❌ Error: .env file not found at $PROJECT_DIR/.env${NC}"
+    echo -e "${YELLOW}⚠️  Required variables: ELASTIC_PASSWORD${NC}"
+    exit 1
+fi
+
+# Verify required environment variables are set
+if [ -z "$ELASTIC_PASSWORD" ]; then
+    echo -e "${RED}❌ Error: Required environment variable ELASTIC_PASSWORD not set${NC}"
+    echo -e "${YELLOW}Please ensure ELASTIC_PASSWORD is defined in $PROJECT_DIR/.env${NC}"
+    exit 1
+fi
+
 # Verify backup exists
 if [ ! -d "$BACKUP_DIR" ]; then
     echo -e "${RED}❌ Backup directory not found: $BACKUP_DIR${NC}"
@@ -74,7 +95,7 @@ fi
 echo -e "${YELLOW}📊 Restoring Elasticsearch...${NC}"
 docker compose start elasticsearch
 sleep 20
-docker exec elasticsearch curl -X POST "localhost:9200/_snapshot/backup/$BACKUP_DATE/_restore" \
+docker exec elasticsearch curl -k -X POST "https://localhost:9200/_snapshot/backup/$BACKUP_DATE/_restore" \
     -u "elastic:$ELASTIC_PASSWORD" \
     -H 'Content-Type: application/json' \
     -d '{

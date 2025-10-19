@@ -1,0 +1,564 @@
+<context>
+# Overview
+ZepCloud is an enterprise-grade cloud infrastructure platform that provides AI-powered document processing and retrieval-augmented generation (RAG) capabilities integrated with Microsoft 365 and Azure services. The platform enables organizations to index, search, and interact with their cloud-stored documents using advanced AI models, while maintaining robust security, monitoring, and deployment automation.
+
+The platform solves the challenge of making organizational knowledge accessible and queryable across Microsoft 365 (OneDrive, SharePoint) and Azure environments, providing intelligent document retrieval and AI-assisted interactions with enterprise data.
+
+# Core Features
+
+## 1. M365 RAG Integration
+- **What it does**: Indexes and processes documents from Microsoft 365 OneDrive and SharePoint, enabling AI-powered search and retrieval
+- **Why it's important**: Organizations have vast amounts of data in M365 that needs to be searchable and intelligently processed
+- **How it works**: Uses OAuth authentication to connect to M365 services, indexes documents with Elasticsearch, and provides RAG capabilities through RAGFlow integration
+
+## 2. Azure RAG Setup
+- **What it does**: Provides Azure-native deployment of RAG infrastructure with enterprise security features
+- **Why it's important**: Enterprise customers require Azure-hosted solutions with comprehensive security and compliance
+- **How it works**: Deploys containerized services on Azure infrastructure with SSL/TLS, monitoring, and backup capabilities
+
+## 3. Security Hardening
+- **What it does**: Implements comprehensive security measures including SSL/TLS, firewall configuration, secure credential management
+- **Why it's important**: Enterprise data requires top-tier security and compliance with industry standards
+- **How it works**: Uses 1Password for secret management, implements network security, SSL certificates, and access controls
+
+## 4. Monitoring and Alerting
+- **What it does**: Provides real-time monitoring, logging, and alerting for all services
+- **Why it's important**: Production systems require 24/7 monitoring and quick incident response
+- **How it works**: Integrates Prometheus, Grafana, and Elasticsearch for comprehensive observability
+
+## 5. Deployment Automation
+- **What it does**: Automates deployment, configuration, and verification across multiple environments
+- **Why it's important**: Reduces deployment errors and enables consistent infrastructure provisioning
+- **How it works**: Uses Docker Compose, shell scripts, and PowerShell automation for deployment orchestration
+
+## 6. Disaster Recovery and Backup
+- **What it does**: Implements automated backup and recovery procedures for all critical data and configurations
+- **Why it's important**: Business continuity requires reliable data protection and recovery capabilities
+- **How it works**: Automated backup scripts, configuration versioning, and documented recovery procedures
+
+# User Experience
+
+## User Personas
+
+### System Administrator
+- Deploys and maintains the infrastructure
+- Configures security policies and monitoring
+- Manages backups and disaster recovery
+
+### Data Engineer
+- Configures document indexing pipelines
+- Manages M365 and Azure integrations
+- Optimizes search and retrieval performance
+
+### End User
+- Searches and retrieves documents through AI interface
+- Interacts with RAG-powered chatbots
+- Accesses organizational knowledge efficiently
+
+## Key User Flows
+
+### Deployment Flow
+1. Administrator runs deployment preparation scripts
+2. System validates prerequisites and configurations
+3. Docker Compose orchestrates service deployment
+4. Verification scripts confirm successful deployment
+5. Monitoring dashboards become available
+
+### Document Indexing Flow
+1. System authenticates with M365 using OAuth
+2. Documents are discovered in OneDrive/SharePoint
+3. Content is indexed in Elasticsearch
+4. RAGFlow processes documents for AI retrieval
+5. Documents become searchable through the interface
+
+### Search and Retrieval Flow
+1. User enters search query or question
+2. System performs semantic search across indexed documents
+3. RAG system generates contextual responses
+4. Results are returned with source citations
+5. User can drill down into original documents
+
+# UI/UX Considerations
+- Command-line interface for administration and deployment
+- Web-based dashboards for monitoring (Grafana)
+- API endpoints for programmatic access
+- Clear error messages and logging for troubleshooting
+</context>
+
+<PRD>
+# Technical Architecture
+
+## System Components
+
+### Backend Services
+- **FastAPI Application**: RESTful API for M365 integration and document processing
+  - Type-hinted Python with async/await patterns
+  - SQLAlchemy 2.0 for database operations
+  - Pydantic models for validation
+  - Comprehensive error handling and logging
+
+### Storage Layer
+- **Elasticsearch**: Document indexing and search
+  - SSL/TLS encryption
+  - Authentication and access control
+  - Performance-optimized indexes
+
+- **PostgreSQL**: Metadata and configuration storage
+  - Relational data for user management
+  - Configuration versioning
+  - Backup and recovery procedures
+
+### AI/ML Components
+- **RAGFlow**: Document processing and retrieval-augmented generation
+  - Integration with LLM providers
+  - Context-aware document retrieval
+  - Intelligent response generation
+
+### Monitoring Stack
+- **Prometheus**: Metrics collection and alerting
+- **Grafana**: Visualization and dashboards
+- **Elasticsearch**: Centralized logging
+
+### Infrastructure
+- **Docker & Docker Compose**: Container orchestration
+- **Nginx**: Reverse proxy and SSL termination
+- **UFW Firewall**: Network security
+
+## Data Models
+
+### Document Metadata
+```python
+class Document(Base):
+    id: int
+    user_id: int (indexed)
+    title: str (indexed)
+    file_path: str
+    file_type: str
+    size_bytes: int
+    created_at: datetime (indexed)
+    updated_at: datetime
+    indexed_at: datetime
+    m365_source: str (OneDrive/SharePoint)
+    embedding_vector: array
+```
+
+### User Management
+```python
+class User(Base):
+    id: int
+    email: str (unique, indexed)
+    m365_tenant_id: str
+    access_token_encrypted: str
+    refresh_token_encrypted: str
+    last_login: datetime
+    created_at: datetime
+```
+
+### Index Configuration
+```python
+class IndexConfig(Base):
+    id: int
+    user_id: int
+    source_type: str (OneDrive/SharePoint)
+    source_path: str
+    sync_frequency: str
+    last_sync: datetime
+    is_active: bool
+```
+
+## APIs and Integrations
+
+### External APIs
+- **Microsoft Graph API**: M365 OneDrive and SharePoint access
+- **Azure APIs**: Azure service integration
+- **LLM Provider APIs**: OpenAI, Anthropic, or custom models
+
+### Internal APIs
+- `/api/v1/auth/*`: Authentication and authorization
+- `/api/v1/documents/*`: Document management and search
+- `/api/v1/indexing/*`: Indexing configuration and status
+- `/api/v1/rag/*`: RAG query and response endpoints
+- `/api/v1/monitoring/*`: Health checks and metrics
+
+## Infrastructure Requirements
+
+### Development Environment
+- Windows 10/11 with WSL2
+- Docker Desktop
+- Node.js 18+ and Python 3.11+
+- VS Code with Cursor IDE
+
+### Production Environment (Hetzner/Azure)
+- Ubuntu 22.04 LTS
+- Docker and Docker Compose
+- 16GB+ RAM, 4+ CPU cores
+- 500GB+ SSD storage
+- SSL certificates (Let's Encrypt or custom CA)
+
+# Development Roadmap
+
+## Phase 1: Foundation (MVP Core)
+**Goal**: Establish core infrastructure and basic M365 integration
+
+### Infrastructure Setup
+- Docker Compose environment with all core services
+- Elasticsearch with SSL/TLS configuration
+- PostgreSQL with initialization scripts
+- Nginx reverse proxy with SSL termination
+- Basic monitoring with Prometheus and Grafana
+
+### Authentication & Authorization
+- M365 OAuth flow (delegated and application permissions)
+- Token management with secure storage
+- User authentication API endpoints
+- Session management
+
+### Basic Document Indexing
+- OneDrive file discovery and indexing
+- Document metadata extraction
+- Elasticsearch index creation and management
+- Basic search API endpoint
+
+### Deployment Automation
+- Docker Compose configuration
+- Basic deployment scripts
+- Environment variable management
+- Health check endpoints
+
+## Phase 2: Enhanced Features
+**Goal**: Add SharePoint support, improve search, and enhance security
+
+### SharePoint Integration
+- SharePoint site discovery
+- Document library indexing
+- Permission-aware indexing
+- Incremental sync capabilities
+
+### Advanced Search
+- Semantic search capabilities
+- Filtering and faceted search
+- Search result ranking
+- Query optimization
+
+### Security Enhancements
+- 1Password integration for secret management
+- SSL certificate automation
+- Firewall configuration
+- Audit logging
+- Rate limiting and DDoS protection
+
+### Monitoring Improvements
+- Custom Grafana dashboards
+- Alerting rules (Prometheus AlertManager)
+- Log aggregation and analysis
+- Performance metrics tracking
+
+## Phase 3: RAG Integration
+**Goal**: Enable AI-powered document interaction
+
+### RAGFlow Integration
+- RAGFlow deployment and configuration
+- Document processing pipeline
+- Vector embedding generation
+- Context retrieval optimization
+
+### LLM Integration
+- Multiple LLM provider support (OpenAI, Anthropic, Azure OpenAI)
+- Prompt engineering and optimization
+- Response generation with citations
+- Conversation history management
+
+### RAG API Development
+- Query endpoints with context retrieval
+- Streaming response support
+- Multi-turn conversation handling
+- Source document citation
+
+## Phase 4: Production Readiness
+**Goal**: Enterprise-grade reliability and operations
+
+### Backup and Disaster Recovery
+- Automated backup procedures (Elasticsearch, PostgreSQL, configs)
+- Backup verification and testing
+- Disaster recovery documentation
+- Recovery time objective (RTO) optimization
+
+### Advanced Monitoring
+- Service-level objectives (SLOs) definition
+- Custom alerting for critical metrics
+- Incident response procedures
+- Performance profiling and optimization
+
+### Scalability Improvements
+- Horizontal scaling for API services
+- Elasticsearch cluster configuration
+- Load balancing
+- Caching strategies (Redis integration)
+
+### Documentation and Testing
+- Comprehensive API documentation
+- Deployment guides and runbooks
+- Load testing and performance benchmarking
+- Security penetration testing
+
+## Phase 5: Azure Native Deployment
+**Goal**: Full Azure integration with native services
+
+### Azure Service Integration
+- Azure Container Instances or AKS deployment
+- Azure Database for PostgreSQL
+- Azure Cognitive Search integration
+- Azure Key Vault for secrets
+
+### Azure-Specific Features
+- Azure AD integration
+- Azure Monitor and Application Insights
+- Azure Backup services
+- Compliance and governance features
+
+### Multi-Environment Support
+- Development, staging, and production environments
+- Environment-specific configuration management
+- CI/CD pipeline with Azure DevOps
+- Infrastructure as Code (Terraform/Bicep)
+
+## Phase 6: MCP Server Ecosystem
+**Goal**: Build extensible MCP server infrastructure
+
+### Core MCP Framework
+- MCP server architecture standardization
+- Server registry and discovery
+- Health check and monitoring for MCP servers
+- Version management and compatibility
+
+### TypingMind MCP Integration
+- TypingMind MCP server deployment (local and Render)
+- Custom action support
+- Webhook integration
+- Session management
+
+### Additional MCP Services
+- GitHub integration MCP server
+- Browser automation MCP (Kapture)
+- Memory and knowledge management MCP (ByteRover)
+- Task management MCP (Task Master AI)
+
+# Logical Dependency Chain
+
+## Foundation First (Phase 1)
+**Must be built first** - everything depends on this:
+1. Docker infrastructure and service orchestration
+2. Database initialization (PostgreSQL + Elasticsearch)
+3. Basic API framework with FastAPI
+4. Health check and monitoring endpoints
+5. Deployment scripts and automation
+
+## Authentication Layer (Phase 1)
+**Depends on**: Foundation
+**Enables**: All document operations
+1. M365 OAuth implementation
+2. Token storage and refresh logic
+3. User management API
+4. Session handling
+
+## Document Indexing (Phase 1-2)
+**Depends on**: Authentication
+**Enables**: Search and RAG features
+1. OneDrive indexing (Phase 1)
+2. SharePoint indexing (Phase 2)
+3. Metadata extraction
+4. Incremental sync
+
+## Search Capabilities (Phase 2)
+**Depends on**: Document Indexing
+**Enables**: User-facing search features
+1. Basic keyword search (Phase 1)
+2. Advanced filtering (Phase 2)
+3. Semantic search (Phase 2)
+
+## Security Hardening (Phase 2)
+**Can be built in parallel** with search features:
+1. 1Password integration
+2. SSL/TLS automation
+3. Firewall rules
+4. Audit logging
+
+## RAG Integration (Phase 3)
+**Depends on**: Document Indexing, Search
+**Enables**: AI-powered features
+1. RAGFlow deployment
+2. Vector embeddings
+3. LLM integration
+4. RAG API endpoints
+
+## Production Features (Phase 4)
+**Depends on**: All core features working
+**Polishes**: Reliability and operations
+1. Backup automation
+2. Advanced monitoring
+3. Scalability improvements
+4. Documentation
+
+## Azure Integration (Phase 5)
+**Can be developed in parallel** after Phase 3:
+1. Azure service migration
+2. Azure-specific features
+3. Multi-environment setup
+
+## MCP Ecosystem (Phase 6)
+**Independent development** with integration points:
+1. MCP server framework
+2. Individual MCP servers
+3. Integration with main platform
+
+# Risks and Mitigations
+
+## Technical Challenges
+
+### Risk: M365 API Rate Limiting
+- **Mitigation**: Implement exponential backoff, request queuing, and caching
+- **Monitoring**: Track API usage metrics in Grafana
+- **Fallback**: Implement batch processing during off-peak hours
+
+### Risk: Elasticsearch Performance at Scale
+- **Mitigation**: Index optimization, proper sharding strategy, regular maintenance
+- **Monitoring**: Track index size, query performance, and resource usage
+- **Scaling**: Elasticsearch cluster expansion plan
+
+### Risk: LLM API Costs
+- **Mitigation**: Response caching, context window optimization, usage limits
+- **Monitoring**: Track token usage and costs per user
+- **Optimization**: Fine-tune prompts to minimize token usage
+
+### Risk: SSL Certificate Management
+- **Mitigation**: Automated Let's Encrypt renewal, certificate monitoring
+- **Monitoring**: Certificate expiration alerts
+- **Fallback**: Manual certificate renewal procedures documented
+
+## MVP Scope Definition
+
+### Core MVP Requirements (Must Have)
+- M365 OneDrive authentication and basic indexing
+- Simple keyword search functionality
+- Docker-based deployment with basic monitoring
+- Secure credential storage
+- Health check endpoints
+
+### Post-MVP Enhancements (Nice to Have)
+- SharePoint integration
+- Advanced semantic search
+- RAG-powered chat interface
+- Comprehensive monitoring dashboards
+- Automated backups
+
+### Out of Scope for MVP
+- Multi-tenancy support
+- Advanced user management UI
+- Custom branding and white-labeling
+- Mobile applications
+- Real-time collaboration features
+
+## Resource Constraints
+
+### Development Time
+- **Risk**: Feature creep extending timelines
+- **Mitigation**: Strict MVP scope, prioritize based on dependency chain
+- **Strategy**: Implement core features first, iterate based on feedback
+
+### Infrastructure Costs
+- **Risk**: Cloud service costs exceeding budget
+- **Mitigation**: Cost monitoring, resource optimization, right-sizing
+- **Strategy**: Start with minimal resources, scale based on usage
+
+### Team Knowledge Gaps
+- **Risk**: Learning curves for new technologies (RAGFlow, Azure services)
+- **Mitigation**: Documentation, proof-of-concepts, community support
+- **Strategy**: Start with simpler implementations, refactor as knowledge grows
+
+# Appendix
+
+## Research Findings
+
+### M365 Integration Best Practices
+- Use delegated permissions for user-specific indexing
+- Implement proper token refresh mechanisms
+- Respect Microsoft Graph API throttling limits
+- Cache frequently accessed metadata
+
+### RAG Implementation Patterns
+- Chunk documents appropriately (500-1000 tokens)
+- Use hybrid search (keyword + semantic)
+- Implement re-ranking for better results
+- Maintain context window awareness
+
+### Security Standards
+- Follow OWASP best practices
+- Implement defense in depth
+- Regular security audits and updates
+- Compliance with data protection regulations (GDPR, CCPA)
+
+## Technical Specifications
+
+### API Response Format
+```json
+{
+  "status": "success",
+  "data": {},
+  "message": "Operation completed",
+  "timestamp": "2025-10-19T00:00:00Z"
+}
+```
+
+### Error Handling Standard
+```python
+class APIError(Exception):
+    def __init__(self, message: str, status_code: int, details: dict = None):
+        self.message = message
+        self.status_code = status_code
+        self.details = details or {}
+```
+
+### Logging Format
+```python
+logger.info(
+    "Operation completed",
+    extra={
+        "operation": "index_document",
+        "doc_id": doc_id,
+        "duration_ms": duration,
+        "user_id": user_id
+    }
+)
+```
+
+## Technology Stack Summary
+
+### Backend
+- Python 3.11+
+- FastAPI 0.100+
+- SQLAlchemy 2.0+
+- Pydantic 2.0+
+
+### Frontend/Monitoring
+- Grafana for dashboards
+- Prometheus for metrics
+- Elasticsearch for logging
+
+### Infrastructure
+- Docker & Docker Compose
+- Nginx
+- PostgreSQL 15+
+- Elasticsearch 8.x
+- Redis (future)
+
+### Cloud Platforms
+- Hetzner (primary)
+- Azure (secondary)
+
+### Development Tools
+- VS Code with Cursor IDE
+- Git & GitHub
+- 1Password for secrets
+- PowerShell and Bash scripting
+</PRD>
+

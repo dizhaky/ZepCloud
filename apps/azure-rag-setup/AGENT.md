@@ -1,3 +1,5 @@
+# ByteRover MCP Integration
+
 [byterover-mcp]
 
 [byterover-mcp]

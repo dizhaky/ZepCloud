@@ -193,6 +193,20 @@ fi
 chown -R deploy:deploy "$PROJECT_DIR"
 
 # ============================================
+# PHASE 6.5: Generate SSL Certificates
+# ============================================
+echo -e "${GREEN}🔐 Phase 6.5: Generating Elasticsearch SSL certificates...${NC}"
+
+# Check if certificates already exist
+if [ ! -f "$PROJECT_DIR/config/elasticsearch/certs/elasticsearch.crt" ]; then
+    echo -e "${YELLOW}Generating self-signed certificates for Elasticsearch...${NC}"
+    su - deploy -c "cd $PROJECT_DIR && bash scripts/generate-es-certs.sh"
+    echo -e "${GREEN}✅ SSL certificates generated${NC}"
+else
+    echo -e "${YELLOW}⚠️  SSL certificates already exist, skipping generation${NC}"
+fi
+
+# ============================================
 # PHASE 7: Start Services
 # ============================================
 echo -e "${GREEN}🚀 Phase 7: Starting services...${NC}"

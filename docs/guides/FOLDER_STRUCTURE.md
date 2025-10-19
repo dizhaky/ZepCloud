@@ -33,7 +33,7 @@ Contains utility scripts and diagnostic tools.
 
 Organized documentation by category.
 
-- **`agents/`**: Agent configuration files (`AGENT.md`, `AGENTS.md`, `CLAUDE.md`)
+- **`agents/`**: Agent configuration and integration files
 - **`architecture/`**: System architecture documentation
 - **`guides/`**: Setup guides and tutorials (`typingmind-tool-fix.md`)
 
@@ -54,7 +54,6 @@ Project configuration files.
 - `typingmind-mcp-server/` → `services/mcp-servers/typingmind/server/`
 - `typingmind-mcp-render/` → `services/mcp-servers/typingmind/deploy/`
 - `*.py` files → `tools/scripts/`
-- `AGENT.md`, `AGENTS.md`, `CLAUDE.md` → `docs/agents/`
 - `typingmind-tool-fix.md` → `docs/guides/`
 
 ## Benefits of New Structure
@@ -80,4 +79,4 @@ When adding new components:
 - Use the main `README.md` for project overview
 - Check individual component READMEs for specific setup instructions
 - Refer to `docs/guides/` for detailed tutorials
-- Use `docs/agents/` for AI agent configuration
+- Use `docs/agents/` for AI agent integration and configuration

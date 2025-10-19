@@ -1,0 +1,68 @@
+{
+  "mcpServers": {
+    "byterover-mcp": {
+      "url": "https://mcp.byterover.dev/mcp?machineId=1f08c1a7-1cb9-60d0-85a1-cbb04ce9594d"
+    },
+    "git": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-git@0.0.4",
+        "--repository",
+        "."
+      ]
+    },
+    "task-master-ai": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "task-master-ai"
+      ]
+    },
+    "memory": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:\\Dev\\ZepCloud"
+      ]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "kapture": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@kapture/mcp"
+      ],
+      "env": {
+        "BROWSER": "chrome",
+        "AUTO_ACTIVATE": "true",
+        "PERSISTENT": "true",
+        "AUTO_RECOVER": "true"
+      }
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": ""
+      }
+    }
+  }
+}

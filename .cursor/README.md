@@ -92,6 +92,76 @@ Contains the main Kilo Code methodology with:
 - Documentation standards
 - Automation settings (auto-accept, auto-save, auto-run)
 
+### MCP Servers (`mcp.json`)
+
+This file configures Model Context Protocol servers for enhanced functionality:
+
+#### Installed Servers
+
+| Server | Purpose | Status |
+|--------|---------|--------|
+| **byterover-mcp** | Knowledge management and pattern storage | ✅ Active |
+| **git** | Git operations and version control | ✅ Active |
+| **task-master-ai** | Task management and workflow | ✅ Active |
+| **kapture** | Browser automation and testing | ✅ Active |
+| **memory** | Persistent memory across sessions | ✅ Active |
+| **filesystem** | File system operations | ✅ Active |
+| **sequential-thinking** | Chain-of-thought workflows | ✅ Active |
+| **github** | GitHub API integration | ⚠️ Requires token |
+
+#### Required Environment Variables
+
+For **GitHub MCP Server**:
+- Set `GITHUB_PERSONAL_ACCESS_TOKEN` in `mcp.json` or as environment variable
+- Generate token at: https://github.com/settings/tokens
+- Required scopes: `repo`, `read:org`, `read:user`
+
+#### MCP Server Features
+
+**ByteRover** - Knowledge Management:
+- `byterover-store-knowledge`: Save patterns and solutions
+- `byterover-retrieve-knowledge`: Retrieve stored knowledge
+
+**Git** - Version Control:
+- `mcp_git_status`: Check repository status
+- `mcp_git_log`: View commit history
+- `mcp_git_diff`: Show file differences
+- `mcp_git_commit`: Create commits
+
+**Task Master** - Project Management:
+- Task tracking and management
+- PRD parsing
+- Complexity analysis
+- Dependency tracking
+
+**Kapture** - Browser Automation:
+- Navigate to URLs
+- Take screenshots
+- Interact with web elements
+- Extract page data
+
+**Memory** - Persistent Context:
+- Store conversation context
+- Retrieve past interactions
+- Maintain project knowledge
+
+**Filesystem** - File Operations:
+- Read and write files
+- List directories
+- Search files
+- File metadata
+
+**Sequential Thinking** - Reasoning:
+- Chain-of-thought processing
+- Step-by-step problem solving
+- Logical reasoning workflows
+
+**GitHub** - Repository Operations:
+- Create issues and PRs
+- Comment on discussions
+- Repository management
+- Code search
+
 ### Modular Rules (`.mdc` files)
 Each `.mdc` file has:
 ```yaml
@@ -170,6 +240,11 @@ globs: ["**/migrations/*.py"]
 
 **Add Azure integration:**
 - Edit `.cursor/rules/azure-integration.mdc`
+
+**Test MCP servers:**
+- Run `npm run mcp:health` or `node scripts/mcp-health-check.js`
+- Check `.cursor/mcp.json` for server configuration
+- Verify all servers are working before development
 
 ## 📖 Documentation
 

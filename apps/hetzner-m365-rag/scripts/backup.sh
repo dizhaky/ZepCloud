@@ -8,12 +8,36 @@ set -e
 BACKUP_DIR="/backup/m365-rag"
 DATE=$(date +%Y%m%d_%H%M%S)
 RETENTION_DAYS=30
+PROJECT_DIR="/data/m365-rag"
 
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
+
+# Load environment variables from .env file
+if [ -f "$PROJECT_DIR/.env" ]; then
+    echo -e "${YELLOW}📝 Loading environment variables...${NC}"
+    set -a  # Automatically export all variables
+    source "$PROJECT_DIR/.env"
+    set +a  # Disable auto-export
+    echo -e "${GREEN}✅ Environment variables loaded${NC}"
+else
+    echo -e "${RED}❌ Error: .env file not found at $PROJECT_DIR/.env${NC}"
+    echo -e "${YELLOW}⚠️  Required variables: ELASTIC_PASSWORD, MINIO_ROOT_USER, MINIO_ROOT_PASSWORD${NC}"
+    exit 1
+fi
+
+# Verify required variables are set
+if [ -z "$ELASTIC_PASSWORD" ] || [ -z "$MINIO_ROOT_USER" ] || [ -z "$MINIO_ROOT_PASSWORD" ]; then
+    echo -e "${RED}❌ Error: Required environment variables not set${NC}"
+    echo -e "${YELLOW}Missing: ${NC}"
+    [ -z "$ELASTIC_PASSWORD" ] && echo -e "  - ELASTIC_PASSWORD"
+    [ -z "$MINIO_ROOT_USER" ] && echo -e "  - MINIO_ROOT_USER"
+    [ -z "$MINIO_ROOT_PASSWORD" ] && echo -e "  - MINIO_ROOT_PASSWORD"
+    exit 1
+fi
 
 echo -e "${GREEN}🔄 Starting M365 RAG System Backup - $DATE${NC}"
 

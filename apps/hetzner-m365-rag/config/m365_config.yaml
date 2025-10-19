@@ -1,0 +1,265 @@
+# M365 RAG System Configuration
+# Microsoft 365 Integration Settings
+
+# M365 Authentication
+authentication:
+  # Use delegated authentication (interactive browser flow)
+  use_delegated: true
+  
+  # Azure AD credentials (read from environment variables)
+  client_id: ${AZURE_CLIENT_ID}
+  client_secret: ${AZURE_CLIENT_SECRET}
+  tenant_id: ${AZURE_TENANT_ID}
+  
+  # Scopes for delegated permissions
+  scopes:
+    - Files.Read.All
+    - Sites.Read.All
+    - Mail.Read
+    - User.Read.All
+    - Team.ReadBasic.All
+    - Calendars.Read
+    - Contacts.Read
+
+# SharePoint Configuration
+sharepoint:
+  enabled: true
+  
+  # Sites to index (empty = all sites)
+  sites: []
+  # Example:
+  # sites:
+  #   - https://yourtenant.sharepoint.com/sites/teamsite1
+  #   - https://yourtenant.sharepoint.com/sites/teamsite2
+  
+  # Document libraries to include (empty = all)
+  libraries: []
+  
+  # Supported file types
+  file_types:
+    - .pdf
+    - .docx
+    - .doc
+    - .xlsx
+    - .xls
+    - .pptx
+    - .ppt
+    - .txt
+    - .md
+    - .csv
+  
+  # Max file size (in MB)
+  max_file_size: 100
+  
+  # Delta sync settings
+  delta_sync:
+    enabled: true
+    # Check for changes every hour
+    interval_minutes: 60
+
+# OneDrive Configuration
+onedrive:
+  enabled: true
+  
+  # Users to index (empty = all users)
+  users: []
+  # Example:
+  # users:
+  #   - user1@yourtenant.com
+  #   - user2@yourtenant.com
+  
+  # Supported file types
+  file_types:
+    - .pdf
+    - .docx
+    - .doc
+    - .xlsx
+    - .xls
+    - .pptx
+    - .ppt
+    - .txt
+    - .md
+    - .csv
+  
+  # Max file size (in MB)
+  max_file_size: 100
+  
+  # Delta sync
+  delta_sync:
+    enabled: true
+    interval_minutes: 60
+
+# Teams Configuration
+teams:
+  enabled: true
+  
+  # Teams to index (empty = all teams)
+  teams: []
+  
+  # Include chat messages
+  include_messages: true
+  
+  # Include channel files
+  include_files: true
+  
+  # Message lookback period (days)
+  message_history_days: 90
+
+# Outlook Configuration
+outlook:
+  enabled: true
+  
+  # Include email attachments
+  include_attachments: true
+  
+  # Folders to index
+  folders:
+    - Inbox
+    - Sent Items
+    - Archive
+  
+  # Supported attachment types
+  attachment_types:
+    - .pdf
+    - .docx
+    - .xlsx
+    - .pptx
+  
+  # Max attachment size (in MB)
+  max_attachment_size: 50
+  
+  # Email lookback period (days)
+  email_history_days: 90
+
+# Calendar Configuration
+calendar:
+  enabled: true
+  
+  # Calendars to index (empty = all)
+  calendars: []
+  
+  # Calendar lookback period (days)
+  history_days: 365
+  
+  # Include meeting attachments
+  include_attachments: true
+
+# Contacts Configuration
+contacts:
+  enabled: true
+  
+  # Include contact photos
+  include_photos: false
+
+# Sync Settings
+sync:
+  # Batch size for document processing
+  batch_size: 100
+  
+  # Max concurrent operations
+  max_concurrency: 5
+  
+  # Retry settings
+  max_retries: 3
+  retry_delay_seconds: 5
+  
+  # Rate limiting
+  requests_per_minute: 60
+  
+  # Progress tracking
+  save_progress_every: 10
+
+# RAG-Anything Settings
+rag:
+  # Enable multimodal processing
+  multimodal: true
+  
+  # Enable knowledge graph construction
+  knowledge_graph: true
+  
+  # Parsers to use
+  parsers:
+    - mineru
+    - docling
+  
+  # Chunking strategy
+  chunking:
+    size: 512
+    overlap: 50
+    method: semantic  # semantic, fixed, or sentence
+
+# Elasticsearch Settings
+elasticsearch:
+  # Index names
+  documents_index: documents
+  images_index: images
+  knowledge_graph_index: knowledge_graph
+  
+  # Bulk indexing
+  bulk_size: 100
+  bulk_timeout_seconds: 30
+  
+  # Refresh interval
+  refresh_interval: 30s
+
+# MinIO Settings
+minio:
+  # Bucket names
+  documents_bucket: m365-documents
+  images_bucket: m365-images
+  backups_bucket: m365-backups
+  
+  # Retention policy (days)
+  retention_days: 365
+
+# Logging
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR
+  
+  # Log to file
+  file:
+    enabled: true
+    path: /data/m365-rag/logs/m365_sync.log
+    max_size_mb: 100
+    backup_count: 5
+  
+  # Log to console
+  console:
+    enabled: true
+
+# Monitoring
+monitoring:
+  # Enable health checks
+  health_checks: true
+  
+  # Metrics collection
+  metrics:
+    enabled: true
+    export_interval_seconds: 60
+
+# Notifications (optional)
+notifications:
+  # Email notifications
+  email:
+    enabled: false
+    smtp_server: smtp.gmail.com
+    smtp_port: 587
+    from_address: noreply@example.com
+    to_addresses:
+      - admin@example.com
+    
+    # When to send notifications
+    notify_on:
+      - sync_error
+      - sync_complete
+      - quota_warning
+  
+  # Webhook notifications
+  webhook:
+    enabled: false
+    url: https://your-webhook-url.com
+    
+    events:
+      - sync_error
+      - sync_complete
+

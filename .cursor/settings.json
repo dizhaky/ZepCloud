@@ -1,0 +1,10 @@
+{
+  "cursor.yoloMode": false,
+  "cursor.agent.autoAccept": false,
+  "cursor.ai.autoApplyChanges": false,
+  "cursor.agent.maxContextFiles": 5,
+  "cursor.ai.maxContextLines": 3000,
+  "cursor.mcp.enabled": true,
+  "cursor.mcp.maxToolsPerRequest": 15
+}
+

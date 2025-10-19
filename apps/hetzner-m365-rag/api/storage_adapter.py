@@ -191,14 +191,25 @@ class MinIOAdapter:
 
 
 class ElasticsearchAdapter:
-    """Adapter class to replace Azure AI Search with Elasticsearch"""
+    """
+    Adapter class to replace Azure AI Search with Elasticsearch
+    
+    Note: This class uses synchronous __init__ (no async/await needed for instantiation).
+    The instance methods are async and should be awaited when called.
+    
+    Example:
+        adapter = ElasticsearchAdapter(es_client)  # No await
+        await adapter.index_document(doc_id, content)  # Await async methods
+    """
     
     def __init__(self, es_client):
         """
-        Initialize with an Elasticsearch client
+        Initialize with an Elasticsearch client (synchronous initialization)
         
         Args:
             es_client: AsyncElasticsearch client instance
+        
+        Note: Do NOT await this __init__ - it's synchronous by design.
         """
         self.es_client = es_client
         self.index_name = "documents"

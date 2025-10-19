@@ -13,6 +13,74 @@ MCP (Model Context Protocol) servers provide tools and context to AI assistants.
 - **ByteRover MCP**: Knowledge management and retrieval
 - **Browser MCP**: Browser automation for testing
 
+## MCP Health Check Protocol
+
+**MANDATORY**: Every session MUST start with MCP server health checks:
+
+### 1. ByteRover Knowledge Management
+```typescript
+// Test knowledge retrieval
+mcp_byterover-mcp_byterover-retrieve-knowledge({ query: "health check", limit: 1 })
+
+// Test knowledge storage
+mcp_byterover-mcp_byterover-store-knowledge({ messages: "Session started - MCP health check" })
+```
+
+### 2. Git Operations
+```typescript
+mcp_git_git_status({ repo_path: "." })
+```
+
+### 3. Task Management
+```typescript
+mcp_task-master-ai_get_tasks({ projectRoot: "C:\\Dev\\ZepCloud" })
+```
+
+### 4. Browser Automation
+```typescript
+mcp_kapture_list_tabs({})
+```
+
+### 5. Memory System
+```typescript
+// Test memory operations if available
+```
+
+### 6. Filesystem Access
+```typescript
+list_dir({ target_directory: "." })
+```
+
+### 7. GitHub Integration
+```typescript
+// Test GitHub operations if token configured
+```
+
+### Health Check Results Format
+
+Report results as:
+```
+## MCP Server Health Check Results
+
+| Server | Status | Notes |
+|--------|--------|-------|
+| ByteRover | ✅ Working | Knowledge retrieval/storage functional |
+| Git | ✅ Working | Repository operations available |
+| Task Master | ✅ Working | Task management functional |
+| Kapture | ✅ Working | Browser automation ready |
+| Memory | ✅ Working | Session memory available |
+| Filesystem | ✅ Working | File operations functional |
+| GitHub | ⚠️ Needs Token | Configure GITHUB_PERSONAL_ACCESS_TOKEN |
+```
+
+### Error Handling
+
+If any MCP server fails:
+1. **Document the specific error message**
+2. **Suggest troubleshooting steps**
+3. **Continue with available servers**
+4. **Note which functionality is unavailable**
+
 ## Server Structure
 
 ### Basic MCP Server Pattern

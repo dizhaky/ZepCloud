@@ -1,0 +1,31 @@
+{
+  "name": "zepcloud",
+  "version": "1.0.0",
+  "description": "ZepCloud - M365 RAG System with MCP Integration",
+  "scripts": {
+    "mcp:health": "node scripts/mcp-health-check.js",
+    "mcp:test": "npm run mcp:health",
+    "mcp:github-token": "powershell -ExecutionPolicy Bypass -File scripts/get-github-token-from-1password-fixed.ps1",
+    "mcp:add-github-token": "node scripts/add-github-token.js",
+    "mcp:setup-1password": "powershell -ExecutionPolicy Bypass -File scripts/setup-1password-github-token.ps1",
+    "mcp:fix-kapture": "powershell -ExecutionPolicy Bypass -File scripts/fix-kapture-mcp-fixed.ps1",
+    "dev:start": "echo 'Starting ZepCloud development environment'",
+    "docs:serve": "echo 'Serving documentation'"
+  },
+  "keywords": [
+    "mcp",
+    "m365",
+    "rag",
+    "azure",
+    "typescript",
+    "python"
+  ],
+  "author": "ZepCloud Team",
+  "license": "MIT",
+  "devDependencies": {
+    "markdownlint-cli": "^0.38.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
