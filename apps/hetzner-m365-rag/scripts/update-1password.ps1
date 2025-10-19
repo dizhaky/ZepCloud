@@ -348,7 +348,7 @@ Write-Host ""
 Write-Host "All items saved in: Employee vault" -ForegroundColor Yellow
 Write-Host "Tags: m365, rag, hetzner, production" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "Access credentials anytime with:" -ForegroundColor Yellow
-Write-Host "  op item get `"`M365 RAG System - Deployment`" --vault Employee" -ForegroundColor Cyan
+Write-Host "Access credentials anytime:" -ForegroundColor Yellow
+Write-Host "  1Password -> Employee vault -> Search: M365 RAG" -ForegroundColor Cyan
 Write-Host ""
 
