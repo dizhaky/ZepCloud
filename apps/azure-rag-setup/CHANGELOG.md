@@ -120,8 +120,11 @@
 #### 1. Update Dependencies
 
 ```bash
+
 # Install updated dependencies
+
 pip install -r requirements.txt
+
 ```
 
 #### 2. Update Scripts
@@ -139,14 +142,19 @@ pip install -r requirements.txt
 #### 4. Test System
 
 ```bash
+
 # Validate all components
+
 python3 validate_complete_system.py
 
 # Test authentication
+
 python3 m365_indexer.py test-auth
 
 # Check system health
+
 python3 maintenance.py --non-interactive --action health
+
 ```
 
 ---
@@ -240,10 +248,13 @@ python3 maintenance.py --non-interactive --action health
 ### Commands
 
 ```bash
+
 # Get help
+
 python3 maintenance.py --help
 python3 m365_indexer.py --help
 python3 orchestrate_rag_anything.py --help
+
 ```
 
 ### External Resources
@@ -291,5 +302,4 @@ python3 orchestrate_rag_anything.py --help
 **Grade:** A+ (98/100)
 **Completion:** 99.5%
 
-**🏆 All objectives achieved and exceeded! 🎉**
-
+## 🏆 All objectives achieved and exceeded! 🎉

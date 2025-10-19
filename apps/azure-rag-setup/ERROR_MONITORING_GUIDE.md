@@ -5,7 +5,7 @@
 
 ---
 
-## ✅ CURRENT ERROR STATUS:
+## ✅ CURRENT ERROR STATUS
 
 **Latest Check:** Just completed
 **Errors:** ✅ **ZERO**
@@ -17,14 +17,14 @@
 
 ---
 
-## 🛠️ MONITORING TOOLS CREATED:
+## 🛠️ MONITORING TOOLS CREATED
 
 ### **1. Quick Error Check**
 
 **Script:** `check_errors_now.sh`
 **Usage:** `./check_errors_now.sh`
 
-**What it shows:**
+## What it shows:
 
 - ✅ All errors
 - ✅ Rate limiting (429)
@@ -33,9 +33,10 @@
 - ✅ Success indicators
 - ✅ Summary statistics
 
-**Example Output:**
+## Example Output:
 
 ```
+
 📊 ERROR ANALYSIS REPORT
 ========================
 1️⃣  ERRORS: ✅ No errors found
@@ -49,6 +50,7 @@
    Rate limits: 0
    Warnings: 0
    Retries: 0
+
 ```
 
 ---
@@ -58,7 +60,7 @@
 **Script:** `monitor_sync_errors_comprehensive.sh`
 **Usage:** `./monitor_sync_errors_comprehensive.sh`
 
-**What it does:**
+## What it does:
 
 - 🔴 Highlights errors in real-time
 - ⏸️ Shows rate limiting events
@@ -70,7 +72,7 @@
 
 ---
 
-## 📊 WHAT I CAN MONITOR:
+## 📊 WHAT I CAN MONITOR
 
 ### **Error Types:**
 
@@ -103,13 +105,15 @@
 
 ---
 
-## 🔍 HOW TO CHECK FOR ERRORS:
+## 🔍 HOW TO CHECK FOR ERRORS
 
 ### **Method 1: Quick Check (Recommended)**
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 ./check_errors_now.sh
+
 ```
 
 **When to use:** Check status at any time
@@ -119,8 +123,10 @@ cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 ### **Method 2: Real-Time Monitoring**
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 ./monitor_sync_errors_comprehensive.sh
+
 ```
 
 **When to use:** Watch for errors as they happen
@@ -130,17 +136,23 @@ cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 ### **Method 3: Manual Log Search**
 
 ```bash
+
 # Check for errors
+
 grep -i "error\|exception" m365_final_sync_*.log
 
 # Check for rate limiting
+
 grep -i "429\|rate limit" m365_final_sync_*.log
 
 # Check for warnings
+
 grep -i "warning\|⚠️" m365_final_sync_*.log
 
 # Check for retries
+
 grep -i "retry\|waiting.*before retry" m365_final_sync_*.log
+
 ```
 
 ---
@@ -151,9 +163,9 @@ Just ask "Any errors?" or "Status?" and I'll check for you!
 
 ---
 
-## 📈 CURRENT SYNC HEALTH:
+## 📈 CURRENT SYNC HEALTH
 
-**✅ EXCELLENT - NO ISSUES DETECTED**
+## ✅ EXCELLENT - NO ISSUES DETECTED
 
 | Metric          | Count | Status                       |
 | --------------- | ----- | ---------------------------- |
@@ -165,7 +177,7 @@ Just ask "Any errors?" or "Status?" and I'll check for you!
 
 ---
 
-## 🚨 WHAT TO WATCH FOR:
+## 🚨 WHAT TO WATCH FOR
 
 ### **🟢 NORMAL (Good):**
 
@@ -188,7 +200,7 @@ Just ask "Any errors?" or "Status?" and I'll check for you!
 
 ---
 
-## 💡 MONITORING BEST PRACTICES:
+## 💡 MONITORING BEST PRACTICES
 
 ### **During Sync:**
 
@@ -205,6 +217,7 @@ Just ask "Any errors?" or "Status?" and I'll check for you!
    - Look for "⏸️ Rate limited" messages
 
 3. **Monitor progress:**
+
    ```bash
    tail -20 m365_final_sync_*.log
    ```
@@ -226,38 +239,39 @@ Just ask "Any errors?" or "Status?" and I'll check for you!
    ```
 
 3. **Check completion:**
+
    ```bash
    grep -i "completed\|finished\|success" m365_final_sync_*.log
    ```
 
 ---
 
-## 📝 ERROR RESPONSE GUIDE:
+## 📝 ERROR RESPONSE GUIDE
 
 ### **If You See Errors:**
 
-**1. Rate Limiting (429):**
+## 1. Rate Limiting (429):
 
 - ✅ **EXPECTED** - Retry logic will handle
 - ⏳ Wait for retry attempts
 - ✅ Should succeed after 1-5 retries
 
-**2. Authentication Errors:**
+## 2. Authentication Errors:
 
 - 🔄 Re-run sync (token may have expired)
 - ✅ Browser will prompt for re-authentication
 
-**3. Permission Errors:**
+## 3. Permission Errors:
 
 - ⚠️ Check Azure AD app permissions
 - ✅ Verify admin consent granted
 
-**4. Network Errors:**
+## 4. Network Errors:
 
 - 🔄 Retry sync
 - ✅ Temporary network issues usually resolve
 
-**5. Max Retries Reached:**
+## 5. Max Retries Reached:
 
 - ⚠️ Folder will be skipped
 - 📝 Note which folder
@@ -265,7 +279,7 @@ Just ask "Any errors?" or "Status?" and I'll check for you!
 
 ---
 
-## 🎯 AUTOMATED MONITORING:
+## 🎯 AUTOMATED MONITORING
 
 ### **I Can Monitor For You:**
 
@@ -286,9 +300,9 @@ And I'll:
 
 ---
 
-## 📊 MONITORING SCHEDULE:
+## 📊 MONITORING SCHEDULE
 
-**Recommended:**
+## Recommended:
 
 - **Every 15 min:** Quick error check
 - **Every 30 min:** Progress review
@@ -299,7 +313,7 @@ And I'll:
 
 ---
 
-## ✅ CURRENT STATUS:
+## ✅ CURRENT STATUS
 
 **Last Check:** Just completed
 **Result:** ✅ **PERFECT - NO ERRORS**
@@ -308,6 +322,6 @@ And I'll:
 
 ---
 
-**🎉 Your sync is running perfectly with zero errors!**
+## 🎉 Your sync is running perfectly with zero errors!
 
 **I'm monitoring and ready to alert you if anything comes up!** 🔍

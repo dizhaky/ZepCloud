@@ -2,7 +2,8 @@
 
 ## Overview
 
-This document describes how to use the robust deployment and verification scripts for the M365 RAG System. These scripts provide enhanced error handling, validation, and status reporting compared to the basic deployment scripts.
+This document describes how to use the robust deployment and verification scripts for the M365 RAG System. These scripts
+  provide enhanced error handling, validation, and status reporting compared to the basic deployment scripts.
 
 ## Deployment Script (`robust-deploy.sh`)
 
@@ -27,14 +28,19 @@ Before running the deployment script, ensure you have:
 ### Running the Deployment Script
 
 ```bash
+
 # Navigate to the scripts directory
+
 cd /path/to/m365-rag-system/scripts
 
 # Make the script executable
+
 chmod +x robust-deploy.sh
 
 # Run the script as root or with sudo
+
 sudo ./robust-deploy.sh
+
 ```
 
 ### Script Phases
@@ -64,14 +70,19 @@ The verification script checks if all services are running correctly and provide
 ### Running the Verification Script
 
 ```bash
-# Navigate to the scripts directory
+
+# Navigate to the scripts directory (2)
+
 cd /path/to/m365-rag-system/scripts
 
-# Make the script executable
+# Make the script executable (2)
+
 chmod +x verify-deployment.sh
 
-# Run the script as root or with sudo
+# Run the script as root or with sudo (2)
+
 sudo ./verify-deployment.sh
+
 ```
 
 ### Verification Checks
@@ -123,37 +134,41 @@ The verification script generates a detailed status report in `/tmp/` with the f
 ### Common Issues
 
 1. **Missing Dependencies**:
+
    ```bash
    # Install Docker
    sudo apt install docker.io docker-compose
-   
+
    # Install other dependencies
    sudo apt install git curl openssl ufw jq
    ```
 
 2. **Environment File Issues**:
+
    ```bash
    # Check environment file
    cat /data/m365-rag/.env
-   
+
    # Ensure proper permissions
    chmod 600 /data/m365-rag/.env
    ```
 
 3. **Service Startup Failures**:
+
    ```bash
    # Check service status
    cd /data/m365-rag && docker compose ps
-   
+
    # Check service logs
    cd /data/m365-rag && docker compose logs --tail=100
    ```
 
 4. **Firewall Issues**:
+
    ```bash
    # Check firewall status
    sudo ufw status
-   
+
    # Allow required ports
    sudo ufw allow 22/tcp
    sudo ufw allow 80/tcp
@@ -163,25 +178,33 @@ The verification script generates a detailed status report in `/tmp/` with the f
 ### Diagnostic Commands
 
 ```bash
+
 # Check Docker status
+
 systemctl status docker
 
 # Check environment variables
+
 cat /data/m365-rag/.env
 
 # Check service status
+
 cd /data/m365-rag && docker compose ps
 
 # Check service logs
+
 cd /data/m365-rag && docker compose logs --tail=50
 
 # Check system resources
+
 df -h
 free -h
 uptime
 
 # Check firewall status
+
 sudo ufw status
+
 ```
 
 ## Security Considerations
@@ -191,11 +214,15 @@ sudo ufw status
 Ensure your `.env` file is properly secured:
 
 ```bash
+
 # Set proper permissions
+
 chmod 600 /data/m365-rag/.env
 
 # Never commit to version control
+
 echo ".env" >> .gitignore
+
 ```
 
 ### Firewall Configuration
@@ -219,17 +246,23 @@ Both scripts generate detailed logs:
 - Deployment log: `/var/log/m365-rag-deploy.log`
 - Verification log: `/var/log/m365-rag-verify.log`
 
-These logs contain timestamped entries for all actions performed by the scripts and can be used for troubleshooting and auditing purposes.
+These logs contain timestamped entries for all actions performed by the scripts and can be used for troubleshooting and
+  auditing purposes.
 
 ## Automation
 
 You can automate deployment verification in your monitoring system:
 
 ```bash
+
 # Run verification check and exit on failure
+
 ./verify-deployment.sh && echo "Verification successful" || echo "Verification failed"
+
 ```
 
 ## Conclusion
 
-The robust deployment and verification scripts provide a comprehensive solution for deploying and monitoring the M365 RAG System. They include extensive error handling, validation, and reporting features to ensure a successful deployment and ongoing system health monitoring.
+The robust deployment and verification scripts provide a comprehensive solution for deploying and monitoring the M365
+RAG System. They include extensive error handling, validation, and reporting features to ensure a successful
+  deployment and ongoing system health monitoring.

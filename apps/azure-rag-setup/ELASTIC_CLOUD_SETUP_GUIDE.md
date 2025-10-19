@@ -21,17 +21,22 @@ You need to obtain your cluster credentials from the Elastic Cloud console:
 ### **2. Update Environment Variables**
 
 ```bash
+
 # Update env.elasticsearch with your actual credentials
+
 ELASTIC_HOST=https://4a8aa287c15d4153b425c7bd9caa0211.us-central1.gcp.cloud.es.io:443
 ELASTIC_USERNAME=elastic
 ELASTIC_PASSWORD=your_actual_password_here
 ELASTIC_INDEX=m365-documents
+
 ```
 
 ### **3. Test Connection**
 
 ```bash
+
 # Test connection to your cloud cluster
+
 python -c "
 from elasticsearch import Elasticsearch
 es = Elasticsearch(
@@ -42,20 +47,27 @@ es = Elasticsearch(
 print('✅ Connected:', es.ping())
 print('Cluster info:', es.info())
 "
+
 ```
 
 ### **4. Create Index**
 
 ```bash
+
 # Create the M365 documents index
+
 python elasticsearch_setup.py
+
 ```
 
 ### **5. Start API Server**
 
 ```bash
+
 # Start the API server with cloud Elasticsearch
+
 python api_server.py
+
 ```
 
 ## 🌐 **Access Your Cluster**
@@ -107,4 +119,4 @@ Your Elastic Cloud cluster provides:
 
 ---
 
-**Your Elastic Cloud cluster is ready for the RAG-Anything + OlmoCR system!**
+## Your Elastic Cloud cluster is ready for the RAG-Anything + OlmoCR system!

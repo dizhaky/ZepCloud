@@ -48,7 +48,9 @@
 Run a small test with just 2 SharePoint sites to verify everything works:
 
 ```bash
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 2
+
 ```
 
 **Time:** ~5-10 minutes
@@ -60,7 +62,9 @@ python3 orchestrate_rag_anything.py --source sharepoint --limit 2
 Process all 42 SharePoint sites:
 
 ```bash
+
 python3 orchestrate_rag_anything.py --source sharepoint
+
 ```
 
 **Time:** ~90 minutes for ~2,000 documents
@@ -72,7 +76,9 @@ python3 orchestrate_rag_anything.py --source sharepoint
 Process all M365 sources (SharePoint, OneDrive, Exchange):
 
 ```bash
+
 python3 orchestrate_rag_anything.py --source all
+
 ```
 
 **Time:** Several hours
@@ -84,7 +90,9 @@ python3 orchestrate_rag_anything.py --source all
 Just check current status without syncing:
 
 ```bash
+
 python3 orchestrate_rag_anything.py --status
+
 ```
 
 **Time:** Instant
@@ -153,7 +161,7 @@ When you run the sync, the system will:
 
 ## 🛡️ Safety Features
 
-**Already in Place:**
+## Already in Place:
 
 - ✅ Progress tracking (can resume if interrupted)
 - ✅ Error handling with retry logic
@@ -162,7 +170,7 @@ When you run the sync, the system will:
 - ✅ Detailed logging to file
 - ✅ No destructive operations
 
-**Can Rollback:**
+## Can Rollback:
 
 - Restore from `sharepoint_progress.json.backup_*`
 - Re-run indexer at any time
@@ -172,7 +180,7 @@ When you run the sync, the system will:
 
 ## 💡 Recommendations
 
-### For First-Time Installation:
+### For First-Time Installation
 
 1. **Start Small** ✅
 
@@ -194,6 +202,7 @@ When you run the sync, the system will:
    - Confirm enhanced search
 
 4. **If Successful, Scale Up**
+
    ```bash
    python3 orchestrate_rag_anything.py --source sharepoint
    ```
@@ -201,17 +210,23 @@ When you run the sync, the system will:
 ### Monitoring Commands
 
 ```bash
+
 # Check status during sync
+
 python3 orchestrate_rag_anything.py --status
 
 # View graph statistics
+
 cat sharepoint_graph.json | jq '.stats'
 
 # Check recent logs
+
 tail -50 initial_deployment_*.log
 
 # View progress file
+
 cat sharepoint_progress_enhanced.json | jq
+
 ```
 
 ---
@@ -221,20 +236,27 @@ cat sharepoint_progress_enhanced.json | jq
 ### Recommended Installation Sequence
 
 ```bash
+
 # 1. Test with 2 sites (5-10 minutes)
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 2
 
 # 2. Check results
+
 python3 orchestrate_rag_anything.py --status
 
 # 3. View graph
+
 cat sharepoint_graph.json | jq '.stats'
 
 # 4. If successful, run full sync
+
 python3 orchestrate_rag_anything.py --source sharepoint
 
 # 5. Set up automated sync (cron job)
+
 # See DEPLOYMENT_GUIDE.md for cron setup
+
 ```
 
 ---
@@ -243,44 +265,58 @@ python3 orchestrate_rag_anything.py --source sharepoint
 
 ### Issue: Sync Fails
 
-**Solution:**
+## Solution:
 
 ```bash
+
 # Check error log
+
 cat initial_deployment_*.log | grep "ERROR\|FAIL"
 
 # Verify M365 auth
+
 python3 m365_auth.py
 
 # Check Azure connection
+
 python3 test_rag_anything_integration.py
+
 ```
 
 ### Issue: Want to Start Over
 
-**Solution:**
+## Solution: (2)
 
 ```bash
+
 # Restore backup
+
 cp sharepoint_progress.json.backup_* sharepoint_progress.json
 
 # Delete graph
+
 rm sharepoint_graph.json
 
 # Re-run sync
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 2
+
 ```
 
 ### Issue: System Status Unclear
 
-**Solution:**
+## Solution: (3)
 
 ```bash
+
 # Run comprehensive status check
+
 python3 orchestrate_rag_anything.py --status
 
 # Run test suite
+
 python3 test_rag_anything_integration.py
+
 ```
 
 ---
@@ -315,14 +351,14 @@ python3 test_rag_anything_integration.py
 
 ## 📞 Support
 
-**Need Help?**
+## Need Help?
 
 - Check status: `python3 orchestrate_rag_anything.py --status`
 - Run tests: `python3 test_rag_anything_integration.py`
 - View docs: `RAG_ANYTHING_INTEGRATION.md`
 - Deployment guide: `DEPLOYMENT_GUIDE.md`
 
-**Ready to Install?**
+## Ready to Install?
 
 Choose one of the installation paths above and run the command!
 

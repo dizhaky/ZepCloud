@@ -2,7 +2,8 @@
 
 ## 🎉 Implementation Summary
 
-The complete Elasticsearch-based RAG system with RAG-Anything and OlmoCR integration has been successfully implemented, providing significant cost savings and enhanced functionality.
+The complete Elasticsearch-based RAG system with RAG-Anything and OlmoCR integration has been successfully implemented,
+  providing significant cost savings and enhanced functionality.
 
 ## 📊 Cost Savings Achieved
 
@@ -119,45 +120,60 @@ The complete Elasticsearch-based RAG system with RAG-Anything and OlmoCR integra
 ### 1. Start Infrastructure
 
 ```bash
+
 docker-compose up -d
 sleep 60  # Wait for services
+
 ```
 
 ### 2. Install Dependencies
 
 ```bash
+
 pip install -r requirements-elasticsearch.txt
+
 ```
 
 ### 3. Configure Environment
 
 ```bash
+
 # Edit env.elasticsearch with your Azure credentials
+
 nano env.elasticsearch
+
 ```
 
 ### 4. Create Index
 
 ```bash
+
 python elasticsearch_setup.py
+
 ```
 
 ### 5. Test System
 
 ```bash
+
 python test_elasticsearch_integration.py
+
 ```
 
 ### 6. Start API Server
 
 ```bash
+
 python api_server.py
+
 ```
 
 ### 7. Sync M365 Data
 
 ```bash
+
 python m365_sync_elasticsearch.py
+
 ```
 
 ### 8. Configure TypingMind
@@ -259,6 +275,7 @@ The comprehensive test suite validates:
 
 ---
 
-**🎉 The Elasticsearch + RAG-Anything + OlmoCR integration is now complete and ready for deployment!**
+## 🎉 The Elasticsearch + RAG-Anything + OlmoCR integration is now complete and ready for deployment!
 
-This implementation provides a cost-effective, feature-rich alternative to Azure AI Search with advanced multimodal processing capabilities that exceed the original system's functionality.
+This implementation provides a cost-effective, feature-rich alternative to Azure AI Search with advanced multimodal
+  processing capabilities that exceed the original system's functionality.

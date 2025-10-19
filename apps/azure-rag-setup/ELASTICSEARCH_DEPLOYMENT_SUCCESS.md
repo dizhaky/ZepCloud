@@ -1,4 +1,4 @@
-# 🎉 Elasticsearch Cloud Deployment - SUCCESS!
+# 🎉 Elasticsearch Cloud Deployment - SUCCESS
 
 ## ✅ **DEPLOYMENT COMPLETE**
 
@@ -54,7 +54,9 @@
 ## 📊 **System Architecture**
 
 ```
+
 M365 Data → RAG-Anything → OlmoCR → Elastic Cloud → API Server → TypingMind
+
 ```
 
 ## 🔧 **Configuration Files Updated**
@@ -70,15 +72,19 @@ M365 Data → RAG-Anything → OlmoCR → Elastic Cloud → API Server → Typin
 ### **1. Test Search Functionality**
 
 ```bash
+
 curl -X POST http://localhost:5001/search \
   -H "Content-Type: application/json" \
   -d '{"query": "test", "size": 10}'
+
 ```
 
 ### **2. Begin M365 Data Sync**
 
 ```bash
+
 python m365_sync_elasticsearch.py
+
 ```
 
 ### **3. Configure TypingMind**
@@ -86,10 +92,12 @@ python m365_sync_elasticsearch.py
 Update `typingmind-elasticsearch-config.json` with:
 
 ```json
+
 {
   "base_url": "http://localhost:5001",
   "index": "m365-documents"
 }
+
 ```
 
 ### **4. Monitor System**
@@ -117,4 +125,4 @@ Update `typingmind-elasticsearch-config.json` with:
 
 ---
 
-**🎉 The Elasticsearch + RAG-Anything + OlmoCR system is now fully deployed and operational with 80-90% cost savings!**
+## 🎉 The Elasticsearch + RAG-Anything + OlmoCR system is now fully deployed and operational with 80-90% cost savings!

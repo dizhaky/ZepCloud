@@ -2,16 +2,17 @@
 
 ## Overview
 
-This guide explains how to set up and manage SSL/TLS encryption for Elasticsearch in the M365 RAG system. SSL/TLS is **enabled by default** for security, encrypting all communication between services and Elasticsearch.
+This guide explains how to set up and manage SSL/TLS encryption for Elasticsearch in the M365 RAG system. SSL/TLS is
+  **enabled by default** for security, encrypting all communication between services and Elasticsearch.
 
 ## Why SSL/TLS is Important
 
 Even in internal Docker networks, SSL/TLS provides:
 
-✅ **Encryption in Transit**: Protects credentials and data from network sniffing  
-✅ **Authentication**: Verifies identity of Elasticsearch nodes  
-✅ **Integrity**: Prevents man-in-the-middle attacks  
-✅ **Compliance**: Meets security best practices for production systems  
+✅ **Encryption in Transit**: Protects credentials and data from network sniffing
+✅ **Authentication**: Verifies identity of Elasticsearch nodes
+✅ **Integrity**: Prevents man-in-the-middle attacks
+✅ **Compliance**: Meets security best practices for production systems
 
 ## Architecture
 
@@ -28,13 +29,17 @@ The SSL configuration includes:
 Before starting Elasticsearch for the first time, generate SSL certificates:
 
 ```bash
+
 cd /data/m365-rag
 chmod +x scripts/generate-es-certs.sh
 ./scripts/generate-es-certs.sh
+
 ```
 
-**Output:**
+## Output:
+
 ```
+
 🔐 Generating Elasticsearch SSL Certificates
 1️⃣  Generating Certificate Authority (CA)...
 ✅ CA certificate generated
@@ -50,21 +55,27 @@ chmod +x scripts/generate-es-certs.sh
 ✅ Certificate verification successful
 
 🎉 SSL Certificates Generated Successfully!
+
 ```
 
 ### 2. Start Elasticsearch
 
 ```bash
+
 docker compose up -d elasticsearch
+
 ```
 
 ### 3. Verify SSL is Working
 
 ```bash
+
 # Test HTTPS connection (self-signed cert, so use -k)
+
 curl -k -u elastic:$ELASTIC_PASSWORD https://localhost:9200
 
 # Expected output: Elasticsearch cluster info
+
 ```
 
 ## Certificate Files
@@ -72,11 +83,13 @@ curl -k -u elastic:$ELASTIC_PASSWORD https://localhost:9200
 After running `generate-es-certs.sh`, you'll have:
 
 ```
+
 config/elasticsearch/certs/
 ├── ca.crt              # Certificate Authority certificate (public)
 ├── ca.key              # CA private key (keep secure!)
 ├── elasticsearch.crt   # Elasticsearch certificate (public)
 └── elasticsearch.key   # Elasticsearch private key (keep secure!)
+
 ```
 
 ### File Permissions
@@ -93,24 +106,29 @@ The script automatically sets proper permissions:
 The `docker-compose.yml` includes SSL settings:
 
 ```yaml
+
 elasticsearch:
   environment:
     # HTTP SSL (API Communication)
+
     - xpack.security.http.ssl.enabled=true
     - xpack.security.http.ssl.key=/usr/share/elasticsearch/config/certs/elasticsearch.key
     - xpack.security.http.ssl.certificate=/usr/share/elasticsearch/config/certs/elasticsearch.crt
     - xpack.security.http.ssl.certificate_authorities=/usr/share/elasticsearch/config/certs/ca.crt
     - xpack.security.http.ssl.verification_mode=certificate
-    
+
     # Transport SSL (Node-to-Node)
+
     - xpack.security.transport.ssl.enabled=true
     - xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certs/elasticsearch.key
     - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certs/elasticsearch.crt
     - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certs/ca.crt
     - xpack.security.transport.ssl.verification_mode=certificate
-  
+
   volumes:
+
     - ./config/elasticsearch/certs:/usr/share/elasticsearch/config/certs:ro
+
 ```
 
 ### API Configuration
@@ -118,10 +136,13 @@ elasticsearch:
 The API service automatically connects via HTTPS:
 
 ```yaml
+
 api:
   environment:
+
     - ES_USE_SSL=true                    # Enable HTTPS connections
     - ES_VERIFY_CERTS=false              # Accept self-signed certs
+
 ```
 
 ## Certificate Validity
@@ -150,6 +171,7 @@ The configuration uses `verification_mode: certificate`:
 | `none` | No verification | ❌ Not recommended |
 
 **We use `certificate`** mode because:
+
 - ✅ Verifies certificate authenticity (signed by CA)
 - ✅ Works with Docker internal IPs/hostnames
 - ✅ Provides strong security without DNS complexity
@@ -160,7 +182,8 @@ The configuration uses `verification_mode: certificate`:
 
 **Error:** `Failed to establish a new connection`
 
-**Solution:**
+## Solution:
+
 1. Check Elasticsearch is running: `docker ps | grep elasticsearch`
 2. Check health: `docker compose logs elasticsearch | tail -50`
 3. Verify certificates exist: `ls -la config/elasticsearch/certs/`
@@ -169,10 +192,12 @@ The configuration uses `verification_mode: certificate`:
 
 **Error:** `SSL certificate verification failed`
 
-**Solution:**
+## Solution: (2)
+
 1. Regenerate certificates: `./scripts/generate-es-certs.sh`
 2. Restart Elasticsearch: `docker compose restart elasticsearch`
 3. Check certificate validity:
+
    ```bash
    openssl x509 -in config/elasticsearch/certs/elasticsearch.crt -noout -dates
    ```
@@ -181,7 +206,8 @@ The configuration uses `verification_mode: certificate`:
 
 **Error:** `certificate has expired`
 
-**Solution:**
+## Solution: (3)
+
 1. Regenerate certificates (they last 10 years): `./scripts/generate-es-certs.sh`
 2. Restart services: `docker compose restart elasticsearch api`
 
@@ -189,19 +215,26 @@ The configuration uses `verification_mode: certificate`:
 
 **Error:** `ConnectionError: HTTPConnectionPool`
 
-**Diagnostic Steps:**
+## Diagnostic Steps:
+
 ```bash
+
 # 1. Check Elasticsearch SSL is working
+
 curl -k -u elastic:PASSWORD https://localhost:9200
 
 # 2. Check API logs
+
 docker compose logs api | tail -50
 
 # 3. Verify environment variables
+
 docker compose exec api env | grep ES_
+
 ```
 
-**Solution:**
+## Solution: (4)
+
 Ensure `ES_USE_SSL=true` in API environment variables.
 
 ## Security Best Practices
@@ -229,30 +262,42 @@ For production with proper domain names and validated certificates:
 ### Option 1: Let's Encrypt (Recommended)
 
 ```bash
+
 # 1. Obtain certificate for your domain
+
 certbot certonly --standalone -d elasticsearch.yourdomain.com
 
 # 2. Copy to config directory
+
 cp /etc/letsencrypt/live/elasticsearch.yourdomain.com/fullchain.pem \
    config/elasticsearch/certs/elasticsearch.crt
 cp /etc/letsencrypt/live/elasticsearch.yourdomain.com/privkey.pem \
    config/elasticsearch/certs/elasticsearch.key
 
 # 3. Update verification mode to 'full' in docker-compose.yml
+
 - xpack.security.http.ssl.verification_mode=full
 
 # 4. Update API config
+
 - ES_VERIFY_CERTS=true
+
 ```
 
 ### Option 2: Corporate CA
 
 ```bash
+
 # 1. Get signed certificate from your corporate CA
+
 # 2. Copy certificates to config/elasticsearch/certs/
+
 # 3. Include corporate CA certificate as ca.crt
+
 # 4. Update verification mode to 'full'
+
 # 5. Set ES_VERIFY_CERTS=true in API config
+
 ```
 
 ## Monitoring
@@ -260,26 +305,35 @@ cp /etc/letsencrypt/live/elasticsearch.yourdomain.com/privkey.pem \
 ### Check SSL Configuration
 
 ```bash
+
 # View certificate details
+
 openssl x509 -in config/elasticsearch/certs/elasticsearch.crt -text -noout
 
 # Check certificate chain
+
 openssl verify -CAfile config/elasticsearch/certs/ca.crt \
   config/elasticsearch/certs/elasticsearch.crt
 
 # Test SSL connection
+
 openssl s_client -connect localhost:9200 \
   -CAfile config/elasticsearch/certs/ca.crt
+
 ```
 
 ### Elasticsearch Logs
 
 ```bash
+
 # Check for SSL-related errors
+
 docker compose logs elasticsearch | grep -i ssl
 
 # Monitor SSL handshake
+
 docker compose logs elasticsearch | grep -i "handshake"
+
 ```
 
 ## Migration from Non-SSL
@@ -299,7 +353,9 @@ If upgrading from a previous non-SSL deployment:
 For local development/testing:
 
 ```python
+
 # Python test with requests
+
 import requests
 
 response = requests.get(
@@ -308,11 +364,15 @@ response = requests.get(
     verify=False  # For self-signed certs
 )
 print(response.json())
+
 ```
 
 ```bash
+
 # Bash test with curl
+
 curl -k -u elastic:PASSWORD https://localhost:9200/_cluster/health?pretty
+
 ```
 
 ## Performance Impact
@@ -339,15 +399,18 @@ This SSL configuration helps meet compliance requirements:
 For SSL-related issues:
 
 1. **Check logs**: `docker compose logs elasticsearch api`
-2. **Verify certificates**: `openssl verify -CAfile config/elasticsearch/certs/ca.crt config/elasticsearch/certs/elasticsearch.crt`
+2. **Verify certificates**: `openssl verify -CAfile config/elasticsearch/certs/ca.crt config/elasticsearch/certs/elastic
+
+  search.crt`
+
 3. **Test connection**: `curl -k -u elastic:PASSWORD https://localhost:9200`
 4. **Review documentation**: This file and `DEPLOYMENT_CHECKLIST.md`
 
 ---
 
-**Last Updated:** October 19, 2025  
-**Version:** 1.0  
+**Last Updated:** October 19, 2025
+**Version:** 1.0
 **Status:** Production Ready ✅
 
-**Security Note:** This configuration uses self-signed certificates optimized for internal Docker network communication. For internet-facing deployments, consider using certificates from a trusted Certificate Authority.
-
+**Security Note:** This configuration uses self-signed certificates optimized for internal Docker network communication.
+  For internet-facing deployments, consider using certificates from a trusted Certificate Authority.

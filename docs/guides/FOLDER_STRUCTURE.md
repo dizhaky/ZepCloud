@@ -2,7 +2,8 @@
 
 ## Overview
 
-This document explains the reorganized folder structure of the ZepCloud project, designed for better maintainability and logical organization.
+This document explains the reorganized folder structure of the ZepCloud project, designed for better maintainability and
+  logical organization.
 
 ## Structure Explanation
 
@@ -45,7 +46,7 @@ Project configuration files.
 
 ## Migration Summary
 
-### Files Moved:
+### Files Moved
 
 - `src/main.py` → `apps/zepcloud-core/main.py`
 - `src/.cursorrules` → `config/.cursorrules`

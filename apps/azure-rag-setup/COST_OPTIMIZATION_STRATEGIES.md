@@ -29,6 +29,7 @@
 #### **A. File Hash-Based Deduplication**
 
 ```python
+
 def _calculate_file_hash(self, content: bytes) -> str:
     """Calculate MD5 hash of file content"""
     return hashlib.md5(content).hexdigest()
@@ -40,11 +41,13 @@ def _is_duplicate_file(self, file_hash: str) -> bool:
 def _add_to_processed_hashes(self, file_hash: str):
     """Add file hash to processed set"""
     self.processed_hashes.add(file_hash)
+
 ```
 
 #### **B. Metadata-Based Deduplication**
 
 ```python
+
 def _get_file_signature(self, file_info: Dict) -> str:
     """Create unique signature from file metadata"""
     return f"{file_info['name']}_{file_info['size']}_{file_info['modified']}"
@@ -52,6 +55,7 @@ def _get_file_signature(self, file_info: Dict) -> str:
 def _is_duplicate_metadata(self, signature: str) -> bool:
     """Check if file with same metadata already processed"""
     return signature in self.processed_signatures
+
 ```
 
 #### **Expected Savings:**
@@ -65,6 +69,7 @@ def _is_duplicate_metadata(self, signature: str) -> bool:
 #### **A. Size-Based Exclusions**
 
 ```python
+
 def _should_skip_file(self, file_info: Dict) -> bool:
     """Determine if file should be skipped based on size"""
     size_mb = file_info['size'] / (1024 * 1024)
@@ -78,11 +83,13 @@ def _should_skip_file(self, file_info: Dict) -> bool:
         return True
 
     return False
+
 ```
 
 #### **B. Content-Based Filtering**
 
 ```python
+
 def _is_meaningful_content(self, content: bytes) -> bool:
     """Check if file contains meaningful content"""
     # Skip files that are mostly whitespace
@@ -95,9 +102,10 @@ def _is_meaningful_content(self, content: bytes) -> bool:
         return False
 
     return True
+
 ```
 
-#### **Expected Savings:**
+#### **Expected Savings:** (2)
 
 - **Large File Exclusion:** 5-10% reduction
 - **Small File Exclusion:** 3-5% reduction
@@ -108,6 +116,7 @@ def _is_meaningful_content(self, content: bytes) -> bool:
 #### **A. Text Extraction & Compression**
 
 ```python
+
 def _extract_text_content(self, content: bytes, filename: str) -> str:
     """Extract and compress text content"""
     # Extract text from various formats
@@ -118,11 +127,13 @@ def _extract_text_content(self, content: bytes, filename: str) -> str:
 
     # Store only essential text, not full binary
     return compressed
+
 ```
 
 #### **B. Metadata-Only Storage**
 
 ```python
+
 def _store_metadata_only(self, file_info: Dict) -> bool:
     """Store only metadata for certain file types"""
     # For images, store only metadata + OCR text
@@ -134,9 +145,10 @@ def _store_metadata_only(self, file_info: Dict) -> bool:
         return True
 
     return False
+
 ```
 
-#### **Expected Savings:**
+#### **Expected Savings:** (3)
 
 - **Text Extraction:** 40-60% size reduction
 - **Metadata-Only:** 70-90% size reduction for images
@@ -147,6 +159,7 @@ def _store_metadata_only(self, file_info: Dict) -> bool:
 #### **A. File Type Prioritization**
 
 ```python
+
 def _get_file_priority(self, filename: str) -> int:
     """Assign priority to file types"""
     high_priority = ['.docx', '.pdf', '.txt', '.md']
@@ -163,11 +176,13 @@ def _get_file_priority(self, filename: str) -> int:
         return 3  # Index only if unique content
     else:
         return 4  # Skip
+
 ```
 
 #### **B. Date-Based Filtering**
 
 ```python
+
 def _should_index_by_date(self, file_info: Dict) -> bool:
     """Filter files based on modification date"""
     from datetime import datetime, timedelta
@@ -177,9 +192,10 @@ def _should_index_by_date(self, file_info: Dict) -> bool:
     cutoff_date = datetime.now() - timedelta(days=730)
 
     return modified_date > cutoff_date
+
 ```
 
-#### **Expected Savings:**
+#### **Expected Savings:** (4)
 
 - **Priority Filtering:** 20-40% reduction
 - **Date Filtering:** 30-50% reduction
@@ -190,15 +206,18 @@ def _should_index_by_date(self, file_info: Dict) -> bool:
 #### **A. Change Detection**
 
 ```python
+
 def _has_file_changed(self, file_info: Dict, stored_info: Dict) -> bool:
     """Check if file has changed since last indexing"""
     return (file_info['modified'] != stored_info.get('modified') or
             file_info['size'] != stored_info.get('size'))
+
 ```
 
 #### **B. Delta Processing**
 
 ```python
+
 def _process_delta_only(self, site_id: str) -> List[Dict]:
     """Process only changed files since last sync"""
     last_sync = self._get_last_sync_time(site_id)
@@ -207,9 +226,10 @@ def _process_delta_only(self, site_id: str) -> List[Dict]:
     modified_files = self._get_modified_files(site_id, last_sync)
 
     return modified_files
+
 ```
 
-#### **Expected Savings:**
+#### **Expected Savings:** (5)
 
 - **Incremental Processing:** 80-90% reduction in ongoing costs
 - **Storage Growth:** Minimal after initial sync
@@ -293,6 +313,7 @@ def _process_delta_only(self, site_id: str) -> List[Dict]:
 ### **Enhanced SharePoint Indexer with Optimizations:**
 
 ```python
+
 class OptimizedSharePointIndexer:
     def __init__(self):
         self.processed_hashes = set()
@@ -369,6 +390,7 @@ class OptimizedSharePointIndexer:
 
         # Skip everything else
         return False
+
 ```
 
 ---
@@ -378,6 +400,7 @@ class OptimizedSharePointIndexer:
 ### **Cost Tracking:**
 
 ```python
+
 def _track_cost_savings(self):
     """Track and report cost savings"""
     savings = {
@@ -388,6 +411,7 @@ def _track_cost_savings(self):
         'estimated_savings': self._calculate_estimated_savings()
     }
     return savings
+
 ```
 
 ### **Quality Assurance:**
@@ -410,15 +434,16 @@ def _track_cost_savings(self):
 
 ## 🎯 EXPECTED RESULTS
 
-**After full implementation:**
+## After full implementation:
 
 - **Monthly Cost:** $300-$607 (50% reduction)
 - **Annual Savings:** $3,588-$7,272
 - **Setup Savings:** $1,470-$1,235
 - **Total First Year Savings:** $5,058-$8,507
 
-**The optimizations will reduce your Azure costs by 30-50% while maintaining search quality!**
+## The optimizations will reduce your Azure costs by 30-50% while maintaining search quality!
 
 ---
 
-**🚀 Ready to implement these optimizations? I can start with the date filtering and size filtering for immediate savings!**
+**🚀 Ready to implement these optimizations? I can start with the date filtering and size filtering for immediate
+  savings!**

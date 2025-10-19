@@ -1,7 +1,7 @@
 # 🎯 Hetzner M365 RAG Deployment - Complete Handoff
 
-**Date:** 2025-10-19  
-**Status:** ✅ **PREPARATION 100% COMPLETE**  
+**Date:** 2025-10-19
+**Status:** ✅ **PREPARATION 100% COMPLETE**
 **Agent:** Kilo Code AI
 
 ---
@@ -76,31 +76,36 @@ These **require manual action** (cannot be automated):
 ## 📁 ALL GENERATED FILES
 
 ### Project Root: `C:\Dev\ZepCloud\`
+
 - `HETZNER_DEPLOYMENT_COMPLETE_SUMMARY.md` - Executive summary
 - `HETZNER_DEPLOYMENT_HANDOFF.md` - This file
 
 ### Deployment Directory: `apps/hetzner-m365-rag/`
 
-**Configuration:**
+## Configuration:
+
 - `.env` - Complete environment config (needs Azure AD)
 - `PASSWORDS_GENERATED.txt` - Password reference
 - `docker-compose.yml` - Service orchestration (ready)
 
-**Documentation:**
+## Documentation:
+
 - `DEPLOYMENT_READY_GUIDE.md` - **PRIMARY GUIDE** ⭐
-- `HETZNER_SERVER_SETUP.md` - Server setup guide ⭐  
+- `HETZNER_SERVER_SETUP.md` - Server setup guide ⭐
 - `DEPLOYMENT_STATUS.md` - Status tracking
 - `README_DEPLOYMENT_READY.md` - Quick start
 - `README.md` - Project overview
 
-**Scripts:**
+## Scripts:
+
 - `scripts/prepare-env.ps1` - Environment setup ✅
 - `scripts/deploy.sh` - Main deployment
 - `scripts/backup.sh` - Backup automation
 - `scripts/restore.sh` - Recovery automation
 - `scripts/verify-production.sh` - Health checks
 
-**Existing Documentation:**
+## Existing Documentation:
+
 - `docs/M365_ENV_VARIABLES.md` - M365 configuration
 - `docs/SECURITY_HARDENING_GUIDE.md` - Security procedures
 - `docs/MONITORING_AND_ALERTING_CONFIGURATION.md` - Monitoring setup
@@ -111,6 +116,7 @@ These **require manual action** (cannot be automated):
 ## 🔑 CREDENTIALS SUMMARY
 
 ### Hetzner Account
+
 - **Email:** dizhaky@gmail.com
 - **Password:** gpg-CNG4ycg9npc2pjr
 - **Location:** 1Password Employee vault (updated)
@@ -119,12 +125,15 @@ These **require manual action** (cannot be automated):
 - **Status:** ✅ Verified and logged in
 
 ### OpenAI API
+
 - **Source:** 1Password Employee vault
 - **Status:** ✅ Retrieved and configured in .env
 - **Item:** "OpenAI API Key"
 
 ### Generated Passwords
+
 All in `.env` and `PASSWORDS_GENERATED.txt`:
+
 - Elasticsearch: 32 chars ✅
 - PostgreSQL: 32 chars ✅
 - MinIO: 32 chars ✅
@@ -134,6 +143,7 @@ All in `.env` and `PASSWORDS_GENERATED.txt`:
 - RAGFlow Secret: 64 chars ✅
 
 ### Azure AD (Pending)
+
 - **Status:** ⏳ Needs creation
 - **Required:** M365_CLIENT_ID, M365_CLIENT_SECRET, M365_TENANT_ID
 - **Instructions:** `DEPLOYMENT_READY_GUIDE.md` Step 1
@@ -146,7 +156,8 @@ All in `.env` and `PASSWORDS_GENERATED.txt`:
 
 **Why:** Required for M365 SharePoint/OneDrive integration
 
-**How:**
+## How:
+
 1. Open https://portal.azure.com
 2. Go to: Azure Active Directory > App registrations
 3. Click "New registration"
@@ -157,20 +168,24 @@ All in `.env` and `PASSWORDS_GENERATED.txt`:
 
 **File:** `C:\Dev\ZepCloud\apps\hetzner-m365-rag\.env`
 
-**Find and replace:**
+## Find and replace:
+
 ```bash
+
 M365_CLIENT_ID=YOUR_AZURE_APP_CLIENT_ID_HERE
 M365_CLIENT_SECRET=YOUR_AZURE_APP_CLIENT_SECRET_HERE
 M365_TENANT_ID=YOUR_AZURE_TENANT_ID_HERE
+
 ```
 
-**With actual values from Priority 1**
+## With actual values from Priority 1
 
 ### Priority 3: Order Hetzner Server (10 minutes)
 
 **URL:** https://www.hetzner.com/dedicated-rootserver/matrix-ax
 
-**Configuration:**
+## Configuration: (2)
+
 - Model: AX52
 - OS: Ubuntu 24.04 LTS
 - RAM: 128GB
@@ -185,19 +200,27 @@ M365_TENANT_ID=YOUR_AZURE_TENANT_ID_HERE
 
 ### When Server is Ready
 
-**1. Prepare Deployment Package**
+## 1. Prepare Deployment Package
+
 ```powershell
+
 cd C:\Dev\ZepCloud\apps\hetzner-m365-rag
 wsl tar -czf ../hetzner-deploy.tar.gz .
+
 ```
 
-**2. Upload to Server**
+## 2. Upload to Server
+
 ```powershell
+
 scp C:\Dev\ZepCloud\apps\hetzner-deploy.tar.gz root@SERVER_IP:/tmp/
+
 ```
 
-**3. Deploy (via SSH)**
+## 3. Deploy (via SSH)
+
 ```bash
+
 ssh root@SERVER_IP
 cd /tmp
 tar -xzf hetzner-deploy.tar.gz -C /opt/
@@ -205,12 +228,16 @@ mv /opt/hetzner-m365-rag /opt/m365-rag
 cd /opt/m365-rag
 chmod +x scripts/*.sh
 ./scripts/deploy.sh
+
 ```
 
-**4. Verify**
+## 4. Verify
+
 ```bash
+
 docker compose ps
 curl http://localhost:8000/health
+
 ```
 
 ---
@@ -248,14 +275,15 @@ curl http://localhost:8000/health
 
 ## 💰 COST & ROI
 
-**Monthly Cost:**
+## Monthly Cost:
+
 - Hetzner AX52: €108 ($117 USD)
 - Bandwidth: Included (unlimited @ 1 Gbit/s)
 
 **Annual Cost:** €1,296 ($1,404 USD)
 
-**vs Azure:** $9,600-18,000/year  
-**Savings:** $8,000-16,000/year  
+**vs Azure:** $9,600-18,000/year
+**Savings:** $8,000-16,000/year
 **ROI:** 2 months to break-even
 
 ---
@@ -263,6 +291,7 @@ curl http://localhost:8000/health
 ## ⏱️ TIME INVESTMENT
 
 ### Completed (by AI)
+
 - Credential management: 15 minutes ✅
 - Password generation: 10 minutes ✅
 - Environment setup: 20 minutes ✅
@@ -270,6 +299,7 @@ curl http://localhost:8000/health
 - **Total Prep:** 90 minutes ✅
 
 ### Remaining (by User)
+
 - Azure AD setup: 15 minutes ⏳
 - Update .env: 2 minutes ⏳
 - Order server: 10 minutes ⏳
@@ -284,18 +314,21 @@ curl http://localhost:8000/health
 
 ## 📖 DOCUMENTATION GUIDE
 
-**Start Here:**
+## Start Here:
+
 1. `README_DEPLOYMENT_READY.md` - Quick overview
 2. `DEPLOYMENT_READY_GUIDE.md` - Complete step-by-step guide
 3. `HETZNER_SERVER_SETUP.md` - Server ordering & setup
 
-**Reference:**
+## Reference:
+
 - `DEPLOYMENT_STATUS.md` - Status tracking
 - `PASSWORDS_GENERATED.txt` - Password reference
 - `docs/M365_ENV_VARIABLES.md` - M365 configuration
 - `docs/SECURITY_HARDENING_GUIDE.md` - Security procedures
 
-**Scripts:**
+## Scripts: (2)
+
 - `scripts/deploy.sh` - Main deployment automation
 - `scripts/backup.sh` - Backup procedures
 - `scripts/restore.sh` - Recovery procedures
@@ -318,26 +351,32 @@ curl http://localhost:8000/health
 
 ## 🆘 TROUBLESHOOTING
 
-**Question: Azure AD setup is confusing**  
+## Question: Azure AD setup is confusing
+
 → See detailed instructions with screenshots in `DEPLOYMENT_READY_GUIDE.md` Step 1
 
-**Question: Deployment fails**  
+## Question: Deployment fails
+
 → Check `DEPLOYMENT_READY_GUIDE.md` troubleshooting section
 
-**Question: Can't access services**  
+## Question: Can't access services
+
 → Verify firewall: `ufw status` and check Docker: `docker compose ps`
 
-**Question: Out of memory**  
+## Question: Out of memory
+
 → Reduce Elasticsearch heap in docker-compose.yml from 16g to 8g
 
-**Question: Need help**  
+## Question: Need help
+
 → All documentation in `apps/hetzner-m365-rag/docs/` directory
 
 ---
 
 ## ✅ FINAL VERIFICATION CHECKLIST
 
-**Preparation (Complete):**
+## Preparation (Complete):
+
 - ✅ Hetzner account verified
 - ✅ Credentials retrieved and secured
 - ✅ Environment file configured
@@ -346,7 +385,8 @@ curl http://localhost:8000/health
 - ✅ Scripts tested and ready
 - ✅ Knowledge stored in ByteRover
 
-**User Actions (Pending):**
+## User Actions (Pending):
+
 - ⏳ Create Azure AD app registration
 - ⏳ Update .env with Azure credentials
 - ⏳ Order Hetzner AX52 server
@@ -359,17 +399,17 @@ curl http://localhost:8000/health
 
 ---
 
-## 🎉 READY FOR DEPLOYMENT!
+## 🎉 READY FOR DEPLOYMENT
 
-**Everything that can be automated has been completed.**
+## Everything that can be automated has been completed.
 
-**Your next 3 steps:**
+## Your next 3 steps:
 
 1. **Now:** Create Azure AD app (15 min)
-2. **Now:** Update .env file (2 min)  
+2. **Now:** Update .env file (2 min)
 3. **Then:** Order Hetzner server (10 min)
 
-**After server arrives (2-4 hours):**
+## After server arrives (2-4 hours):
 
 4. Deploy using commands above (30 min)
 5. Verify and start using your system!
@@ -378,28 +418,29 @@ curl http://localhost:8000/health
 
 ## 📞 CONTACT & SUPPORT
 
-**Hetzner Support:**
+## Hetzner Support:
+
 - Status: https://status.hetzner.com/
 - Community: https://community.hetzner.com/
 - Tickets: https://robot.hetzner.com/support/index
 
-**Documentation:**
+## Documentation: (2)
+
 - Primary: `DEPLOYMENT_READY_GUIDE.md`
 - Server Setup: `HETZNER_SERVER_SETUP.md`
 - All docs: `apps/hetzner-m365-rag/docs/`
 
 ---
 
-**Handoff Status:** ✅ **COMPLETE**  
-**Next Action:** Create Azure AD App Registration  
-**Estimated Time to Production:** 3-4 hours  
+**Handoff Status:** ✅ **COMPLETE**
+**Next Action:** Create Azure AD App Registration
+**Estimated Time to Production:** 3-4 hours
 
-**Good luck with your deployment! 🚀**
+## Good luck with your deployment! 🚀
 
 ---
 
-_Prepared by Kilo Code AI Agent_  
-_Date: 2025-10-19_  
-_Session Duration: 90 minutes_  
+_Prepared by Kilo Code AI Agent_
+_Date: 2025-10-19_
+_Session Duration: 90 minutes_
 _Completion: 80% automated, 20% manual actions required_
-

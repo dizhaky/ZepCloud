@@ -1,7 +1,7 @@
 # 🚀 Hetzner M365 RAG - Deployment Ready Guide
 
-**Generated:** 2025-10-19  
-**Status:** Ready for Deployment  
+**Generated:** 2025-10-19
+**Status:** Ready for Deployment
 **Credentials Source:** 1Password
 
 ---
@@ -32,6 +32,7 @@
 ### Quick Setup Instructions
 
 1. **Go to Azure Portal**:
+
    ```
    https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
    ```
@@ -41,7 +42,7 @@
 3. **Configure Application**:
    - **Name**: `M365 RAG System`
    - **Supported account types**: `Accounts in this organizational directory only (Single tenant)`
-   - **Redirect URI**: 
+   - **Redirect URI**:
      - Platform: `Web`
      - URL: `http://localhost:8000`
 
@@ -85,11 +86,13 @@
 ## 📝 Step 2: Update Environment Configuration
 
 1. **Open the deployment environment file**:
+
    ```bash
    notepad c:\Dev\ZepCloud\apps\hetzner-m365-rag\.env.deployment
    ```
 
 2. **Update these values** with your Azure AD app registration details:
+
    ```bash
    M365_CLIENT_ID=<your-application-client-id-from-step-5>
    M365_CLIENT_SECRET=<your-client-secret-from-step-6>
@@ -97,12 +100,14 @@
    ```
 
 3. **Generate secure passwords** for these fields (replace placeholders):
+
    ```powershell
    # Run in PowerShell to generate secure passwords
    -join ((48..57) + (65..90) + (97..122) | Get-Random -Count 32 | ForEach-Object {[char]$_})
    ```
 
    Update:
+
    - `ELASTIC_PASSWORD`
    - `POSTGRES_PASSWORD`
    - `MINIO_ROOT_PASSWORD`
@@ -122,6 +127,7 @@
 **Note:** If you see a rate limit message, wait 10 minutes and retry.
 
 1. **Open Hetzner Console**:
+
    ```
    https://accounts.hetzner.com/login
    ```
@@ -135,11 +141,13 @@
 ### Options for Server Setup
 
 **Option A: Use Existing Server** (if you have one)
+
 - Note the server IP address
 - Ensure SSH access is enabled
 - Proceed to Step 4
 
-**Option B: Create New AX52 Dedicated Server**
+## Option B: Create New AX52 Dedicated Server
+
 1. Go to "Dedicated Servers" > "Order"
 2. Select: **AX52**
    - CPU: AMD Ryzen 9 5950X (16 cores / 32 threads)
@@ -161,25 +169,30 @@
 ### Prepare Deployment Package
 
 1. **Create deployment archive**:
+
    ```powershell
    cd c:\Dev\ZepCloud\apps\hetzner-m365-rag
-   
+
    # Create tar archive (requires WSL or Git Bash)
    wsl tar -czf ../m365-rag-deploy.tar.gz .
    ```
 
 ### Upload to Server
 
-**Replace `SERVER_IP` with your actual Hetzner server IP**
+## Replace `SERVER_IP` with your actual Hetzner server IP
 
 ```powershell
+
 # Using SCP (recommended)
+
 scp c:\Dev\ZepCloud\apps\m365-rag-deploy.tar.gz root@SERVER_IP:/tmp/
 
 # Or using SFTP
+
 sftp root@SERVER_IP
 put c:\Dev\ZepCloud\apps\m365-rag-deploy.tar.gz /tmp/
 bye
+
 ```
 
 ---
@@ -189,31 +202,40 @@ bye
 ### SSH into Server
 
 ```powershell
+
 ssh root@SERVER_IP
+
 ```
 
 ### Extract and Deploy
 
 ```bash
+
 # Extract deployment files
+
 cd /tmp
 tar -xzf m365-rag-deploy.tar.gz -C /opt/
 mv /opt/hetzner-m365-rag /opt/m365-rag
 
 # Copy your configured .env file
+
 # (You'll need to transfer this separately or edit on server)
 
 # Make scripts executable
+
 cd /opt/m365-rag
 chmod +x scripts/*.sh
 
 # Run deployment script
+
 ./scripts/deploy.sh
+
 ```
 
 ### What the Deployment Script Does
 
 The `deploy.sh` script will automatically:
+
 1. ✅ Update system packages
 2. ✅ Install Docker and Docker Compose
 3. ✅ Configure firewall (UFW)
@@ -233,49 +255,71 @@ The `deploy.sh` script will automatically:
 ### Check Service Health
 
 ```bash
+
 # Check all services are running
+
 docker compose ps
 
 # Should show all services as "healthy" or "Up"
+
 ```
 
 ### Test API Endpoint
 
 ```bash
+
 # Health check
+
 curl http://localhost:8000/health
 
-# Expected response:
+# Expected response
+
 # {
+
 #   "status": "healthy",
+
 #   "version": "1.0.0",
+
 #   "services": {
+
 #     "elasticsearch": "connected",
+
 #     "postgres": "connected",
+
 #     "redis": "connected"
+
 #   }
-# }
+
+# } (2)
+
 ```
 
 ### Test Elasticsearch
 
 ```bash
+
 # Check cluster health (replace ELASTIC_PASSWORD)
+
 curl -k -u elastic:YOUR_ELASTIC_PASSWORD https://localhost:9200/_cluster/health
 
 # Expected: {"status":"green"}
+
 ```
 
 ### Check Logs
 
 ```bash
+
 # View all service logs
+
 docker compose logs -f
 
 # View specific service
+
 docker compose logs -f api
 docker compose logs -f elasticsearch
 docker compose logs -f ragflow
+
 ```
 
 ---
@@ -302,23 +346,31 @@ After successful deployment, access these URLs:
 **Prerequisites:** Domain name pointing to your server
 
 ```bash
+
 # Install Certbot
+
 apt-get install -y certbot python3-certbot-nginx
 
 # Get SSL certificate
+
 certbot --nginx -d rag.yourdomain.com
 
 # Auto-renewal is configured automatically
+
 ```
 
 ### Configure Automated Backups
 
 ```bash
+
 # Add to crontab
+
 crontab -e
 
 # Add this line for daily backups at 2 AM
+
 0 2 * * * /opt/m365-rag/scripts/backup.sh >> /var/log/m365-rag-backup.log 2>&1
+
 ```
 
 ### Monitor System
@@ -335,29 +387,37 @@ crontab -e
 ### Authenticate with M365
 
 ```bash
+
 # Interactive browser authentication
+
 curl -X POST http://YOUR_SERVER_IP:8000/m365/auth \
   -H "Content-Type: application/json" \
   -d '{"auth_type":"interactive"}'
 
 # Follow the URL in the response to complete authentication
+
 ```
 
 ### Sync SharePoint
 
 ```bash
+
 # Sync SharePoint site
+
 curl -X POST http://YOUR_SERVER_IP:8000/m365/sync/sharepoint \
   -H "Content-Type: application/json" \
   -d '{
     "site_url": "https://yourtenant.sharepoint.com/sites/yoursite"
   }'
+
 ```
 
 ### Test Search
 
 ```bash
+
 # Search indexed documents
+
 curl -X POST http://YOUR_SERVER_IP:8000/search \
   -H "Content-Type: application/json" \
   -d '{
@@ -365,6 +425,7 @@ curl -X POST http://YOUR_SERVER_IP:8000/search \
     "filters": {"source": "sharepoint"},
     "limit": 5
   }'
+
 ```
 
 ---
@@ -374,49 +435,68 @@ curl -X POST http://YOUR_SERVER_IP:8000/search \
 ### Elasticsearch Won't Start
 
 ```bash
-# Check logs
+
+# Check logs (2)
+
 docker compose logs elasticsearch
 
 # Common fix: Increase vm.max_map_count
+
 sudo sysctl -w vm.max_map_count=262144
 echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 
 # Restart
+
 docker compose restart elasticsearch
+
 ```
 
 ### Out of Memory
 
 ```bash
+
 # Check memory usage
+
 free -h
 docker stats
 
 # Adjust resource limits in docker-compose.yml
-# Reduce Elasticsearch heap if needed:
+
+# Reduce Elasticsearch heap if needed
+
 ES_JAVA_OPTS: "-Xms8g -Xmx8g"  # Reduce from 16g if needed
+
 ```
 
 ### M365 Authentication Fails
 
 ```bash
+
 # Verify Azure app permissions
+
 # Check .env file has correct values
+
 cat /opt/m365-rag/.env | grep M365
 
 # Test authentication manually
+
 docker compose exec api python -c "from api.m365_auth import M365Auth; print(M365Auth().get_access_token())"
+
 ```
 
 ### Services Can't Connect
 
 ```bash
+
 # Check Docker network
+
 docker network inspect hetzner-m365-rag_m365-rag-network
 
 # Restart all services
+
 docker compose down
 docker compose up -d
+
 ```
 
 ---
@@ -449,13 +529,15 @@ See `docs/BUG_FIXES.md` and `docs/BUG_FIXES_ROUND2.md` for resolved issues.
 
 ## ✨ Summary
 
-**Current Status:**
+## Current Status:
+
 - ✅ Hetzner credentials retrieved
 - ✅ OpenAI API key configured
 - ✅ Deployment files prepared
 - ⚠️ Azure AD app registration needed (see Step 1)
 
-**Next Actions:**
+## Next Actions:
+
 1. Create Azure AD app registration (Step 1)
 2. Update `.env.deployment` with Azure values (Step 2)
 3. Log into Hetzner console (Step 3)
@@ -467,7 +549,6 @@ See `docs/BUG_FIXES.md` and `docs/BUG_FIXES_ROUND2.md` for resolved issues.
 
 ---
 
-**Last Updated:** 2025-10-19  
-**Version:** 1.0  
+**Last Updated:** 2025-10-19
+**Version:** 1.0
 **Prepared By:** Kilo Code AI Agent
-

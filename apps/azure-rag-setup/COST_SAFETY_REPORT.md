@@ -100,13 +100,19 @@
 ### **No Cost-Generating Processes Running:**
 
 ```bash
+
 # Check for any remaining processes
+
 ps aux | grep -E "(python|m365|azure|indexer|sync)" | grep -v grep
+
 # Result: Only system processes, no Azure RAG processes
 
 # Check cron jobs
+
 crontab -l
+
 # Result: No Azure RAG cron jobs found
+
 ```
 
 ### **Azure Resources Status:**
@@ -148,11 +154,17 @@ crontab -l
 ### **Set Up Monitoring:**
 
 ```bash
+
 # Azure Cost Management alerts
-# Set up alerts for:
+
+# Set up alerts for
+
 # - Daily spend > $50
+
 # - Monthly spend > $1,000
+
 # - Unusual usage patterns
+
 ```
 
 ### **Prevention Measures:**
@@ -164,6 +176,6 @@ crontab -l
 
 ---
 
-**Status: ✅ SAFE - No cost-generating processes running**
+## Status: ✅ SAFE - No cost-generating processes running
 
-**Next Action: Review optimization options before resuming**
+## Next Action: Review optimization options before resuming

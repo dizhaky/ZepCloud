@@ -4,7 +4,7 @@ Secure credential management using 1Password CLI for all sensitive data.
 
 ---
 
-## 🔐 Why 1Password?
+## 🔐 Why 1Password
 
 - **Never store credentials in plain text**
 - **Centralized credential management**
@@ -18,25 +18,35 @@ Secure credential management using 1Password CLI for all sensitive data.
 
 ### Windows Installation
 
-**Option A: Using Winget (Recommended)**
+## Option A: Using Winget (Recommended)
+
 ```powershell
+
 winget install --id AgileBits.1Password.CLI
+
 ```
 
-**Option B: Using Scoop**
+## Option B: Using Scoop
+
 ```powershell
+
 scoop install 1password-cli
+
 ```
 
-**Option C: Manual Download**
+## Option C: Manual Download
+
 1. Visit [https://1password.com/downloads/command-line/](https://1password.com/downloads/command-line/)
 2. Download the Windows installer
 3. Run the installer
 4. Restart your terminal
 
 ### Verify Installation
+
 ```powershell
+
 op --version
+
 ```
 
 ---
@@ -44,17 +54,25 @@ op --version
 ## Step 2: Sign In to 1Password
 
 ```powershell
+
 # First time sign in
+
 op signin
 
 # Or if already configured
+
 op signin --account your-account.1password.com
+
 ```
 
-**Save your session:**
+## Save your session:
+
 ```powershell
+
 # This creates a session token
+
 $env:OP_SESSION_your_account = $(op signin --raw)
+
 ```
 
 ---
@@ -64,14 +82,19 @@ $env:OP_SESSION_your_account = $(op signin --raw)
 ### A. Create Vault for M365 RAG Project
 
 ```powershell
+
 # Create a dedicated vault (optional but recommended)
+
 op vault create "M365-RAG-Production"
+
 ```
 
 ### B. Store Credentials
 
 #### Hetzner Server
+
 ```powershell
+
 op item create `
   --category=server `
   --vault="M365-RAG-Production" `
@@ -80,10 +103,13 @@ op item create `
   ssh_user="root" `
   ssh_port="22" `
   --tags="hetzner,production"
+
 ```
 
 #### Azure AD / M365
+
 ```powershell
+
 op item create `
   --category="API Credential" `
   --vault="M365-RAG-Production" `
@@ -92,10 +118,13 @@ op item create `
   client_secret="YOUR_CLIENT_SECRET" `
   tenant_id="YOUR_TENANT_ID" `
   --tags="azure,m365"
+
 ```
 
 #### OpenAI API
+
 ```powershell
+
 op item create `
   --category="API Credential" `
   --vault="M365-RAG-Production" `
@@ -103,10 +132,13 @@ op item create `
   api_key="sk-YOUR_KEY" `
   organization_id="org-YOUR_ORG" `
   --tags="openai,api"
+
 ```
 
 #### Database Credentials
+
 ```powershell
+
 op item create `
   --category="Database" `
   --vault="M365-RAG-Production" `
@@ -117,10 +149,13 @@ op item create `
   hostname="postgres" `
   port="5432" `
   --tags="postgres,database"
+
 ```
 
 #### Elasticsearch
+
 ```powershell
+
 op item create `
   --category="Database" `
   --vault="M365-RAG-Production" `
@@ -130,10 +165,13 @@ op item create `
   hostname="elasticsearch" `
   port="9200" `
   --tags="elasticsearch"
+
 ```
 
 #### Redis
+
 ```powershell
+
 op item create `
   --category="Database" `
   --vault="M365-RAG-Production" `
@@ -142,10 +180,13 @@ op item create `
   hostname="redis" `
   port="6379" `
   --tags="redis"
+
 ```
 
 #### MinIO
+
 ```powershell
+
 op item create `
   --category="API Credential" `
   --vault="M365-RAG-Production" `
@@ -155,16 +196,20 @@ op item create `
   endpoint="minio:9000" `
   bucket="m365-documents" `
   --tags="minio,storage"
+
 ```
 
 #### JWT Secret
+
 ```powershell
+
 op item create `
   --category="Password" `
   --vault="M365-RAG-Production" `
   --title="M365 RAG JWT Secret" `
   password[password]="$(openssl rand -hex 32)" `
   --tags="jwt,api"
+
 ```
 
 ---
@@ -174,6 +219,7 @@ op item create `
 Create a PowerShell script to generate `.env` from 1Password:
 
 ```powershell
+
 # Save as: scripts/generate-env-from-1password.ps1
 
 <#
@@ -191,6 +237,7 @@ param(
 )
 
 # Ensure 1Password CLI is available
+
 if (-not (Get-Command op -ErrorAction SilentlyContinue)) {
     Write-Error "1Password CLI (op) not found. Please install it first."
     exit 1
@@ -199,6 +246,7 @@ if (-not (Get-Command op -ErrorAction SilentlyContinue)) {
 Write-Host "🔐 Fetching credentials from 1Password..." -ForegroundColor Cyan
 
 # Get credentials from 1Password
+
 $azureClientId = op item get "Azure AD M365 RAG App" --vault $Vault --fields client_id
 $azureClientSecret = op item get "Azure AD M365 RAG App" --vault $Vault --fields client_secret
 $azureTenantId = op item get "Azure AD M365 RAG App" --vault $Vault --fields tenant_id
@@ -218,26 +266,40 @@ $jwtSecret = op item get "M365 RAG JWT Secret" --vault $Vault --fields password
 $hetznerIp = op item get "Hetzner AX52 Server" --vault $Vault --fields server_ip
 
 # Generate .env file
+
 $envContent = @"
-# ============================================
-# M365 RAG System - Environment Configuration
-# Generated from 1Password on $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
-# ============================================
-# WARNING: This file is auto-generated. Do not edit manually.
-# Update credentials in 1Password and regenerate this file.
-# ============================================
 
 # ============================================
+
+# M365 RAG System - Environment Configuration
+
+# Generated from 1Password on $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+
+# ============================================ (2)
+
+# WARNING: This file is auto-generated. Do not edit manually
+
+# Update credentials in 1Password and regenerate this file
+
+# ============================================ (3)
+
+# ============================================ (4)
+
 # DATABASE & STORAGE
-# ============================================
+
+# ============================================ (5)
+
 DATABASE_URL=postgresql://raguser:$postgresPassword@postgres:5432/m365_rag
 POSTGRES_USER=raguser
 POSTGRES_PASSWORD=$postgresPassword
 POSTGRES_DB=m365_rag
 
-# ============================================
-# ELASTICSEARCH
-# ============================================
+# ============================================ (6)
+
+# ELASTICSEARCH (2)
+
+# ============================================ (7)
+
 ES_HOST=elasticsearch
 ES_PORT=9200
 ES_USER=elastic
@@ -245,59 +307,87 @@ ES_PASSWORD=$esPassword
 ES_USE_SSL=true
 ES_VERIFY_CERTS=false
 
-# ============================================
-# REDIS
-# ============================================
+# ============================================ (8)
+
+# REDIS (2)
+
+# ============================================ (9)
+
 REDIS_URL=redis://:$redisPassword@redis:6379
 REDIS_PASSWORD=$redisPassword
 
-# ============================================
+# ============================================ (10)
+
 # MINIO (S3-compatible storage)
-# ============================================
+
+# ============================================ (11)
+
 MINIO_ENDPOINT=minio:9000
 MINIO_ACCESS_KEY=$minioAccessKey
 MINIO_SECRET_KEY=$minioSecretKey
 MINIO_BUCKET=m365-documents
 
-# ============================================
+# ============================================ (12)
+
 # MICROSOFT 365 / AZURE AD
-# ============================================
+
+# ============================================ (13)
+
 AZURE_CLIENT_ID=$azureClientId
 AZURE_CLIENT_SECRET=$azureClientSecret
 AZURE_TENANT_ID=$azureTenantId
 M365_USE_DELEGATED_AUTH=false
 
-# ============================================
+# ============================================ (14)
+
 # OPENAI
-# ============================================
+
+# ============================================ (15)
+
 OPENAI_API_KEY=$openaiKey
 OPENAI_ORG_ID=$openaiOrg
 
-# ============================================
+# ============================================ (16)
+
 # SECURITY
-# ============================================
+
+# ============================================ (17)
+
 JWT_SECRET=$jwtSecret
 API_KEY=$(openssl rand -hex 32)
 
-# ============================================
-# HETZNER SERVER
-# ============================================
+# ============================================ (18)
+
+# HETZNER SERVER (2)
+
+# ============================================ (19)
+
 HETZNER_SERVER_IP=$hetznerIp
 
-# ============================================
+# ============================================ (20)
+
 # OPTIONAL: EMAIL ALERTS
-# ============================================
+
+# ============================================ (21)
+
 # SMTP_HOST=smtp.gmail.com
+
 # SMTP_PORT=587
+
 # SMTP_USER=your-email@gmail.com
+
 # SMTP_PASSWORD=your-app-password
+
 # ALERT_EMAIL=admin@yourdomain.com
+
 "@
 
 # Write to file
+
 $envContent | Out-File -FilePath $OutputFile -Encoding UTF8 -NoNewline
 
 # Set secure permissions (Windows)
+
 $acl = Get-Acl $OutputFile
 $acl.SetAccessRuleProtection($true, $false)
 $rule = New-Object System.Security.AccessControl.FileSystemAccessRule(
@@ -316,6 +406,7 @@ Write-Host "⚠️  Remember:" -ForegroundColor Yellow
 Write-Host "   - Never commit .env to git" -ForegroundColor Yellow
 Write-Host "   - Regenerate this file after updating 1Password" -ForegroundColor Yellow
 Write-Host "   - Keep 1Password vault locked when not in use" -ForegroundColor Yellow
+
 ```
 
 ---
@@ -323,11 +414,15 @@ Write-Host "   - Keep 1Password vault locked when not in use" -ForegroundColor Y
 ## Step 5: Generate .env File
 
 ```powershell
+
 # Navigate to project root
+
 cd apps/hetzner-m365-rag
 
 # Generate .env from 1Password
+
 .\scripts\generate-env-from-1password.ps1
+
 ```
 
 ---
@@ -337,21 +432,28 @@ cd apps/hetzner-m365-rag
 ### Quick Reference Commands
 
 ```powershell
+
 # Get Azure Client ID
+
 op item get "Azure AD M365 RAG App" --vault M365-RAG-Production --fields client_id
 
 # Get OpenAI API Key
+
 op item get "OpenAI API Key" --vault M365-RAG-Production --fields api_key
 
 # Get PostgreSQL Password
+
 op item get "M365 RAG PostgreSQL" --vault M365-RAG-Production --fields password
 
 # Get Hetzner Server IP
+
 op item get "Hetzner AX52 Server" --vault M365-RAG-Production --fields server_ip
 
 # SSH to Hetzner (using 1Password)
+
 $HETZNER_IP = op item get "Hetzner AX52 Server" --vault M365-RAG-Production --fields server_ip
 ssh root@$HETZNER_IP
+
 ```
 
 ---
@@ -361,17 +463,23 @@ ssh root@$HETZNER_IP
 ### When Rotating Credentials
 
 ```powershell
+
 # Update Azure Client Secret
+
 op item edit "Azure AD M365 RAG App" --vault M365-RAG-Production client_secret="NEW_SECRET"
 
 # Update OpenAI API Key
+
 op item edit "OpenAI API Key" --vault M365-RAG-Production api_key="NEW_KEY"
 
 # Regenerate .env file
+
 .\scripts\generate-env-from-1password.ps1
 
 # Restart services to use new credentials
+
 docker compose restart
+
 ```
 
 ---
@@ -381,18 +489,23 @@ docker compose restart
 ### Share Vault with Team
 
 ```powershell
+
 # Invite team member to vault
+
 op vault user grant --vault M365-RAG-Production --user teammate@company.com
 
 # Set permissions (view_items, create_items, edit_items, etc.)
+
 op vault user set-role --vault M365-RAG-Production --user teammate@company.com --role manager
+
 ```
 
 ---
 
 ## Security Best Practices
 
-### ✅ DO:
+### ✅ DO
+
 - **Store ALL credentials in 1Password**
 - **Use service accounts for API access**
 - **Rotate credentials every 6-12 months**
@@ -401,7 +514,8 @@ op vault user set-role --vault M365-RAG-Production --user teammate@company.com -
 - **Lock 1Password when not in use**
 - **Use strong master password**
 
-### ❌ DON'T:
+### ❌ DON'T
+
 - **Never commit .env to git** (already in .gitignore)
 - **Never share credentials via email/chat**
 - **Never store credentials in code comments**
@@ -415,7 +529,9 @@ op vault user set-role --vault M365-RAG-Production --user teammate@company.com -
 ### GitHub Actions with 1Password
 
 ```yaml
+
 # .github/workflows/deploy.yml
+
 name: Deploy to Hetzner
 
 on:
@@ -426,9 +542,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+
       - uses: actions/checkout@v3
-      
+
       - name: Install 1Password CLI
+
         uses: 1password/load-secrets-action@v1
         with:
           export-env: true
@@ -437,10 +555,12 @@ jobs:
           AZURE_CLIENT_ID: op://M365-RAG-Production/Azure AD M365 RAG App/client_id
           AZURE_CLIENT_SECRET: op://M365-RAG-Production/Azure AD M365 RAG App/client_secret
           OPENAI_API_KEY: op://M365-RAG-Production/OpenAI API Key/api_key
-      
+
       - name: Deploy
+
         run: |
           # Your deployment commands here
+
 ```
 
 ---
@@ -448,30 +568,45 @@ jobs:
 ## Troubleshooting
 
 ### Issue: "op not found"
+
 ```powershell
+
 # Add to PATH (Windows)
+
 $env:PATH += ";C:\Program Files\1Password CLI"
 
 # Or reinstall
+
 winget install --id AgileBits.1Password.CLI
+
 ```
 
 ### Issue: "Authentication required"
+
 ```powershell
+
 # Sign in again
+
 op signin
 
 # Or check session
+
 op whoami
+
 ```
 
 ### Issue: "Item not found"
+
 ```powershell
+
 # List all items in vault
+
 op item list --vault M365-RAG-Production
 
 # Search for item
+
 op item get "Azure AD" --vault M365-RAG-Production
+
 ```
 
 ---
@@ -498,7 +633,7 @@ op item get "Azure AD" --vault M365-RAG-Production
 
 ---
 
-**Next Steps:**
+## Next Steps:
 
 1. Install 1Password CLI (see above)
 2. Store your credentials in 1Password
@@ -506,4 +641,3 @@ op item get "Azure AD" --vault M365-RAG-Production
 4. Continue with deployment using secure credentials!
 
 🔐 **Your credentials are now secure!**
-

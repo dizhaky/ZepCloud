@@ -1,8 +1,8 @@
 # ✅ HETZNER M365 RAG - DEPLOYMENT PACKAGE READY
 
-**Status:** 🎯 **100% PREPARED - AWAITING SERVER ORDER**  
-**Date:** 2025-10-19  
-**Preparation Time:** 90 minutes  
+**Status:** 🎯 **100% PREPARED - AWAITING SERVER ORDER**
+**Date:** 2025-10-19
+**Preparation Time:** 90 minutes
 **Remaining Time:** ~3-4 hours (including server provisioning)
 
 ---
@@ -73,7 +73,7 @@ Ready to execute:
 
 - `scripts/prepare-env.ps1` - Environment setup ✅ Tested
 - `scripts/deploy.sh` - Main deployment automation
-- `scripts/backup.sh` - Daily backup automation  
+- `scripts/backup.sh` - Daily backup automation
 - `scripts/restore.sh` - Disaster recovery
 - `scripts/verify-production.sh` - Health monitoring
 
@@ -93,7 +93,8 @@ Ready to execute:
 
 **Why:** Required for M365 SharePoint/OneDrive integration
 
-**Steps:**
+## Steps:
+
 1. Go to https://portal.azure.com
 2. Navigate: Azure Active Directory > App registrations > New registration
 3. Configure:
@@ -102,7 +103,7 @@ Ready to execute:
    - Redirect URI: http://localhost:8000
 4. Get these values:
    - Application (client) ID
-   - Directory (tenant) ID  
+   - Directory (tenant) ID
    - Create client secret
 5. Add permissions:
    - Files.ReadWrite.All
@@ -117,14 +118,17 @@ Ready to execute:
 
 **File Location:** `C:\Dev\ZepCloud\apps\hetzner-m365-rag\.env`
 
-**Replace these lines:**
+## Replace these lines:
+
 ```bash
+
 M365_CLIENT_ID=YOUR_AZURE_APP_CLIENT_ID_HERE
 M365_CLIENT_SECRET=YOUR_AZURE_APP_CLIENT_SECRET_HERE
 M365_TENANT_ID=YOUR_AZURE_TENANT_ID_HERE
+
 ```
 
-**With your Azure AD values from Action 1**
+## With your Azure AD values from Action 1
 
 ---
 
@@ -134,7 +138,8 @@ M365_TENANT_ID=YOUR_AZURE_TENANT_ID_HERE
 
 **Order URL:** https://www.hetzner.com/dedicated-rootserver/matrix-ax
 
-**Configuration:**
+## Configuration:
+
 - Model: AX52
 - CPU: AMD Ryzen 9 5950X (16 cores)
 - RAM: 128GB DDR4 ECC
@@ -147,28 +152,36 @@ M365_TENANT_ID=YOUR_AZURE_TENANT_ID_HERE
 
 #### Step 2: Deploy When Server Ready (30 min)
 
-**Quick Deploy Commands:**
+## Quick Deploy Commands:
+
 ```powershell
+
 # 1. Create deployment archive
+
 cd C:\Dev\ZepCloud\apps\hetzner-m365-rag
 wsl tar -czf ../hetzner-deploy.tar.gz .
 
 # 2. Upload to server
+
 scp ../hetzner-deploy.tar.gz root@SERVER_IP:/tmp/
 
 # 3. Deploy (SSH into server first)
+
 ssh root@SERVER_IP
 cd /tmp && tar -xzf hetzner-deploy.tar.gz -C /opt/ && \
 mv /opt/hetzner-m365-rag /opt/m365-rag && \
 cd /opt/m365-rag && chmod +x scripts/*.sh && \
 ./scripts/deploy.sh
+
 ```
 
 #### Step 3: Verify Deployment (5 min)
 
 ```bash
+
 docker compose ps
 curl http://localhost:8000/health
+
 ```
 
 ---
@@ -193,14 +206,14 @@ curl http://localhost:8000/health
 | - Run deployment | 15 min | ⏳ |
 | - Verify & test | 15 min | ⏳ |
 
-**Total Preparation:** ✅ 90 minutes COMPLETE  
+**Total Preparation:** ✅ 90 minutes COMPLETE
 **Total Remaining:** ⏳ 3-5 hours (mostly waiting)
 
 ---
 
 ## 🎯 IMMEDIATE NEXT STEPS
 
-### Right Now (17 minutes):
+### Right Now (17 minutes)
 
 1. **Create Azure AD App Registration** ← START HERE
    - Open: https://portal.azure.com
@@ -212,7 +225,7 @@ curl http://localhost:8000/health
    - Add Azure AD credentials
    - Time: 2 minutes
 
-### Then (2-4 hours):
+### Then (2-4 hours)
 
 3. **Order Hetzner Server**
    - URL: https://www.hetzner.com/dedicated-rootserver/matrix-ax
@@ -234,11 +247,13 @@ curl http://localhost:8000/health
 ## 📁 KEY FILES REFERENCE
 
 ### Configuration
+
 - `.env` - Environment variables (ADD AZURE AD CREDENTIALS)
 - `PASSWORDS_GENERATED.txt` - Password reference
 - `docker-compose.yml` - Service orchestration
 
-### Documentation  
+### Documentation
+
 - `DEPLOYMENT_READY_GUIDE.md` - Complete deployment guide ⭐
 - `HETZNER_SERVER_SETUP.md` - Server ordering & setup ⭐
 - `DEPLOYMENT_STATUS.md` - Status tracking
@@ -246,6 +261,7 @@ curl http://localhost:8000/health
 - `docs/M365_ENV_VARIABLES.md` - M365 configuration details
 
 ### Scripts
+
 - `scripts/prepare-env.ps1` - Environment setup (already run ✅)
 - `scripts/deploy.sh` - Main deployment automation
 - `scripts/backup.sh` - Backup automation
@@ -267,34 +283,38 @@ curl http://localhost:8000/health
 
 ## 💰 COST SUMMARY
 
-**Hetzner AX52:** €108/month ($117 USD)  
-**Azure Alternative:** $800-1,500/month  
-**Annual Savings:** $8,000-14,000  
+**Hetzner AX52:** €108/month ($117 USD)
+**Azure Alternative:** $800-1,500/month
+**Annual Savings:** $8,000-14,000
 **ROI:** Break-even in 2 months
 
 ---
 
-## 🆘 NEED HELP?
+## 🆘 NEED HELP
 
-### Documentation
+### Documentation (2)
 
-**Quick Start:** This file  
-**Complete Guide:** `DEPLOYMENT_READY_GUIDE.md`  
-**Server Setup:** `HETZNER_SERVER_SETUP.md`  
+**Quick Start:** This file
+**Complete Guide:** `DEPLOYMENT_READY_GUIDE.md`
+**Server Setup:** `HETZNER_SERVER_SETUP.md`
 **Troubleshooting:** `DEPLOYMENT_READY_GUIDE.md` (bottom section)
 
 ### Common Questions
 
-**Q: What if Azure AD setup is confusing?**  
+## Q: What if Azure AD setup is confusing?
+
 A: See detailed screenshot instructions in `DEPLOYMENT_READY_GUIDE.md` Step 1
 
-**Q: How do I know if deployment worked?**  
+## Q: How do I know if deployment worked?
+
 A: Run `docker compose ps` - all services should show "healthy"
 
-**Q: What if something fails?**  
+## Q: What if something fails?
+
 A: Check `DEPLOYMENT_READY_GUIDE.md` troubleshooting section
 
-**Q: How do I access Grafana?**  
+## Q: How do I access Grafana?
+
 A: http://SERVER_IP:3000, password in `PASSWORDS_GENERATED.txt`
 
 ---
@@ -318,9 +338,9 @@ Before you start:
 
 ---
 
-## 🚀 YOU'RE READY TO DEPLOY!
+## 🚀 YOU'RE READY TO DEPLOY
 
-**Everything is prepared. Just complete the 2 critical actions above and order your server.**
+## Everything is prepared. Just complete the 2 critical actions above and order your server.
 
 **Estimated Total Time to Production:** 3-4 hours (mostly waiting for server)
 
@@ -328,15 +348,14 @@ Before you start:
 
 ---
 
-**Status:** ✅ Preparation 100% Complete  
-**Next Action:** Create Azure AD App Registration (15 min)  
-**Then:** Order Hetzner AX52 Server  
+**Status:** ✅ Preparation 100% Complete
+**Next Action:** Create Azure AD App Registration (15 min)
+**Then:** Order Hetzner AX52 Server
 
 🎉 **Good luck with your deployment!**
 
 ---
 
-_Generated by Kilo Code AI Agent on 2025-10-19_  
-_All credentials secured in 1Password and .env files_  
+_Generated by Kilo Code AI Agent on 2025-10-19_
+_All credentials secured in 1Password and .env files_
 _Complete deployment knowledge stored in ByteRover_
-

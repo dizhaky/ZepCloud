@@ -8,11 +8,14 @@
 
 ## 🎯 Overview
 
-The TypingMind Integration provides the user interface for searching and interacting with the Azure RAG system. This component enables end-users to search through all indexed documents using natural language queries with AI-powered responses.
+The TypingMind Integration provides the user interface for searching and interacting with the Azure RAG system. This
+component enables end-users to search through all indexed documents using natural language queries with AI-powered
+  responses.
 
 ## 🏗️ Architecture
 
 ```
+
 ┌─────────────────────────────────────────────────────────────────┐
 │                      TypingMind Integration                     │
 ├─────────────────────────────────────────────────────────────────┤
@@ -40,6 +43,7 @@ The TypingMind Integration provides the user interface for searching and interac
 │  ├── typingmind-setup-instructions.md (Setup Guide)            │
 │  └── verify_typingmind_config.py (Validation)                  │
 └─────────────────────────────────────────────────────────────────┘
+
 ```
 
 ---
@@ -63,11 +67,15 @@ The TypingMind Integration provides the user interface for searching and interac
 #### Usage
 
 ```bash
+
 # Generate TypingMind configuration
+
 python3 generate-typingmind-config.py
 
 # Check generated configuration
+
 cat typingmind-azure-config.json
+
 ```
 
 #### Generated Configuration
@@ -83,7 +91,7 @@ cat typingmind-azure-config.json
 **Purpose:** TypingMind configuration for Azure AI Search integration
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (2)
 
 - **Azure AI Search Integration:** Complete search integration
 - **Enhanced Search Capabilities:** Advanced search features
@@ -94,6 +102,7 @@ cat typingmind-azure-config.json
 #### Configuration Structure
 
 ```json
+
 {
   "name": "Azure AI Search RAG",
   "type": "azure_search",
@@ -128,6 +137,7 @@ cat typingmind-azure-config.json
     }
   }
 }
+
 ```
 
 ### 3. Setup Instructions
@@ -136,7 +146,7 @@ cat typingmind-azure-config.json
 **Purpose:** Complete TypingMind setup guide
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (3)
 
 - **Step-by-step Guide:** Detailed setup instructions
 - **Configuration Import:** Import configuration into TypingMind
@@ -144,14 +154,18 @@ cat typingmind-azure-config.json
 - **Troubleshooting:** Common issue resolution
 - **Best Practices:** Usage recommendations
 
-#### Usage
+#### Usage (2)
 
 ```bash
+
 # View setup instructions
+
 cat typingmind-setup-instructions.md
 
 # Follow the guide
+
 open typingmind-setup-instructions.md
+
 ```
 
 #### Setup Steps
@@ -168,7 +182,7 @@ open typingmind-setup-instructions.md
 **Purpose:** Validate TypingMind configuration
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (4)
 
 - **Configuration Validation:** Validate TypingMind config
 - **Azure Connectivity:** Test Azure AI Search connection
@@ -176,14 +190,18 @@ open typingmind-setup-instructions.md
 - **Error Reporting:** Comprehensive error reporting
 - **Performance Testing:** Search performance validation
 
-#### Usage
+#### Usage (3)
 
 ```bash
+
 # Validate TypingMind configuration
+
 python3 verify_typingmind_config.py
 
 # Test search functionality
+
 python3 verify_typingmind_config.py --test-search
+
 ```
 
 #### Validation Checks
@@ -210,10 +228,12 @@ python3 verify_typingmind_config.py --test-search
 #### Example Queries
 
 ```
+
 Find all documents about employee benefits
 Show me presentations from last quarter
 Search for contracts with specific terms
 Find documents containing financial data
+
 ```
 
 ### 2. Enhanced Search Features
@@ -225,13 +245,15 @@ Find documents containing financial data
 - **Topic Clustering:** Group related documents
 - **Entity Relationships:** Find documents by shared entities
 
-#### Example Queries
+#### Example Queries (2)
 
 ```
+
 Find documents related to "Q4 budget planning"
 Show me all documents that reference "employee handbook"
 Find documents by the same author
 Group documents by topic
+
 ```
 
 #### Multimodal Content Search
@@ -241,13 +263,15 @@ Group documents by topic
 - **Image Search:** Find documents with images
 - **Content Type Filtering:** Filter by content types
 
-#### Example Queries
+#### Example Queries (3)
 
 ```
+
 Find documents with tables about financial data
 Show me documents containing mathematical equations
 Find presentations with images
 Filter documents by content type
+
 ```
 
 ### 3. Advanced Filtering
@@ -263,10 +287,12 @@ Filter documents by content type
 #### Example Filters
 
 ```
+
 has_tables eq true
 relationship_score gt 3.0
 metadata_storage_path contains "HR"
 metadata_storage_name contains "budget"
+
 ```
 
 ---
@@ -276,41 +302,56 @@ metadata_storage_name contains "budget"
 ### 1. Generate Configuration
 
 ```bash
-# Generate TypingMind configuration
+
+# Generate TypingMind configuration (2)
+
 python3 generate-typingmind-config.py
 
-# Check generated configuration
+# Check generated configuration (2)
+
 cat typingmind-azure-config.json
+
 ```
 
 ### 2. Import into TypingMind
 
 ```bash
+
 # Follow setup instructions
+
 cat typingmind-setup-instructions.md
 
 # Or open the guide
+
 open typingmind-setup-instructions.md
+
 ```
 
 ### 3. Test Configuration
 
 ```bash
+
 # Validate configuration
+
 python3 verify_typingmind_config.py
 
-# Test search functionality
+# Test search functionality (2)
+
 python3 verify_typingmind_config.py --test-search
+
 ```
 
 ### 4. Test Search
 
 ```bash
+
 # Test basic search
+
 curl -X POST "https://your-search-service.search.windows.net/indexes/training-data-index/docs/search?api-version=2023-11-01" \
   -H "Content-Type: application/json" \
   -H "api-key: your-admin-key" \
   -d '{"search": "employee benefits", "top": 5}'
+
 ```
 
 ---
@@ -326,15 +367,19 @@ curl -X POST "https://your-search-service.search.windows.net/indexes/training-da
 #### Required Variables
 
 ```bash
+
 # Azure AI Search
+
 AZURE_SEARCH_SERVICE_NAME=your-search-service
 AZURE_SEARCH_ADMIN_KEY=your-admin-key
 AZURE_SEARCH_INDEX_NAME=training-data-index
 
 # Optional: Custom settings
+
 TYPINGMIND_RESPONSE_LENGTH=2000
 TYPINGMIND_MAX_RESULTS=10
 TYPINGMIND_HIGHLIGHT=true
+
 ```
 
 ### TypingMind Configuration
@@ -385,46 +430,63 @@ TYPINGMIND_HIGHLIGHT=true
 #### Issue: Configuration Import Failed
 
 ```bash
+
 # Check configuration format
+
 python3 -c "import json; json.load(open('typingmind-azure-config.json'))"
 
-# Validate configuration
+# Validate configuration (2)
+
 python3 verify_typingmind_config.py
+
 ```
 
 #### Issue: Search Not Working
 
 ```bash
+
 # Test Azure connectivity
+
 python3 verify_typingmind_config.py --test-search
 
 # Check Azure credentials
+
 grep AZURE_SEARCH_SERVICE_NAME .env
 grep AZURE_SEARCH_ADMIN_KEY .env
+
 ```
 
 #### Issue: No Results Found
 
 ```bash
+
 # Check index status
+
 python3 maintenance.py --non-interactive --action status
 
 # Verify document count
+
 curl -X GET "https://your-search-service.search.windows.net/indexes/training-data-index/stats?api-version=2023-11-01" \
   -H "api-key: your-admin-key"
+
 ```
 
 ### Debug Commands
 
 ```bash
-# Validate configuration
+
+# Validate configuration (3)
+
 python3 verify_typingmind_config.py
 
 # Test search
+
 python3 verify_typingmind_config.py --test-search
 
 # Check Azure status
+
 python3 maintenance.py --non-interactive --action health
+
 ```
 
 ---
@@ -472,9 +534,12 @@ python3 maintenance.py --non-interactive --action health
 ### Commands
 
 ```bash
+
 # Get help
+
 python3 generate-typingmind-config.py --help
 python3 verify_typingmind_config.py --help
+
 ```
 
 ### External Resources
@@ -491,5 +556,4 @@ python3 verify_typingmind_config.py --help
 **Grade:** A+ (98/100)
 **Completion:** 99.5%
 
-**🏆 All objectives achieved and exceeded! 🎉**
-
+## 🏆 All objectives achieved and exceeded! 🎉

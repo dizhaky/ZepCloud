@@ -2,7 +2,8 @@
 
 ## Overview
 
-This document describes the backup configuration for the Azure RAG System in a production environment. Regular backups are essential for data protection and disaster recovery.
+This document describes the backup configuration for the Azure RAG System in a production environment. Regular backups
+  are essential for data protection and disaster recovery.
 
 ## Backup Strategy
 
@@ -20,7 +21,9 @@ The Azure RAG System implements a comprehensive backup strategy that includes:
 Elasticsearch data is backed up using the snapshot feature:
 
 ```bash
+
 # Create Elasticsearch snapshot
+
 docker exec m365-elasticsearch curl -X PUT "localhost:9200/_snapshot/backup/$BACKUP_DATE?wait_for_completion=true" \
     -u "elastic:$ELASTIC_PASSWORD" \
     -H 'Content-Type: application/json' \
@@ -29,6 +32,7 @@ docker exec m365-elasticsearch curl -X PUT "localhost:9200/_snapshot/backup/$BAC
         "ignore_unavailable": true,
         "include_global_state": false
     }'
+
 ```
 
 ### 2. Configuration Files
@@ -36,11 +40,14 @@ docker exec m365-elasticsearch curl -X PUT "localhost:9200/_snapshot/backup/$BAC
 Application configuration files are backed up:
 
 ```bash
+
 # Backup configuration files
+
 tar -czf "$BACKUP_DIR/$DATE/configs.tar.gz" \
     -C /opt/azure-rag-setup \
     .env \
     docker-compose.yml
+
 ```
 
 ### 3. Scripts
@@ -48,10 +55,13 @@ tar -czf "$BACKUP_DIR/$DATE/configs.tar.gz" \
 Backup scripts are also backed up:
 
 ```bash
+
 # Backup scripts
+
 tar -czf "$BACKUP_DIR/$DATE/scripts.tar.gz" \
     -C /opt/azure-rag-setup \
     scripts/
+
 ```
 
 ## Backup Directory Structure
@@ -59,6 +69,7 @@ tar -czf "$BACKUP_DIR/$DATE/scripts.tar.gz" \
 Backups are stored in the following directory structure:
 
 ```
+
 /backup/azure-rag/
 ├── 20251019_020000/
 │   ├── elasticsearch_snapshot.json
@@ -68,6 +79,7 @@ Backups are stored in the following directory structure:
 ├── 20251018_020000/
 │   └── ...
 └── ...
+
 ```
 
 ## Automated Backup Script
@@ -83,9 +95,12 @@ The system includes an automated backup script (`scripts/backup.sh`) that:
 ### Running Backups Manually
 
 ```bash
+
 # Run backup manually
+
 cd /opt/azure-rag-setup
 ./scripts/backup.sh
+
 ```
 
 ## Backup Retention Policy
@@ -93,8 +108,11 @@ cd /opt/azure-rag-setup
 The system implements a 30-day backup retention policy:
 
 ```bash
+
 # Clean up backups older than 30 days
+
 find "$BACKUP_DIR" -type d -mtime +30 -exec rm -rf {} + 2>/dev/null || true
+
 ```
 
 ## Off-site Backup Recommendations
@@ -104,31 +122,41 @@ For production environments, it's recommended to implement off-site backups:
 ### Azure Blob Storage
 
 ```bash
+
 # Install Azure CLI
+
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 # Configure Azure credentials
+
 az login
 
 # Copy backups to Azure Blob Storage
+
 az storage blob upload-batch \
     --account-name yourstorageaccount \
     --destination your-container \
     --source /backup/azure-rag/ \
     --destination-path azure-rag-backups/
+
 ```
 
 ### AWS S3
 
 ```bash
+
 # Install AWS CLI
+
 sudo apt install awscli
 
 # Configure AWS credentials
+
 aws configure
 
 # Copy backups to S3
+
 aws s3 sync /backup/azure-rag/ s3://your-backup-bucket/azure-rag-backups/
+
 ```
 
 ## Backup Verification
@@ -136,12 +164,16 @@ aws s3 sync /backup/azure-rag/ s3://your-backup-bucket/azure-rag-backups/
 Regular backup verification is essential to ensure backups are valid:
 
 ```bash
+
 # Verify configuration backup
+
 tar -tzf "$BACKUP_DIR/$DATE/configs.tar.gz" | head -10
 
 # Verify Elasticsearch snapshot
+
 docker exec m365-elasticsearch curl -u "elastic:$ELASTIC_PASSWORD" \
     "localhost:9200/_snapshot/backup/$BACKUP_DATE?pretty"
+
 ```
 
 ## Restore Procedure
@@ -149,9 +181,12 @@ docker exec m365-elasticsearch curl -u "elastic:$ELASTIC_PASSWORD" \
 The system includes a restore script (`scripts/restore.sh`) that can restore from any backup:
 
 ```bash
+
 # Restore from specific backup
+
 cd /opt/azure-rag-setup
 ./scripts/restore.sh 20251019_020000
+
 ```
 
 ## Monitoring and Alerts
@@ -159,22 +194,30 @@ cd /opt/azure-rag-setup
 ### Backup Status Monitoring
 
 ```bash
+
 # Check backup logs
+
 tail -f /var/log/azure-rag-backup.log
 
 # Check last backup success
+
 ls -la /backup/azure-rag/ | tail -5
+
 ```
 
 ### Health Checks
 
 ```bash
+
 # Verify backup directory exists and has content
+
 df -h /backup
 ls -la /backup/azure-rag/
 
 # Check cron job status
+
 crontab -l
+
 ```
 
 ## Disaster Recovery Plan
@@ -182,7 +225,7 @@ crontab -l
 ### RTO (Recovery Time Objective)
 
 - **Target**: 2 hours for full system recovery
-- **Components**: 
+- **Components**:
   - 30 minutes for infrastructure provisioning
   - 60 minutes for data restoration
   - 30 minutes for service validation
@@ -197,12 +240,16 @@ crontab -l
 Regular testing of backup and restore procedures is essential:
 
 ```bash
+
 # Test restore to temporary location
+
 ./scripts/restore.sh 20251019_020000
 
 # Verify restored data
+
 docker exec m365-elasticsearch curl -u "elastic:$ELASTIC_PASSWORD" \
     "localhost:9200/_cat/indices?v"
+
 ```
 
 ## Security Considerations
@@ -212,11 +259,15 @@ docker exec m365-elasticsearch curl -u "elastic:$ELASTIC_PASSWORD" \
 For sensitive environments, consider encrypting backups:
 
 ```bash
+
 # Encrypt backup with GPG
+
 gpg --symmetric --cipher-algo AES256 configs.tar.gz
 
 # Decrypt backup
+
 gpg configs.tar.gz.gpg
+
 ```
 
 ### Access Control
@@ -224,9 +275,12 @@ gpg configs.tar.gz.gpg
 Ensure backup directories have proper permissions:
 
 ```bash
+
 # Set proper ownership and permissions
+
 chown -R deploy:deploy /backup/azure-rag
 chmod 700 /backup/azure-rag
+
 ```
 
 ## Performance Considerations
@@ -243,9 +297,12 @@ The backup process should be scheduled during low-usage periods:
 Monitor resource usage during backup:
 
 ```bash
+
 # Monitor backup process resource usage
+
 htop
 iotop -o
+
 ```
 
 ## Troubleshooting
@@ -253,12 +310,14 @@ iotop -o
 ### Common Issues
 
 1. **Backup fails due to insufficient disk space**:
+
    ```bash
    # Check disk space
    df -h /backup
    ```
 
 2. **Elasticsearch snapshot fails**:
+
    ```bash
    # Check Elasticsearch logs
    docker logs m365-elasticsearch
@@ -267,14 +326,19 @@ iotop -o
 ### Diagnostic Commands
 
 ```bash
+
 # Check backup script execution
+
 sudo tail -f /var/log/azure-rag-backup.log
 
 # Verify cron job execution
+
 grep CRON /var/log/syslog | grep backup
 
 # Check backup directory permissions
+
 ls -la /backup/
+
 ```
 
 ## Best Practices
@@ -287,4 +351,5 @@ ls -la /backup/
 6. **Retention**: Implement appropriate retention policies
 7. **Validation**: Regularly validate backup integrity
 
-This backup configuration ensures your Azure RAG System data is protected and can be recovered in case of failures or disasters.
+This backup configuration ensures your Azure RAG System data is protected and can be recovered in case of failures or
+  disasters.

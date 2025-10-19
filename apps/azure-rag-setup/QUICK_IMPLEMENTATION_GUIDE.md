@@ -18,7 +18,9 @@
 ### **Step 2: Run Implementation Script (3 minutes)**
 
 ```bash
+
 ./implement_m365_integration.sh
+
 ```
 
 This script will:
@@ -58,29 +60,39 @@ This script will:
 If you prefer to run commands manually:
 
 ```bash
+
 # 1. Test authentication
+
 python3 m365_indexer.py test-auth
 
 # 2. Estimate data volume
+
 python3 m365_indexer.py estimate
 
 # 3. Start with SharePoint (MVP)
+
 python3 m365_indexer.py sync-sharepoint
 
 # 4. Add OneDrive indexing
+
 python3 m365_indexer.py sync-onedrive
 
 # 5. Add Exchange indexing
+
 python3 m365_indexer.py sync-exchange
 
 # 6. Full M365 sync (all services)
+
 python3 m365_indexer.py sync
 
 # 7. Check status
+
 python3 m365_indexer.py status
 
 # 8. System health check
+
 python3 maintenance.py --non-interactive --action health
+
 ```
 
 ## 📊 **Monitoring & Status**
@@ -88,26 +100,35 @@ python3 maintenance.py --non-interactive --action health
 ### **Check Sync Status**
 
 ```bash
+
 python3 m365_indexer.py status
+
 ```
 
 ### **System Health**
 
 ```bash
+
 python3 maintenance.py --non-interactive --action health
+
 ```
 
 ### **Individual Service Status**
 
 ```bash
+
 # SharePoint only
+
 python3 m365_indexer.py sync-sharepoint --status
 
 # OneDrive only
+
 python3 m365_indexer.py sync-onedrive --status
 
 # Exchange only
+
 python3 m365_indexer.py sync-exchange --status
+
 ```
 
 ## 🔄 **Automated Scheduling**
@@ -115,11 +136,15 @@ python3 m365_indexer.py sync-exchange --status
 ### **Set up Cron Jobs**
 
 ```bash
+
 # Add to crontab for hourly incremental sync
+
 0 * * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 m365_indexer.py sync
 
 # Daily health check
+
 0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action health
+
 ```
 
 ## 🎉 **SUCCESS INDICATORS**
@@ -177,6 +202,6 @@ python3 m365_indexer.py sync-exchange --status
 
 ## 🎯 **READY TO IMPLEMENT!**
 
-**The Microsoft 365 integration is 100% complete and ready for production use!**
+## The Microsoft 365 integration is 100% complete and ready for production use!
 
 **Next step:** Add the API permissions and run `./implement_m365_integration.sh` 🚀

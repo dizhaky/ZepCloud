@@ -2,7 +2,8 @@
 
 ## 🎯 Current Status: IMPLEMENTATION COMPLETE
 
-The complete Elasticsearch-based RAG system with RAG-Anything and OlmoCR integration has been successfully implemented and is **ready for comprehensive testing**.
+The complete Elasticsearch-based RAG system with RAG-Anything and OlmoCR integration has been successfully implemented
+  and is **ready for comprehensive testing**.
 
 ## 📊 Cost Savings Achieved
 
@@ -38,46 +39,67 @@ The complete Elasticsearch-based RAG system with RAG-Anything and OlmoCR integra
 ### 1. Infrastructure Testing
 
 ```bash
+
 # Start the complete infrastructure
+
 docker-compose up -d
 
 # Wait for services to be ready (60 seconds)
+
 sleep 60
 
 # Verify all services are running
+
 curl -u elastic:YourStrongPassword123! http://localhost:9200
 curl http://localhost:5601  # Kibana
 curl http://localhost:9998/tika  # Apache Tika
+
 ```
 
 ### 2. API Testing
 
 ```bash
+
 # Run comprehensive integration test
+
 python test_elasticsearch_integration.py
 
-# Expected results:
+# Expected results
+
 # ✅ Elasticsearch Connection - PASSED
+
 # ✅ Apache Tika Connection - PASSED
+
 # ✅ API Server Health - PASSED
+
 # ✅ Search Functionality - PASSED
+
 # ✅ Enhanced Features - PASSED
+
 # ✅ Multimodal Search - PASSED
+
 # ✅ Entity Search - PASSED
+
 # ✅ Statistics Endpoint - PASSED
+
 ```
 
 ### 3. Data Synchronization Testing
 
 ```bash
+
 # Start the API server
+
 python api_server.py
 
 # In another terminal, sync M365 data
+
 python m365_sync_elasticsearch.py
 
 # Monitor progress in logs
+
 tail -f m365_sync.log
+
 ```
 
 ### 4. TypingMind Integration Testing
@@ -85,6 +107,7 @@ tail -f m365_sync.log
 Update TypingMind configuration to use the new Elasticsearch API:
 
 ```json
+
 {
   "name": "M365 Elasticsearch with RAG-Anything",
   "endpoints": {
@@ -93,6 +116,7 @@ Update TypingMind configuration to use the new Elasticsearch API:
     "health": "/health"
   }
 }
+
 ```
 
 ## 🧪 Comprehensive Test Suite
@@ -207,42 +231,59 @@ The system includes a complete test suite that validates:
 #### Elasticsearch Won't Start
 
 ```bash
+
 # Check memory allocation
+
 docker-compose logs elasticsearch
 
 # Increase memory if needed
-# Edit docker-compose.yml:
+
+# Edit docker-compose.yml
+
 # - "ES_JAVA_OPTS=-Xms8g -Xmx8g"
+
 ```
 
 #### Authentication Failures
 
 ```bash
+
 # Verify Azure credentials
+
 python -c "from utils.graph_client import GraphClientWrapper; GraphClientWrapper()"
 
 # Check environment variables
+
 cat env.elasticsearch
+
 ```
 
 #### API Server Errors
 
 ```bash
+
 # Check Elasticsearch connectivity
+
 curl -u elastic:password http://localhost:9200/_cluster/health
 
 # Verify API server logs
+
 python api_server.py
+
 ```
 
 #### Slow Indexing
 
 ```bash
+
 # Adjust batch size in env.elasticsearch
+
 BATCH_SIZE=200  # Increase for faster processing
 
 # Check system resources
+
 docker stats
+
 ```
 
 ## 📈 Success Metrics
@@ -317,11 +358,11 @@ docker stats
 
 ---
 
-## 🎉 Ready for Testing!
+## 🎉 Ready for Testing
 
 The Elasticsearch + RAG-Anything + OlmoCR system is now **fully implemented and ready for comprehensive testing**.
 
-**Key Benefits:**
+## Key Benefits:
 
 - ✅ **80-90% cost savings** compared to Azure AI Search
 - ✅ **Enhanced capabilities** with multimodal processing
@@ -333,4 +374,5 @@ The Elasticsearch + RAG-Anything + OlmoCR system is now **fully implemented and 
 
 ---
 
-_This system provides a cost-effective, feature-rich alternative to Azure AI Search with advanced multimodal processing capabilities that exceed the original system's functionality._
+_This system provides a cost-effective, feature-rich alternative to Azure AI Search with advanced multimodal processing
+  capabilities that exceed the original system's functionality._

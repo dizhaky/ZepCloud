@@ -53,22 +53,30 @@
 ### **Option 1: Start Docker Desktop**
 
 ```bash
+
 # Start Docker Desktop application
+
 open -a "Docker Desktop"
 
-# Wait for Docker to start, then run:
+# Wait for Docker to start, then run
+
 docker-compose up -d
+
 ```
 
 ### **Option 2: Manual Elasticsearch Configuration**
 
 ```bash
+
 # Configure Elasticsearch for single-node mode
+
 cd elasticsearch-8.11.0
 ./bin/elasticsearch -E discovery.type=single-node -E xpack.security.enabled=false
 
-# Wait for startup, then test:
+# Wait for startup, then test
+
 curl http://localhost:9200
+
 ```
 
 ### **Option 3: Use Alternative Search Engine**
@@ -127,9 +135,10 @@ Even with mock data, the implementation provides:
 
 ## 🎉 **Implementation Status: COMPLETE**
 
-The Elasticsearch + RAG-Anything + OlmoCR system is **fully implemented** and ready. The only missing piece is the Elasticsearch infrastructure, which can be started with Docker or manual configuration.
+The Elasticsearch + RAG-Anything + OlmoCR system is **fully implemented** and ready. The only missing piece is the
+  Elasticsearch infrastructure, which can be started with Docker or manual configuration.
 
-**Key Achievements:**
+## Key Achievements:
 
 - ✅ **Complete implementation** with all 22 files
 - ✅ **API server operational** with mock data
@@ -137,8 +146,9 @@ The Elasticsearch + RAG-Anything + OlmoCR system is **fully implemented** and re
 - ✅ **TypingMind integration** ready
 - ✅ **80-90% cost savings** architecture ready
 
-**The system is ready for production deployment once Elasticsearch is running!**
+## The system is ready for production deployment once Elasticsearch is running!
 
 ---
 
-_This implementation provides a complete, production-ready Elasticsearch-based RAG system with advanced multimodal processing capabilities that exceed the original Azure AI Search functionality while providing 80-90% cost savings._
+_This implementation provides a complete, production-ready Elasticsearch-based RAG system with advanced multimodal
+  processing capabilities that exceed the original Azure AI Search functionality while providing 80-90% cost savings._

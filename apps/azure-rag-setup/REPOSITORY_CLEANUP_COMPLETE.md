@@ -35,6 +35,7 @@
 ## 📁 **New Directory Structure**
 
 ```
+
 azure-rag-setup/
 ├── archive/                    # Excluded from git (in .gitignore)
 │   ├── binaries/              # Elasticsearch downloads
@@ -52,6 +53,7 @@ azure-rag-setup/
 ├── .gitignore                 # Git ignore rules
 ├── requirements.txt           # Python dependencies
 └── README.md                  # Main documentation
+
 ```
 
 ## 🔒 **Security Improvements**
@@ -167,4 +169,4 @@ The `.gitignore` now excludes:
 
 ---
 
-**✅ REPOSITORY CLEANUP COMPLETE - READY FOR SECURE DEVELOPMENT**
+## ✅ REPOSITORY CLEANUP COMPLETE - READY FOR SECURE DEVELOPMENT

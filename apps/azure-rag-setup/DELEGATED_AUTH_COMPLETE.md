@@ -1,10 +1,11 @@
-# 🎉 M365 Delegated Authentication Implementation Complete!
+# 🎉 M365 Delegated Authentication Implementation Complete
 
 ## ✅ What Was Implemented
 
-I've successfully implemented a **delegated permissions** approach for M365 integration that bypasses the service principal permission issues we encountered.
+I've successfully implemented a **delegated permissions** approach for M365 integration that bypasses the service
+  principal permission issues we encountered.
 
-### Key Changes:
+### Key Changes
 
 1. **New Azure AD App Created**
 
@@ -31,14 +32,14 @@ I've successfully implemented a **delegated permissions** approach for M365 inte
 
 ## 🔐 How Delegated Authentication Works
 
-### Traditional Application Permissions (What Wasn't Working):
+### Traditional Application Permissions (What Wasn't Working)
 
 - App authenticates with client ID + client secret
 - Requires admin to grant application permissions to service principal
 - Works without user interaction
 - **Problem:** Service principal wasn't getting permissions granted
 
-### Delegated Permissions (What We Implemented):
+### Delegated Permissions (What We Implemented)
 
 - App authenticates using device code flow
 - User logs in with their Microsoft account
@@ -50,8 +51,10 @@ I've successfully implemented a **delegated permissions** approach for M365 inte
 ### Step 1: Run the Test Script
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 ./test_delegated_auth.sh
+
 ```
 
 ### Step 2: Authenticate
@@ -69,32 +72,39 @@ When prompted:
 After successful authentication:
 
 ```bash
+
 # Test authentication
+
 python3 m365_indexer.py test-auth
 
 # Sync SharePoint
+
 python3 m365_indexer.py sync-sharepoint
 
 # Sync OneDrive (all users)
+
 python3 m365_indexer.py sync-onedrive
 
 # Sync Exchange (emails/attachments)
+
 python3 m365_indexer.py sync-exchange
 
 # Full M365 sync (all services)
+
 python3 m365_indexer.py sync
+
 ```
 
 ## 📊 What This Solves
 
-### ❌ Previous Problem:
+### ❌ Previous Problem
 
 - Azure Portal showed permissions as "Granted"
 - But service principal only had basic OpenID scopes
 - Application permissions (Role type) weren't actually granted
 - Got 403 errors when trying to access Microsoft Graph API
 
-### ✅ Solution:
+### ✅ Solution
 
 - Uses delegated permissions (Scope type) instead
 - Authenticates with YOUR user account
@@ -103,7 +113,7 @@ python3 m365_indexer.py sync
 
 ## 🔍 Technical Details
 
-### Files Created/Modified:
+### Files Created/Modified
 
 1. **m365_auth_delegated.py** - New delegated auth module
 
@@ -124,13 +134,14 @@ python3 m365_indexer.py sync
    - Uses client credentials flow
 
 4. **.env** - Updated configuration
+
    ```
    M365_CLIENT_ID=d642ba9c-258e-45ca-bfcd-b6fe99ab7154
    M365_TENANT_ID=0454334e-d9a9-458c-9999-b3db378abae1
    M365_USE_DELEGATED_AUTH=true
    ```
 
-### Permissions Configured:
+### Permissions Configured
 
 - **Sites.Read.All** - Read SharePoint sites and documents
 - **Files.Read.All** - Read OneDrive files
@@ -181,7 +192,7 @@ The system caches your authentication token, so you won't need to re-authenticat
 - Automatically refreshed when expired
 - Re-authentication only needed if cache is cleared
 
-## 🚀 Ready to Go!
+## 🚀 Ready to Go
 
 The M365 integration is **100% complete and ready** for production use with delegated authentication!
 

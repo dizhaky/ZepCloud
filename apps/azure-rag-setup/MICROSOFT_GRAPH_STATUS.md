@@ -10,13 +10,13 @@
 
 ### **✅ GOOD NEWS: No Active Microsoft Graph Usage**
 
-**Processes Running:**
+## Processes Running:
 
 - ❌ No M365 sync processes running
 - ❌ No cron jobs scheduled
 - ❌ No active Microsoft Graph API calls
 
-**Configuration Files:**
+## Configuration Files:
 
 - ❌ No `.env` files with M365 credentials
 - ❌ No active configuration files
@@ -134,7 +134,7 @@
 **Cost Impact:** $0 (No active usage)
 **Risk Level:** LOW (Free within M365 license)
 
-**Summary:**
+## Summary:
 
 - No active Microsoft Graph usage
 - No cost exposure

@@ -5,6 +5,7 @@ A comprehensive development workspace for AI-powered applications and MCP (Model
 ## Project Structure
 
 ```
+
 ZepCloud/
 ├── apps/                          # Core applications
 │   ├── zepcloud-core/            # Main application
@@ -24,6 +25,7 @@ ZepCloud/
 │   └── guides/                   # Setup and usage guides
 ├── config/                       # Configuration files
 └── README.md                     # This file
+
 ```
 
 ## Components
@@ -63,7 +65,8 @@ ZepCloud/
 
 ## Development
 
-Each component has its own development environment and dependencies. Check individual component READMEs for specific setup instructions.
+Each component has its own development environment and dependencies. Check individual component READMEs for specific
+  setup instructions.
 
 ## Contributing
 

@@ -8,32 +8,32 @@
 
 ## 🎯 **TASK ACCOMPLISHED**
 
-**Successfully connected Microsoft Graph API to TypingMind with zero cloud costs!**
+## Successfully connected Microsoft Graph API to TypingMind with zero cloud costs!
 
 ### **✅ COMPLETED COMPONENTS:**
 
-**1. Microsoft Graph API Integration:**
+## 1. Microsoft Graph API Integration:
 
 - ✅ **Authentication:** WORKING (interactive browser auth)
 - ✅ **Data Access:** 178 SharePoint documents indexed
 - ✅ **User Info:** Dan Izhaky (dizhaky@unitedsafetytech.com)
 - ✅ **API Calls:** Fully functional
 
-**2. Local Storage System:**
+## 2. Local Storage System:
 
 - ✅ **Location:** `/Volumes/Express 1M2/m365_local_storage`
 - ✅ **Database:** SQLite with 178 documents
 - ✅ **Storage Size:** 276.75 MB
 - ✅ **Document Types:** SharePoint files indexed
 
-**3. TypingMind Integration:**
+## 3. TypingMind Integration:
 
 - ✅ **Search Service:** `typingmind_simple_search.py` (Flask API)
 - ✅ **Endpoints:** `/search`, `/health`, `/stats`
 - ✅ **Configuration:** `typingmind_local_config.json`
 - ✅ **Search Functionality:** Working (3 test results found)
 
-**4. Cost Elimination:**
+## 4. Cost Elimination:
 
 - ✅ **Azure AI Search:** DELETED (eliminated $200+/month)
 - ✅ **Azure Storage:** DELETED (eliminated $50+/month)
@@ -72,13 +72,15 @@
 ### **1. Start the Search Server:**
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 typingmind_simple_search.py
+
 ```
 
 ### **2. Configure TypingMind:**
 
-**Use these settings in TypingMind:**
+## Use these settings in TypingMind:
 
 - **Endpoint:** `http://localhost:5001/search`
 - **Service:** `local-m365-search`
@@ -157,7 +159,7 @@ python3 typingmind_simple_search.py
 
 ## 🎊 **CONGRATULATIONS!**
 
-**You now have:**
+## You now have:
 
 - ✅ **Microsoft Graph API** connected to TypingMind
 - ✅ **Zero cloud costs** - everything runs locally
@@ -170,7 +172,7 @@ python3 typingmind_simple_search.py
 
 ---
 
-**Next Steps:**
+## Next Steps:
 
 1. Start the search server: `python3 typingmind_simple_search.py`
 2. Configure TypingMind with the provided settings

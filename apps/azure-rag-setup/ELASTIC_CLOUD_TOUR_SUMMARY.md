@@ -206,7 +206,9 @@
 ### **1. Data Synchronization**
 
 ```bash
+
 python m365_sync_elasticsearch.py
+
 ```
 
 This will:
@@ -219,9 +221,11 @@ This will:
 ### **2. Test Search API**
 
 ```bash
+
 curl -X POST http://localhost:5001/search \
   -H "Content-Type: application/json" \
   -d '{"query": "test", "size": 10}'
+
 ```
 
 ### **3. Configure TypingMind**
@@ -266,4 +270,4 @@ curl -X POST http://localhost:5001/search \
 
 ---
 
-**✅ ELASTIC CLOUD TOUR COMPLETE - SYSTEM READY FOR PRODUCTION USE**
+## ✅ ELASTIC CLOUD TOUR COMPLETE - SYSTEM READY FOR PRODUCTION USE

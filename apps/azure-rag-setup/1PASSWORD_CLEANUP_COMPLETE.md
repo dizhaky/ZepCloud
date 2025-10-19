@@ -15,13 +15,13 @@ Successfully cleaned up and consolidated all 1Password integration files into or
 
 ### 📁 Documentation
 
-**Removed from root:**
+## Removed from root:
 
 - `1PASSWORD_INTEGRATION_COMPLETE.md`
 - `1PASSWORD_AZURE_SEARCH_SUMMARY.md`
 - `1PASSWORD_SETUP_GUIDE.md`
 
-**Created:**
+## Created:
 
 - `docs/security/1PASSWORD_GUIDE.md` - Comprehensive integration guide
 - `docs/security/README.md` - Security documentation index
@@ -29,14 +29,14 @@ Successfully cleaned up and consolidated all 1Password integration files into or
 
 ### 🔧 Scripts
 
-**Removed from root:**
+## Removed from root: (2)
 
 - `setup_azure_ad_1password.sh`
 - `get_m365_credentials.sh`
 - `setup_credentials_manual.sh`
 - `create_1password_azure_search.sh`
 
-**Created in scripts/1password/:**
+## Created in scripts/1password/:
 
 - `setup-azure-ad.sh` (moved + renamed)
 - `get-m365-credentials.sh` (moved + renamed)
@@ -55,6 +55,7 @@ Successfully cleaned up and consolidated all 1Password integration files into or
 ## New Structure
 
 ```
+
 azure-rag-setup/
 ├── docs/
 │   └── security/
@@ -74,6 +75,7 @@ azure-rag-setup/
 │       └── get-credentials.sh              # Generic retrieval
 │
 └── 1PASSWORD_CLEANUP_COMPLETE.md (this file)
+
 ```
 
 ---
@@ -83,25 +85,34 @@ azure-rag-setup/
 ### Documentation
 
 ```bash
+
 # Main guide
+
 open docs/security/1PASSWORD_GUIDE.md
 
 # Security overview
+
 open docs/security/README.md
+
 ```
 
 ### Scripts
 
 ```bash
+
 # Azure AD setup
+
 ./scripts/1password/setup-azure-ad.sh
 
 # Get credentials
+
 ./scripts/1password/get-m365-credentials.sh
 ./scripts/1password/get-azure-search-credentials.sh
 
 # Create items
+
 ./scripts/1password/create-azure-search-item.sh
+
 ```
 
 ---
@@ -123,25 +134,31 @@ open docs/security/README.md
 If you have scripts or references to old paths:
 
 ```bash
+
 # OLD
+
 ./setup_azure_ad_1password.sh
 ./get_m365_credentials.sh
 
 # NEW
+
 ./scripts/1password/setup-azure-ad.sh
 ./scripts/1password/get-m365-credentials.sh
+
 ```
 
 ### Update Your Documentation Links
 
 ```markdown
-# OLD
+
+# OLD (2)
 
 [Setup Guide](1PASSWORD_SETUP_GUIDE.md)
 
-# NEW
+# NEW (2)
 
 [Setup Guide](docs/security/1PASSWORD_GUIDE.md)
+
 ```
 
 ---
@@ -195,7 +212,7 @@ If you have scripts or references to old paths:
 
 ---
 
-**Cleanup completed successfully! 🎉**
+## Cleanup completed successfully! 🎉
 
 All 1Password files are now organized and consolidated.
 

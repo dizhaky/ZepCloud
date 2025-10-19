@@ -2,8 +2,10 @@
 
 ## Status Update
 
-**Python Compatibility Issue:**
-RAG-Anything requires Python 3.10-3.13, but the system Python is 3.14. Rather than downgrade Python, we've created a **parser-agnostic architecture** that provides the same benefits:
+## Python Compatibility Issue:
+
+RAG-Anything requires Python 3.10-3.13, but the system Python is 3.14. Rather than downgrade Python, we've created a
+  **parser-agnostic architecture** that provides the same benefits:
 
 1. **Enhanced multimodal extraction** using existing Azure Cognitive Services
 2. **Graph relationship building** using custom logic
@@ -55,15 +57,20 @@ Instead of depending solely on RAG-Anything, we're building a modular preprocess
 When you want to add RAG-Anything support:
 
 ```bash
+
 # Create Python 3.13 environment
+
 conda create -n raganything python=3.13
 conda activate raganything
 
 # Install RAG-Anything
+
 pip install 'raganything[all]'
 
 # Install other dependencies
+
 pip install -r requirements.txt
+
 ```
 
 ## Current Implementation

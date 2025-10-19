@@ -5,14 +5,18 @@
 Based on the MCP logs, Kapture MCP server is experiencing connection issues:
 
 ```
+
 2025-10-19 11:56:07.256 [error] No server info found
 2025-10-19 11:56:07.259 [error] No server info found
+
 ```
 
 ## ✅ Current Status
 
 **Kapture MCP is configured correctly** in `.cursor/mcp.json`:
+
 ```json
+
 {
   "kapture": {
     "command": "npx",
@@ -25,22 +29,26 @@ Based on the MCP logs, Kapture MCP server is experiencing connection issues:
     }
   }
 }
+
 ```
 
 ## 🔧 Root Cause
 
-The "No server info found" errors indicate that **Kapture MCP requires the Kapture browser extension** to be installed and active.
+The "No server info found" errors indicate that **Kapture MCP requires the Kapture browser extension** to be installed
+  and active.
 
 ## 🛠️ Solution Steps
 
 ### 1. Install Kapture Browser Extension
 
-**Chrome:**
+## Chrome:
+
 - Visit: https://chrome.google.com/webstore/detail/kapture
 - Click "Add to Chrome"
 - Enable the extension
 
-**Edge:**
+## Edge:
+
 - Visit: https://microsoftedge.microsoft.com/addons/detail/kapture
 - Click "Get"
 - Enable the extension
@@ -48,6 +56,7 @@ The "No server info found" errors indicate that **Kapture MCP requires the Kaptu
 ### 2. Restart Cursor
 
 After installing the extension:
+
 1. Close Cursor completely
 2. Reopen Cursor
 3. Wait for MCP servers to reconnect
@@ -55,19 +64,27 @@ After installing the extension:
 ### 3. Test Kapture MCP
 
 Run the health check:
+
 ```bash
+
 npm run mcp:health
+
 ```
 
 Expected result:
+
 ```
+
 | Kapture | ✅ Working | Browser automation configured |
+
 ```
 
 ### 4. Test Browser Automation
 
 Once working, you can test:
+
 ```typescript
+
 // List browser tabs
 mcp_kapture_list_tabs()
 
@@ -76,6 +93,7 @@ mcp_kapture_new_tab()
 
 // Navigate to URL
 mcp_kapture_navigate({ tabId: "tab-id", url: "https://example.com" })
+
 ```
 
 ## 🔄 Alternative Solutions
@@ -83,33 +101,42 @@ mcp_kapture_navigate({ tabId: "tab-id", url: "https://example.com" })
 If Kapture continues to have issues, consider these alternatives:
 
 ### Option 1: Playwright MCP
+
 ```json
+
 {
   "playwright": {
     "command": "npx",
     "args": ["-y", "@modelcontextprotocol/server-playwright"]
   }
 }
+
 ```
 
 ### Option 2: Puppeteer MCP
+
 ```json
+
 {
   "puppeteer": {
-    "command": "npx", 
+    "command": "npx",
     "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
   }
 }
+
 ```
 
 ### Option 3: Selenium MCP
+
 ```json
+
 {
   "selenium": {
     "command": "npx",
     "args": ["-y", "@modelcontextprotocol/server-selenium"]
   }
 }
+
 ```
 
 ## 📊 Current MCP Status

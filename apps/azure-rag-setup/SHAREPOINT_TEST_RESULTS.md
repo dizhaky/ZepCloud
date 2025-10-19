@@ -6,7 +6,8 @@
 
 ## Executive Summary
 
-The SharePoint directory integration is **fully functional** and ready for production use. The system successfully authenticated, accessed 42 SharePoint sites, and verified all indexer components.
+The SharePoint directory integration is **fully functional** and ready for production use. The system successfully
+  authenticated, accessed 42 SharePoint sites, and verified all indexer components.
 
 ## Test Results
 
@@ -23,7 +24,7 @@ The SharePoint directory integration is **fully functional** and ready for produ
 - **Tenant:** unitedsafetytechnology.sharepoint.com
 - **Access Level:** Read access to all sites confirmed
 
-#### Key Sites Discovered:
+#### Key Sites Discovered
 
 - UST Hub Site
 - UST Archive
@@ -56,7 +57,7 @@ The SharePoint directory integration is **fully functional** and ready for produ
 - **Progress File:** `sharepoint_progress.json` (valid JSON)
 - **Tracking Status:** Active and functional
 
-#### Indexed Site Details:
+#### Indexed Site Details
 
 - **Site Name:** UST Hub Site
 - **Documents Found:** 14
@@ -124,17 +125,23 @@ The SharePoint directory integration is **fully functional** and ready for produ
 ### 1. Production Indexing
 
 ```bash
+
 # Check current status
+
 python3 m365_sharepoint_indexer.py --status
 
 # Index all sites
+
 python3 m365_sharepoint_indexer.py
 
 # Index with limit (for testing)
+
 python3 m365_sharepoint_indexer.py --limit 5
 
 # Index specific site
+
 python3 m365_sharepoint_indexer.py --site SITE_ID
+
 ```
 
 ### 2. Scheduled Syncing
@@ -142,21 +149,29 @@ python3 m365_sharepoint_indexer.py --site SITE_ID
 The system supports automated scheduled syncing via cron jobs:
 
 ```bash
+
 # Setup cron job (if not already configured)
+
 ./setup_cron.sh
 
 # Check cron status
+
 crontab -l | grep sharepoint
+
 ```
 
 ### 3. Monitoring
 
 ```bash
+
 # Watch progress
+
 watch -n 5 'python3 m365_sharepoint_indexer.py --status'
 
 # Check Azure blob storage
+
 # Visit: https://portal.azure.com → Storage Account → training-data → sharepoint/
+
 ```
 
 ## Issues Fixed

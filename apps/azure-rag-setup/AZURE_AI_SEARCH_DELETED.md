@@ -47,18 +47,25 @@
 ### **Option 1: Delete Remaining Services**
 
 ```bash
+
 # Delete Azure Storage Account
+
 az storage account delete --name tmstorage0731039 --resource-group typingmind-rag-rg --yes
 
 # Delete Azure Cognitive Services
+
 az cognitiveservices account delete --name typingmind-rag-cognitive --resource-group typingmind-rag-rg --yes
+
 ```
 
 ### **Option 2: Delete Entire Resource Group**
 
 ```bash
+
 # Delete the entire resource group (removes all services)
+
 az group delete --name typingmind-rag-rg --yes
+
 ```
 
 ---
@@ -94,14 +101,14 @@ az group delete --name typingmind-rag-rg --yes
 
 ## 🎯 RECOMMENDATION
 
-**To achieve 100% cost elimination:**
+## To achieve 100% cost elimination:
 
 1. **Delete remaining Azure services** (Storage + Cognitive)
 2. **Implement local alternatives** for search functionality
 3. **Update project configuration** to remove Azure dependencies
 4. **Test functionality** with local solutions
 
-**Total potential savings: $599-$1,213/month ($7,188-$14,556/year)**
+## Total potential savings: $599-$1,213/month ($7,188-$14,556/year)
 
 ---
 

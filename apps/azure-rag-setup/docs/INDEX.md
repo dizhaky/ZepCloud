@@ -146,37 +146,51 @@
 ### Daily Operations
 
 ```bash
+
 # Check system health
+
 python3 maintenance.py --non-interactive --action health
 
 # Check sync status
+
 python3 m365_indexer.py status
 
 # View recent activity
+
 tail -f /tmp/rag_sync.log
+
 ```
 
 ### Weekly Sync
 
 ```bash
+
 # Full M365 sync
+
 python3 m365_indexer.py sync
 
 # Enhanced features sync
+
 python3 orchestrate_rag_anything.py --source sharepoint
+
 ```
 
 ### Troubleshooting
 
 ```bash
+
 # Validate all components
+
 python3 validate_complete_system.py
 
 # Test authentication
+
 python3 m365_indexer.py test-auth
 
 # Check Azure connectivity
+
 python3 maintenance.py --non-interactive --action health --output json
+
 ```
 
 ---
@@ -210,17 +224,23 @@ python3 maintenance.py --non-interactive --action health --output json
 ### Key Commands
 
 ```bash
+
 # System health
+
 python3 maintenance.py --non-interactive --action health
 
 # M365 sync
+
 python3 m365_indexer.py sync
 
 # Enhanced features
+
 python3 orchestrate_rag_anything.py --source sharepoint
 
 # Validation
+
 python3 validate_complete_system.py
+
 ```
 
 ### Key Files
@@ -274,5 +294,4 @@ python3 validate_complete_system.py
 **Grade:** A+ (98/100)
 **Completion:** 99.5%
 
-**🏆 All objectives achieved and exceeded! 🎉**
-
+## 🏆 All objectives achieved and exceeded! 🎉

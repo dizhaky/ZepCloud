@@ -22,14 +22,14 @@
 
 ### 📊 Document Processing Summary
 
-**Total Documents:**
+## Total Documents:
 
 - Files uploaded: **2,260** blobs
 - Documents indexed: **2,249**
 - Unindexed: **11** (0.5%)
 - Success rate: **99.5%**
 
-**Processing Runs:**
+## Processing Runs:
 
 - Run 1: 1,100 docs (stopped at 2-min quota)
 - Run 2: 889 docs
@@ -37,7 +37,7 @@
 - **Total: 2,399 items processed**
 - **Failed: 0** ✅
 
-**File Type Distribution:**
+## File Type Distribution:
 
 - PDF: 1,766 files (78.5%)
 - DOCX: 184 files (8.2%)
@@ -53,9 +53,10 @@
 
 ### Fix #1: Improved Indexer Configuration ✅
 
-**Configuration Changes:**
+## Configuration Changes:
 
 ```python
+
 {
     "batchSize": 25,  # Reduced from 100
     "maxFailedItems": 100,  # Increased from 10
@@ -71,9 +72,10 @@
         "interval": "PT1H"  # Hourly indexing
     }
 }
+
 ```
 
-**Results:**
+## Results:
 
 - ✅ Indexing rate: **18.6% → 99.5%**
 - ✅ Documents indexed: **371 → 2,249**
@@ -82,7 +84,7 @@
 
 ### Fix #2: Upload with Retry Logic ✅
 
-**Implementation:**
+## Implementation:
 
 - Exponential backoff retry (2-30 sec, 3 attempts)
 - Resume capability via `upload_progress.json`
@@ -90,7 +92,7 @@
 - Real-time progress tracking with tqdm
 - Timeout handling (5 min upload, 1 min connection)
 
-**Results:**
+## Results: (2)
 
 - ✅ Upload success rate: **~99%**
 - ✅ Resumable uploads enabled
@@ -99,14 +101,16 @@
 
 ### Fix #3: Non-Interactive Mode ✅
 
-**CLI Interface:**
+## CLI Interface:
 
 ```bash
+
 python3 maintenance.py --non-interactive --action [health|run-indexer|clean|status]
 python3 maintenance.py --non-interactive --action health --output json
+
 ```
 
-**Results:**
+## Results: (3)
 
 - ✅ Automation support enabled
 - ✅ JSON/text output formats
@@ -119,13 +123,13 @@ python3 maintenance.py --non-interactive --action health --output json
 
 ### Indexer Efficiency
 
-**Before Optimization:**
+## Before Optimization:
 
 - Batch size: 100 (too large)
 - Error tolerance: Low (10 max failures)
 - Result: 18.6% completion, many docs skipped
 
-**After Optimization:**
+## After Optimization:
 
 - Batch size: 25 (optimal)
 - Error tolerance: High (100 max failures)
@@ -133,7 +137,7 @@ python3 maintenance.py --non-interactive --action health --output json
 
 ### Processing Speed
 
-**3 Indexing Runs:**
+## 3 Indexing Runs:
 
 1. **Run 1** (Oct 18, 00:37-00:39): 1,100 docs in 2 minutes = **550 docs/min**
 2. **Run 2** (Oct 18, 00:39-00:40): 889 docs in 88 seconds = **606 docs/min**
@@ -154,7 +158,7 @@ python3 maintenance.py --non-interactive --action health --output json
 
 ### Overall Health: 75/100 (Healthy) ✅
 
-**Component Status:**
+## Component Status:
 
 - ✅ **Indexer:** Running (automatic hourly schedule)
 - ✅ **Index:** 2,249 documents (51.31 MB)
@@ -163,7 +167,7 @@ python3 maintenance.py --non-interactive --action health --output json
 - ✅ **Azure Connectivity:** Active and stable
 - ✅ **Automation:** Fully operational
 
-**Search Performance:**
+## Search Performance:
 
 - Total documents: 2,249
 - Query "\*": 2,249 results (100% coverage)
@@ -221,34 +225,47 @@ python3 maintenance.py --non-interactive --action health --output json
 ### Daily Operations
 
 ```bash
+
 # Health check
+
 python3 maintenance.py --non-interactive --action health
 
 # Check indexer status
+
 python3 maintenance.py --non-interactive --action status
 
 # Run indexer manually
+
 python3 maintenance.py --non-interactive --action run-indexer
 
 # Upload new documents
+
 python3 upload_with_retry.py
 
 # Validate environment
+
 python3 validate_environment.py
+
 ```
 
 ### Automated Monitoring
 
 ```bash
+
 # Add to crontab for daily health checks (9 AM)
-0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action health --output json >> logs/daily_health.log
+
+0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action health
+  --output json >> logs/daily_health.log
+
 ```
 
 ### JSON Output (for scripts/monitoring)
 
 ```bash
+
 python3 maintenance.py --non-interactive --action status --output json
 python3 maintenance.py --non-interactive --action health --output json
+
 ```
 
 ---
@@ -297,6 +314,7 @@ python3 maintenance.py --non-interactive --action health --output json
 ### Visual Comparison
 
 ```
+
 BEFORE:
 ┌──────────────────────────────────────┐
 │ Documents Indexed:     371 (18.6%)   │
@@ -316,6 +334,7 @@ AFTER:
 │ Monitoring:            Comprehensive │ ⭐
 │ Grade:                 A+ (98%)      │ ⭐
 └──────────────────────────────────────┘
+
 ```
 
 ---
@@ -330,6 +349,7 @@ AFTER:
    Location: typingmind-azure-config.json
 
    Steps:
+
    1. Open TypingMind → Settings → Plugins
    2. Find "Query Training Data - Azure AI Search"
    3. Enable plugin
@@ -337,6 +357,7 @@ AFTER:
    5. Test queries:
       - "Search from training data for [your topic]"
       - "What information do I have about [subject]"
+
    ```
 
 2. **✅ Set Up Monitoring (Optional)**
@@ -346,7 +367,8 @@ AFTER:
    crontab -e
 
    # Add this line for daily health checks at 9 AM
-   0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action health --output json >> logs/daily_health.log
+0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action
+  health --output json >> logs/daily_health.log
    ```
 
 3. **✅ Review Search Functionality**
@@ -390,9 +412,10 @@ AFTER:
 
 ## 🎉 Conclusion
 
-We successfully transformed your Azure RAG system from a **B+ grade (85%) with 18.6% indexing** to an **A+ grade (98%) with 99.5% indexing** - a **506% increase** in indexed documents and a **435% improvement** in indexing rate.
+We successfully transformed your Azure RAG system from a **B+ grade (85%) with 18.6% indexing** to an **A+ grade (98%)
+  with 99.5% indexing** - a **506% increase** in indexed documents and a **435% improvement** in indexing rate.
 
-### Key Achievements:
+### Key Achievements
 
 - ✅ **99.5% indexing completion** (target was 85%)
 - ✅ **Zero failures** across all indexing runs
@@ -401,7 +424,7 @@ We successfully transformed your Azure RAG system from a **B+ grade (85%) with 1
 - ✅ **Comprehensive monitoring** and health checks
 - ✅ **Production-ready** with hourly auto-indexing
 
-### The System is Now:
+### The System is Now
 
 - 🎯 **Highly reliable** (0 failures, 99%+ success)
 - 🚀 **Fully automated** (hourly indexing, CLI tools)
@@ -415,4 +438,4 @@ We successfully transformed your Azure RAG system from a **B+ grade (85%) with 1
 **Final Grade:** A+ (98/100)
 **Status:** ✅ **EXCEEDS PRODUCTION STANDARDS** 🏆
 
-**🚀 Your Azure RAG system is now operating at peak performance with 99.5% indexing completion!**
+## 🚀 Your Azure RAG system is now operating at peak performance with 99.5% indexing completion!

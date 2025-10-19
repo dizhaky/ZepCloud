@@ -47,13 +47,17 @@
 Create a `.env` file with your Microsoft 365 credentials:
 
 ```bash
+
 # Microsoft 365 Configuration
+
 M365_CLIENT_ID=your-app-registration-id
 M365_TENANT_ID=your-tenant-id
 M365_USE_DELEGATED_AUTH=true
 
 # Optional: For application permissions
+
 # M365_CLIENT_SECRET=your-client-secret
+
 ```
 
 ### **Step 2: Get Microsoft 365 Credentials**
@@ -94,7 +98,9 @@ If you already have an Azure AD app registration:
 ### **Step 4: Test the Connection**
 
 ```bash
+
 # Test Microsoft Graph API connection
+
 python3 -c "
 from m365_auth import M365Auth
 auth = M365Auth()
@@ -103,6 +109,7 @@ if auth.test_connection():
 else:
     print('❌ Connection failed - check credentials')
 "
+
 ```
 
 ---
@@ -168,29 +175,39 @@ else:
 ### **Option 1: Full M365 Integration**
 
 ```bash
+
 # Enable all M365 services
+
 python3 m365_sharepoint_indexer.py
 python3 m365_onedrive_indexer.py
 python3 m365_exchange_indexer.py
 python3 m365_teams_indexer.py
 python3 m365_calendar_indexer.py
 python3 m365_contacts_indexer.py
+
 ```
 
 ### **Option 2: Selective Integration**
 
 ```bash
+
 # Enable only specific services
+
 python3 m365_sharepoint_indexer.py  # SharePoint only
 python3 m365_onedrive_indexer.py   # OneDrive only
+
 ```
 
 ### **Option 3: Scheduled Integration**
 
 ```bash
+
 # Set up cron job for regular syncing
+
 crontab -e
+
 # Add: 0 2 * * * /path/to/m365_sync.sh
+
 ```
 
 ---
@@ -220,36 +237,44 @@ crontab -e
 ### **1. Create Environment File**
 
 ```bash
+
 cat > .env << EOF
 M365_CLIENT_ID=your-app-id
 M365_TENANT_ID=your-tenant-id
 M365_USE_DELEGATED_AUTH=true
 EOF
+
 ```
 
 ### **2. Test Connection**
 
 ```bash
+
 python3 m365_auth.py
+
 ```
 
 ### **3. Start Indexing**
 
 ```bash
+
 python3 m365_sharepoint_indexer.py
+
 ```
 
 ### **4. Monitor Progress**
 
 ```bash
+
 tail -f m365_sync.log
+
 ```
 
 ---
 
 ## 📞 NEXT STEPS
 
-**To activate Microsoft Graph API:**
+## To activate Microsoft Graph API:
 
 1. **Get credentials** from Azure AD app registration
 2. **Create `.env` file** with credentials

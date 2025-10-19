@@ -1,8 +1,8 @@
 # 🚀 DEPLOYMENT READY - M365 RAG SYSTEM
 
-**Status:** ✅ **READY FOR IMMEDIATE DEPLOYMENT**  
-**Date:** October 19, 2025  
-**Implementation:** 100% Complete  
+**Status:** ✅ **READY FOR IMMEDIATE DEPLOYMENT**
+**Date:** October 19, 2025
+**Implementation:** 100% Complete
 **Total Files:** 33+ production-ready files
 
 ---
@@ -10,34 +10,49 @@
 ## ⚡ QUICK START (30 Minutes)
 
 ### 1. Upload to Server
+
 ```bash
+
 # From your local machine
+
 scp -r apps/hetzner-m365-rag root@YOUR_SERVER_IP:/tmp/
+
 ```
 
 ### 2. Run Automated Deployment
+
 ```bash
+
 # SSH into your server
+
 ssh root@YOUR_SERVER_IP
 
 # Copy to final location
+
 mv /tmp/hetzner-m365-rag /data/m365-rag
 cd /data/m365-rag
 
 # Make scripts executable
+
 chmod +x scripts/*.sh
 chmod +x tests/*.sh
 
 # Run deployment
+
 ./scripts/deploy.sh
+
 ```
 
 ### 3. Configure Environment
+
 ```bash
+
 # Edit .env file with your credentials
+
 nano .env
 
-# Required values:
+# Required values
+
 ELASTIC_PASSWORD=<your-secure-password>
 POSTGRES_PASSWORD=<your-secure-password>
 MINIO_ROOT_PASSWORD=<your-secure-password>
@@ -45,20 +60,28 @@ OPENAI_API_KEY=<your-openai-key>
 AZURE_CLIENT_ID=<your-azure-client-id>
 AZURE_CLIENT_SECRET=<your-azure-client-secret>
 AZURE_TENANT_ID=<your-azure-tenant-id>
+
 ```
 
 ### 4. Verify Deployment
+
 ```bash
+
 # Run verification tests
+
 ./tests/test_deployment.sh
+
 ```
 
 ### 5. Access Services
+
 ```
+
 • API Health:    http://YOUR_SERVER_IP:8000/health
 • RAGFlow UI:    http://YOUR_SERVER_IP:9380
 • Grafana:       http://YOUR_SERVER_IP:3000
 • MinIO Console: http://YOUR_SERVER_IP:9001
+
 ```
 
 ---
@@ -66,6 +89,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 ## 📦 WHAT'S INCLUDED
 
 ### Complete Infrastructure
+
 - ✅ 11 Docker services fully configured
 - ✅ 38GB RAM allocation optimized
 - ✅ Network isolation configured
@@ -74,6 +98,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - ✅ Resource limits and reservations
 
 ### Production Application
+
 - ✅ FastAPI server with async/await
 - ✅ RAG-Anything integration
 - ✅ Hybrid search (vector + BM25)
@@ -86,6 +111,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - ✅ Error handling & logging
 
 ### Security Hardened
+
 - ✅ UFW firewall configuration
 - ✅ SSL/TLS setup script
 - ✅ Let's Encrypt automation
@@ -96,6 +122,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - ✅ RBAC implementation
 
 ### Monitoring & Observability
+
 - ✅ Prometheus metrics collection
 - ✅ Grafana dashboards
 - ✅ Elasticsearch exporter
@@ -105,6 +132,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - ✅ Resource usage tracking
 
 ### Backup & Recovery
+
 - ✅ Automated daily backups
 - ✅ 30-day retention
 - ✅ Disaster recovery script
@@ -114,6 +142,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - ✅ 4-hour RTO target
 
 ### Testing Suite
+
 - ✅ Load testing (Locust)
 - ✅ API integration tests (Pytest)
 - ✅ Deployment verification
@@ -122,6 +151,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - ✅ Cache behavior tests
 
 ### Documentation
+
 - ✅ README (500+ lines)
 - ✅ Quick Start Guide
 - ✅ Deployment Checklist
@@ -136,6 +166,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 ## 🎯 DEPLOYMENT CHECKLIST
 
 ### Pre-Deployment ✅
+
 - [x] All code written and tested
 - [x] Configuration files ready
 - [x] Docker Compose validated
@@ -144,6 +175,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - [x] Tests written
 
 ### Infrastructure Setup (30 min)
+
 - [ ] Order Hetzner AX52 server
 - [ ] SSH key authentication configured
 - [ ] System updated (`apt update && apt upgrade`)
@@ -154,6 +186,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - [ ] Non-root deploy user created
 
 ### Application Deployment (20 min)
+
 - [ ] Files uploaded to server
 - [ ] .env file configured
 - [ ] Scripts made executable
@@ -162,6 +195,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - [ ] Verification tests passed
 
 ### Security Configuration (15 min)
+
 - [ ] Domain DNS configured
 - [ ] SSL certificates obtained
 - [ ] HTTPS configured
@@ -170,6 +204,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - [ ] Passwords secured
 
 ### M365 Integration (30 min)
+
 - [ ] Azure AD app registered
 - [ ] API permissions granted
 - [ ] Client secret created
@@ -178,6 +213,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - [ ] Initial sync completed
 
 ### Monitoring Setup (10 min)
+
 - [ ] Grafana dashboards configured
 - [ ] Prometheus targets verified
 - [ ] Alerts configured
@@ -185,6 +221,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - [ ] Metrics collecting
 
 ### Final Verification (10 min)
+
 - [ ] All tests passing
 - [ ] API responding
 - [ ] RAGFlow accessible
@@ -216,6 +253,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 ## 🔐 SECURITY FEATURES
 
 ### Network Security
+
 - ✅ UFW firewall (ports 22, 80, 443 only)
 - ✅ Fail2ban brute-force protection
 - ✅ SSH key-only authentication
@@ -224,6 +262,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - ✅ Rate limiting
 
 ### Data Security
+
 - ✅ LUKS disk encryption for /data
 - ✅ TLS 1.3 for all connections
 - ✅ Elasticsearch X-Pack Security
@@ -233,6 +272,7 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 - ✅ RBAC permissions
 
 ### Application Security
+
 - ✅ Input validation (Pydantic)
 - ✅ CORS configuration
 - ✅ SQL injection prevention
@@ -245,7 +285,9 @@ AZURE_TENANT_ID=<your-azure-tenant-id>
 ## 💰 COST BREAKDOWN
 
 ### Monthly Infrastructure
+
 ```
+
 Hetzner AX52:        $108/month
   • 32GB RAM
   • AMD Ryzen 7 3700X (8 cores)
@@ -258,10 +300,13 @@ Additional Costs:
   • OpenAI API:      $50-500/month (usage-based)
 
 Total:               $163-613/month
+
 ```
 
 ### vs Azure
+
 ```
+
 Azure Equivalent:    $1,330/month
   • VM (32GB):       $580
   • Elasticsearch:   $600
@@ -270,6 +315,7 @@ Azure Equivalent:    $1,330/month
 
 Annual Savings:      $8,000-14,000
 ROI Timeline:        2-3 months
+
 ```
 
 ---
@@ -277,24 +323,34 @@ ROI Timeline:        2-3 months
 ## 🧪 TESTING
 
 ### Load Testing
+
 ```bash
+
 cd /data/m365-rag/tests
 pip install locust
 locust -f locustfile.py --host http://localhost:8000
+
 # Access UI: http://localhost:8089
+
 ```
 
 ### Integration Tests
+
 ```bash
+
 cd /data/m365-rag/tests
 pip install pytest httpx
 pytest test_api.py -v
+
 ```
 
 ### Deployment Verification
+
 ```bash
+
 cd /data/m365-rag/tests
 ./test_deployment.sh
+
 ```
 
 ---
@@ -315,6 +371,7 @@ cd /data/m365-rag/tests
 ## 🚨 MONITORING & ALERTS
 
 ### Automatic Alerts
+
 - 🚨 CPU usage > 80%
 - 🚨 Memory usage > 85%
 - 🚨 Disk space < 20%
@@ -324,6 +381,7 @@ cd /data/m365-rag/tests
 - 🚨 Backup failure
 
 ### Grafana Dashboards
+
 - Elasticsearch Overview
 - System Resources
 - Application Metrics
@@ -335,76 +393,108 @@ cd /data/m365-rag/tests
 ## 🆘 TROUBLESHOOTING
 
 ### Services Won't Start
+
 ```bash
+
 # Check logs
+
 docker compose logs --tail=100
 
 # Restart specific service
+
 docker compose restart <service-name>
 
 # Full restart
+
 docker compose down && docker compose up -d
+
 ```
 
 ### Elasticsearch Out of Memory
+
 ```bash
+
 # Increase heap size in docker-compose.yml
+
 ES_JAVA_OPTS: "-Xms8g -Xmx8g"  # Increase from default
+
 ```
 
 ### Can't Connect to API
+
 ```bash
+
 # Check API logs
+
 docker compose logs api
 
 # Verify API is running
+
 curl localhost:8000/health
 
 # Check firewall
+
 ufw status
+
 ```
 
 ### M365 Authentication Failing
+
 ```bash
+
 # Verify credentials in .env
+
 cat .env | grep AZURE
 
 # Test authentication manually
+
 docker compose exec api python -c "from api.m365_auth import M365Auth; M365Auth().authenticate()"
+
 ```
 
 ---
 
 ## 📞 SUPPORT RESOURCES
 
-### Documentation
+### Documentation (2)
+
 1. **QUICKSTART.md** - 30-minute setup
 2. **README.md** - Complete user guide
 3. **DEPLOYMENT_CHECKLIST.md** - Detailed steps
 4. **IMPLEMENTATION_SUMMARY.md** - Technical details
 
 ### Command Reference
+
 ```bash
+
 # Start all services
+
 docker compose up -d
 
 # Stop all services
+
 docker compose down
 
 # View logs
+
 docker compose logs -f [service]
 
 # Check service health
+
 docker compose ps
 
 # Run backup
+
 ./scripts/backup.sh
 
 # Run verification
+
 ./tests/test_deployment.sh
 
 # Setup SSL
+
 ./scripts/setup-ssl.sh
+
 ```
 
 ---
@@ -412,6 +502,7 @@ docker compose ps
 ## ✅ VALIDATION CRITERIA
 
 ### Deployment Success
+
 - ✅ All 11 services running
 - ✅ All health checks passing
 - ✅ API responding to requests
@@ -422,6 +513,7 @@ docker compose ps
 - ✅ Grafana showing metrics
 
 ### Functionality
+
 - ✅ Search API returns results
 - ✅ Document upload works
 - ✅ M365 authentication succeeds
@@ -434,6 +526,7 @@ docker compose ps
 ## 🎉 SUCCESS METRICS
 
 ### Week 1
+
 - [ ] All services deployed
 - [ ] SSL configured
 - [ ] M365 connected
@@ -441,6 +534,7 @@ docker compose ps
 - [ ] Monitoring active
 
 ### Month 1
+
 - [ ] 1,000+ documents indexed
 - [ ] 10+ active users
 - [ ] < 1s average query time
@@ -448,6 +542,7 @@ docker compose ps
 - [ ] Backups verified
 
 ### Quarter 1
+
 - [ ] 10,000+ documents
 - [ ] 50+ active users
 - [ ] Cost savings realized
@@ -459,35 +554,52 @@ docker compose ps
 ## 🚀 DEPLOYMENT COMMANDS
 
 ### Quick Deploy (Automated)
+
 ```bash
+
 # One command deployment
+
 ./scripts/deploy.sh
+
 ```
 
 ### Manual Deploy (Step-by-Step)
+
 ```bash
+
 # 1. Create directories
+
 mkdir -p {api,config,data,logs,backups,scripts,tests,docs}
 
 # 2. Configure environment
+
 cp .env.example .env
 nano .env
 
 # 3. Start services
+
 docker compose up -d
 
-# 4. Verify deployment
+# 4. Verify deployment (2)
+
 ./tests/test_deployment.sh
+
 ```
 
-### Setup SSL
+### Setup SSL (2)
+
 ```bash
+
 sudo ./scripts/setup-ssl.sh
+
 ```
 
 ### First M365 Sync
+
 ```bash
+
 docker compose exec api python -m api.m365_sharepoint_indexer
+
 ```
 
 ---
@@ -495,6 +607,7 @@ docker compose exec api python -m api.m365_sharepoint_indexer
 ## 🎯 GO LIVE CHECKLIST
 
 ### Final Pre-Launch
+
 - [ ] All tests passing (100%)
 - [ ] SSL certificate valid
 - [ ] Backups tested and verified
@@ -505,6 +618,7 @@ docker compose exec api python -m api.m365_sharepoint_indexer
 - [ ] Support procedures documented
 
 ### Launch Day
+
 - [ ] Final system check
 - [ ] Enable monitoring alerts
 - [ ] Announce to users
@@ -514,6 +628,7 @@ docker compose exec api python -m api.m365_sharepoint_indexer
 - [ ] Collect initial feedback
 
 ### Post-Launch (Week 1)
+
 - [ ] Daily health checks
 - [ ] Performance optimization
 - [ ] User feedback review
@@ -526,11 +641,13 @@ docker compose exec api python -m api.m365_sharepoint_indexer
 ## 📞 IMMEDIATE NEXT STEPS
 
 1. **Upload Files to Server**
+
    ```bash
    scp -r apps/hetzner-m365-rag root@YOUR_SERVER:/tmp/
    ```
 
 2. **Run Deployment**
+
    ```bash
    ssh root@YOUR_SERVER
    cd /tmp/hetzner-m365-rag
@@ -539,12 +656,14 @@ docker compose exec api python -m api.m365_sharepoint_indexer
    ```
 
 3. **Configure Secrets**
+
    ```bash
    nano .env
    # Add all required API keys and passwords
    ```
 
 4. **Verify Everything**
+
    ```bash
    ./tests/test_deployment.sh
    ```
@@ -556,9 +675,10 @@ docker compose exec api python -m api.m365_sharepoint_indexer
 
 ---
 
-## 🏆 YOU'RE READY!
+## 🏆 YOU'RE READY
 
 ```
+
 ╔══════════════════════════════════════════════════════╗
 ║                                                      ║
 ║         🎉 DEPLOYMENT READY! 🎉                      ║
@@ -579,16 +699,16 @@ docker compose exec api python -m api.m365_sharepoint_indexer
 ║  📚 Read: QUICKSTART.md for step-by-step            ║
 ║                                                      ║
 ╚══════════════════════════════════════════════════════╝
+
 ```
 
-**Total Value:** $50,000+ (development cost)  
-**Your Investment:** Files ready to deploy  
-**Annual Savings:** $8,000-14,000 vs Azure  
+**Total Value:** $50,000+ (development cost)
+**Your Investment:** Files ready to deploy
+**Annual Savings:** $8,000-14,000 vs Azure
 **Setup Time:** 30 minutes (automated) or 2 hours (manual)
 
 ---
 
-**Let's deploy! 🚀**
+## Let's deploy! 🚀
 
 *Follow QUICKSTART.md for your first deployment in 30 minutes.*
-

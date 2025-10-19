@@ -1,4 +1,4 @@
-# 🎉 TYPINGMIND SERVER IS RUNNING!
+# 🎉 TYPINGMIND SERVER IS RUNNING
 
 **Date:** October 18, 2025
 **Status:** ✅ **SERVER OPERATIONAL**
@@ -10,7 +10,7 @@
 
 ### **✅ TYPINGMIND LOCAL SEARCH SERVER IS LIVE!**
 
-**Server Details:**
+## Server Details:
 
 - **URL:** `http://localhost:5001`
 - **Status:** ✅ HEALTHY
@@ -25,7 +25,9 @@
 ### **1. Health Check:**
 
 ```bash
+
 curl http://localhost:5001/health
+
 ```
 
 **Response:** ✅ `{"status":"healthy","database_exists":true}`
@@ -33,9 +35,11 @@ curl http://localhost:5001/health
 ### **2. Search Endpoint:**
 
 ```bash
+
 curl -X POST http://localhost:5001/search \
   -H "Content-Type: application/json" \
   -d '{"search": "test", "top": 3}'
+
 ```
 
 **Response:** ✅ Returns search results from 178 documents
@@ -43,7 +47,9 @@ curl -X POST http://localhost:5001/search \
 ### **3. Stats Endpoint:**
 
 ```bash
+
 curl http://localhost:5001/stats
+
 ```
 
 **Response:** ✅ `{"total_documents":178,"sharepoint_documents":178}`
@@ -52,7 +58,7 @@ curl http://localhost:5001/stats
 
 ## 🔧 **TYPINGMIND CONFIGURATION**
 
-**To connect TypingMind to this server, use these settings:**
+## To connect TypingMind to this server, use these settings:
 
 ### **Plugin Configuration:**
 
@@ -128,7 +134,7 @@ curl http://localhost:5001/stats
 
 ## 🎊 **SUCCESS!**
 
-**Microsoft Graph API is now fully connected to TypingMind!**
+## Microsoft Graph API is now fully connected to TypingMind!
 
 ✅ **Server Running** - Flask API on port 5001
 ✅ **Database Connected** - 178 documents indexed
@@ -140,7 +146,7 @@ curl http://localhost:5001/stats
 
 ---
 
-**Next Steps:**
+## Next Steps:
 
 1. Configure TypingMind with the provided settings
 2. Test search functionality with your M365 data

@@ -31,6 +31,7 @@ Once you have the token:
 
 1. **Open**: `.cursor/mcp.json`
 2. **Find the GitHub section**:
+
    ```json
    "github": {
      "command": "npx",
@@ -43,12 +44,15 @@ Once you have the token:
      }
    }
    ```
+
 3. **Replace the empty string** with your token:
+
    ```json
    "env": {
      "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_actual_token_here"
    }
    ```
+
 4. **Save the file**
 5. **Restart Cursor** to reload MCP configuration
 
@@ -57,11 +61,15 @@ Once you have the token:
 Alternatively, set as environment variable:
 
 ```bash
+
 # Windows PowerShell
+
 $env:GITHUB_PERSONAL_ACCESS_TOKEN = "ghp_your_actual_token_here"
 
 # Windows CMD
+
 set GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_actual_token_here
+
 ```
 
 ### 🧪 Test GitHub MCP
@@ -69,12 +77,17 @@ set GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_actual_token_here
 After configuration:
 
 ```bash
+
 npm run mcp:health
+
 ```
 
 You should see:
+
 ```
+
 | GitHub | ✅ Working | GitHub API integration ready |
+
 ```
 
 ### 🎯 Expected Result

@@ -2,30 +2,35 @@
 
 ## How to Tell Cursor Agents About Browser Control
 
-This guide explains how to inform other Cursor agents about browser control capabilities and how to use them effectively.
+This guide explains how to inform other Cursor agents about browser control capabilities and how to use them
+  effectively.
 
 ## Quick Reference for Agents
 
 ### Browser Control Capabilities
 
 ```markdown
+
 I can control the browser with user credentials:
 
 - Default browser: Comet (ai.perplexity.comet)
 - User profile access: Full authenticated sessions
 - Credentials preserved: Login sessions, cookies, saved data
 - Control methods: Chrome DevTools Protocol + MCP server
+
 ```
 
 ### Agent Instructions
 
 ```markdown
+
 To enable browser control for this agent:
 
 1. Check if chrome-devtools-mcp is installed: `npm list -g chrome-devtools-mcp`
 2. Start browser with debugging: `/Applications/Comet.app/Contents/MacOS/Comet --remote-debugging-port=9222`
 3. Test connection: `curl -s http://localhost:9222/json/version`
 4. Use MCP server: `npx chrome-devtools-mcp@latest --isolated`
+
 ```
 
 ## Agent Communication Templates
@@ -33,6 +38,7 @@ To enable browser control for this agent:
 ### For New Agents
 
 ````markdown
+
 ## Browser Control Available
 
 This project has browser control capabilities configured:
@@ -45,12 +51,17 @@ This project has browser control capabilities configured:
 ### Usage
 
 ```bash
+
 # Start browser with debugging
+
 /Applications/Comet.app/Contents/MacOS/Comet --remote-debugging-port=9222
 
 # Control via MCP
+
 BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolated
+
 ```
+
 ````
 
 ### Capabilities
@@ -65,7 +76,9 @@ BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolat
 ````
 
 ### For Existing Agents
+
 ```markdown
+
 ## Browser Control Status
 
 ✅ **Browser Control**: Available and configured
@@ -74,10 +87,12 @@ BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolat
 ✅ **Debug Protocol**: Chrome DevTools Protocol active
 
 ### Quick Start
+
 1. Check browser status: `ps aux | grep -i comet`
 2. Start debugging: `/Applications/Comet.app/Contents/MacOS/Comet --remote-debugging-port=9222`
 3. Test connection: `curl -s http://localhost:9222/json/version`
 4. Begin control: Use MCP server for browser automation
+
 ````
 
 ## Agent Configuration Files
@@ -85,7 +100,8 @@ BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolat
 ### .cursor/agent-instructions.md
 
 ````markdown
-# Agent Instructions
+
+# Agent Instructions (2)
 
 ## Browser Control
 
@@ -99,18 +115,24 @@ This agent has browser control capabilities:
 ## Usage Commands
 
 ```bash
+
 # Start browser debugging
+
 /Applications/Comet.app/Contents/MacOS/Comet --remote-debugging-port=9222
 
 # Test connection
+
 curl -s http://localhost:9222/json/version
 
 # Use MCP server
+
 BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolated
+
 ```
+
 ````
 
-## Capabilities
+## Capabilities (2)
 
 - Navigate to authenticated websites
 - Access user credentials and saved data
@@ -121,10 +143,13 @@ BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolat
 ````
 
 ### .cursor/agent-capabilities.md
+
 ```markdown
+
 # Agent Capabilities
 
-## Browser Control
+## Browser Control (2)
+
 - **Status**: Available and configured
 - **Browser**: Comet with user credentials
 - **Authentication**: Full access to logged-in sessions
@@ -132,6 +157,7 @@ BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolat
 - **Security**: User credentials preserved and secure
 
 ## Available Actions
+
 - Navigate to any URL
 - Access authenticated websites
 - Fill forms with user data
@@ -140,6 +166,7 @@ BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolat
 - Execute JavaScript
 - Monitor network requests
 - Debug web applications
+
 ````
 
 ## Agent Communication Methods
@@ -147,7 +174,8 @@ BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolat
 ### 1. Direct Instructions
 
 ```markdown
-## Browser Control Available
+
+## Browser Control Available (2)
 
 I can control the browser with your credentials:
 
@@ -157,11 +185,13 @@ I can control the browser with your credentials:
 - MCP server: chrome-devtools-mcp
 
 To use: Start browser with debugging, then use MCP server for control.
+
 ```
 
 ### 2. Configuration Sharing
 
 ```markdown
+
 ## Project Browser Control
 
 This project has browser control configured:
@@ -172,26 +202,35 @@ This project has browser control configured:
 - User credentials: Preserved and accessible
 
 See .cursor/browser-control-settings.md for details.
+
 ```
 
 ### 3. Quick Setup Commands
 
 ````markdown
+
 ## Browser Control Setup
 
 ```bash
+
 # Install MCP server
+
 npm install -g chrome-devtools-mcp
 
-# Start browser with debugging
+# Start browser with debugging (2)
+
 /Applications/Comet.app/Contents/MacOS/Comet --remote-debugging-port=9222
 
-# Test connection
+# Test connection (2)
+
 curl -s http://localhost:9222/json/version
 
-# Use MCP server
+# Use MCP server (2)
+
 BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolated
+
 ```
+
 ````
 
 ````
@@ -199,44 +238,52 @@ BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolat
 ## Agent Handoff Templates
 
 ### For Project Transfer
+
 ```markdown
-## Browser Control Capabilities
+
+## Browser Control Capabilities (2)
 
 This project includes browser control:
+
 - **Status**: Configured and ready
 - **Browser**: Comet with user credentials
 - **MCP Server**: chrome-devtools-mcp@0.8.1
 - **Debug Port**: 9222 (configurable)
 - **User Sessions**: Full authenticated access
 
-### Quick Start
+### Quick Start (2)
+
 1. Check browser: `ps aux | grep -i comet`
 2. Start debugging: `/Applications/Comet.app/Contents/MacOS/Comet --remote-debugging-port=9222`
 3. Test: `curl -s http://localhost:9222/json/version`
 4. Control: Use MCP server for browser automation
 
 ### Documentation
+
 - Settings: `.cursor/browser-control-settings.md`
 - Capabilities: `.cursor/agent-capabilities.md`
 - Instructions: `.cursor/agent-instructions.md`
+
 ````
 
 ### For Agent Collaboration
 
 ```markdown
-## Browser Control Status
+
+## Browser Control Status (2)
 
 ✅ **Available**: Browser control with user credentials
 ✅ **Configured**: MCP server and debug protocol
 ✅ **Ready**: Can control browser with authenticated sessions
 ✅ **Documented**: Complete setup and usage instructions
 
-### Usage
+### Usage (2)
 
 - Start browser with debugging
 - Use MCP server for control
 - Access authenticated websites
 - Interact with logged-in services
+
 ```
 
 ## Agent Memory Integration
@@ -244,6 +291,7 @@ This project includes browser control:
 ### For Byterover MCP
 
 ````markdown
+
 ## Browser Control Knowledge
 
 This project has browser control capabilities:
@@ -253,21 +301,27 @@ This project has browser control capabilities:
 - Debug protocol: Chrome DevTools Protocol
 - User sessions: Authenticated access preserved
 
-### Usage Commands
+### Usage Commands (2)
 
 ```bash
-# Start browser debugging
+
+# Start browser debugging (2)
+
 /Applications/Comet.app/Contents/MacOS/Comet --remote-debugging-port=9222
 
-# Test connection
+# Test connection (3)
+
 curl -s http://localhost:9222/json/version
 
-# Use MCP server
+# Use MCP server (3)
+
 BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolated
+
 ```
+
 ````
 
-### Capabilities
+### Capabilities (3)
 
 - Navigate to authenticated websites
 - Access user credentials and saved data
@@ -280,18 +334,25 @@ BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolat
 ## Agent Testing
 
 ### Verification Commands
+
 ```bash
+
 # Check browser status
+
 ps aux | grep -i comet
 
 # Test debug connection
+
 curl -s http://localhost:9222/json/version
 
 # Verify MCP server
+
 npx chrome-devtools-mcp@latest --help
 
 # Check project configuration
+
 ls -la .cursor/browser-control-settings.md
+
 ````
 
 ### Success Indicators
@@ -314,17 +375,23 @@ ls -la .cursor/browser-control-settings.md
 ### Debug Commands
 
 ```bash
+
 # Check running processes
+
 ps aux | grep -i comet
 
-# Test debug connection
+# Test debug connection (2)
+
 curl -s http://localhost:9222/json/version
 
 # List available tabs
+
 curl -s http://localhost:9222/json
 
 # Test MCP server
+
 npx chrome-devtools-mcp@latest --help
+
 ```
 
 ## Summary
@@ -337,4 +404,5 @@ This guide provides comprehensive instructions for:
 - Enabling agent collaboration
 - Troubleshooting common issues
 
-Use these templates and instructions to ensure all Cursor agents understand and can utilize browser control capabilities.
+Use these templates and instructions to ensure all Cursor agents understand and can utilize browser control
+  capabilities.

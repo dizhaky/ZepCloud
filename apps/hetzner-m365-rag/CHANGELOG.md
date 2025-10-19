@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 #### Infrastructure
+
 - Complete Docker Compose orchestration for all services
 - Elasticsearch 8.15.0 with vector search support
 - PostgreSQL 16 with pgvector extension
@@ -22,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prometheus + Grafana monitoring stack
 
 #### Application
+
 - FastAPI-based API server with async support
 - RAG-Anything integration for multimodal processing
 - Elasticsearch adapter replacing Azure AI Search
@@ -32,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Background task processing
 
 #### M365 Integration
+
 - M365 authentication modules (interactive, delegated, app)
 - Support for multiple authentication methods
 - SharePoint connector (ready for adaptation)
@@ -41,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Calendar and Contacts indexing
 
 #### Security
+
 - LUKS disk encryption support
 - UFW firewall configuration
 - Fail2ban brute-force protection
@@ -50,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Environment variable management
 
 #### Monitoring
+
 - Prometheus metrics collection
 - Grafana dashboards
 - Elasticsearch exporter for cluster metrics
@@ -58,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Performance metrics tracking
 
 #### Backup & Recovery
+
 - Automated daily backup script
 - Elasticsearch snapshot management
 - PostgreSQL dump automation
@@ -67,6 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Disaster recovery procedures
 
 #### Documentation
+
 - Comprehensive README
 - Implementation guide
 - Architecture specification
@@ -76,12 +83,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Security best practices
 
 #### Scripts
+
 - Automated deployment script
 - Backup and restore scripts
 - Database initialization script
 - Service management utilities
 
 #### Configuration
+
 - Elasticsearch configuration
 - Nginx configuration
 - Prometheus configuration
@@ -197,4 +206,3 @@ For questions, issues, or feature requests:
 ## License
 
 [Add license information]
-

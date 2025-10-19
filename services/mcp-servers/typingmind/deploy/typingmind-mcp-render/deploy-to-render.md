@@ -17,7 +17,7 @@
 
 Use these exact settings:
 
-**Basic Settings:**
+## Basic Settings:
 
 - **Name**: `typingmind-mcp-server`
 - **Environment**: `Node`
@@ -25,12 +25,12 @@ Use these exact settings:
 - **Branch**: `main`
 - **Root Directory**: (leave empty)
 
-**Build & Deploy:**
+## Build & Deploy:
 
 - **Build Command**: `npm install`
 - **Start Command**: `npm start`
 
-**Advanced Settings:**
+## Advanced Settings:
 
 - **Plan**: `Free`
 - **Auto-Deploy**: `Yes`
@@ -66,6 +66,7 @@ Once deployed, configure TypingMind:
 Once connected, click **"Edit Servers"** and add:
 
 ```json
+
 {
   "mcpServers": {
     "memory": {
@@ -94,9 +95,10 @@ Once connected, click **"Edit Servers"** and add:
     }
   }
 }
+
 ```
 
-## ✅ Success!
+## ✅ Success
 
 Your TypingMind MCP server will be running on Render.com with all the MCP plugins available!
 

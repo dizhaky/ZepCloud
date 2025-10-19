@@ -1,505 +1,408 @@
-# M365 RAG System - Hetzner Deployment
+# 🚀 Hetzner M365 RAG System
 
-**Version:** 1.0.0  
-**Last Updated:** October 18, 2025  
-**Status:** Production Ready
+## Production-ready RAG system for Microsoft 365 content with enterprise search capabilities
 
----
-
-## 🎯 Overview
-
-This is a complete self-hosted M365 RAG (Retrieval-Augmented Generation) system deployed on Hetzner AX52 infrastructure, featuring:
-
-- **Elasticsearch 8.15** - Vector search engine with kNN support
-- **RAG-Anything** - Multimodal document processing (images, tables, equations)
-- **RAGFlow** - Production UI with citations and agent workflows
-- **PostgreSQL 16** - Metadata and user database with pgvector
-- **Redis 7** - Caching layer for query optimization
-- **MinIO** - S3-compatible object storage
-- **Prometheus + Grafana** - Comprehensive monitoring
-- **FastAPI** - Custom integration layer
-- **M365 Connectors** - SharePoint, OneDrive, Teams, Outlook, Calendar, Contacts
-
-**Annual Cost Savings:** $8,000-14,000 vs Azure  
-**Hardware:** Hetzner AX52 (128GB RAM, 2x3.84TB NVMe) - $108/month
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-green)](https://github.com)
+[![Automation](https://img.shields.io/badge/Automation-100%25%20CLI-blue)](https://github.com)
+[![Cost](https://img.shields.io/badge/Cost-€26-€108%2Fmonth-orange)](https://github.com)
 
 ---
 
-## 🚀 Quick Start
+## ⚡ QUICK START
 
-### Prerequisites
+### One Command Deployment
 
-- Hetzner AX52 server with Ubuntu 24.04 LTS
-- Domain name (optional but recommended)
-- OpenAI API key
-- Microsoft 365 tenant with admin access
+```powershell
 
-### Installation
+cd C:\Dev\ZepCloud\apps\hetzner-m365-rag
+.\DEPLOY_COMPLETE_CLI.ps1 -CreateServer
 
-1. **Upload project files to server:**
-   ```bash
-   scp -r . root@YOUR_SERVER_IP:/tmp/m365-rag-deploy
-   ```
+```
 
-2. **Run deployment script:**
-   ```bash
-   ssh root@YOUR_SERVER_IP
-   cd /tmp/m365-rag-deploy
-   chmod +x scripts/deploy.sh
-   ./scripts/deploy.sh
-   ```
-
-3. **Configure environment:**
-   ```bash
-   vi /data/m365-rag/.env
-   # Add your OpenAI API key and Azure AD credentials
-   ```
-
-4. **Restart services:**
-   ```bash
-   cd /data/m365-rag
-   docker compose restart
-   ```
-
-5. **Verify deployment:**
-   ```bash
-   docker compose ps
-   curl http://localhost:8000/health
-   ```
+**That's it!** Your system will be running in 30 minutes.
 
 ---
 
-## 📊 System Architecture
+## 📖 WHAT YOU GET
 
-```
-┌─────────────────────────────────────────────┐
-│          User Layer (RAGFlow UI)            │
-│                Port 80/443                   │
-└──────────────────┬──────────────────────────┘
-                   │
-┌──────────────────▼──────────────────────────┐
-│         Application Layer                    │
-│  ┌──────────────┐    ┌──────────────┐      │
-│  │   RAGFlow    │    │   API Server │      │
-│  │   (Port 9380)│    │   (Port 8000)│      │
-│  └──────────────┘    └──────────────┘      │
-└──────────────────┬──────────────────────────┘
-                   │
-┌──────────────────▼──────────────────────────┐
-│            Data Layer                        │
-│  ┌─────────────────────────────────────┐   │
-│  │ Elasticsearch (16GB, Port 9200)     │   │
-│  └─────────────────────────────────────┘   │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐   │
-│  │PostgreSQL│ │  Redis   │ │  MinIO   │   │
-│  │ (4GB)    │ │  (2GB)   │ │  (2GB)   │   │
-│  └──────────┘ └──────────┘ └──────────┘   │
-└─────────────────────────────────────────────┘
-```
+### Complete RAG System
 
----
+- **Vector Search** - Semantic search across all M365 content
 
-## 🔧 Configuration Files
+- **Full-Text Search** - Traditional keyword search
 
-### Core Configuration
+- **M365 Integration** - SharePoint, OneDrive, Teams, Email
 
-- `docker-compose.yml` - Service orchestration
-- `.env` - Environment variables and secrets
-- `config/nginx/nginx.conf` - Reverse proxy configuration
-- `config/elasticsearch/elasticsearch.yml` - Search engine config
-- `config/prometheus/prometheus.yml` - Monitoring config
+- **Production UI** - RAGFlow interface
 
-### Scripts
+- **REST API** - FastAPI with interactive docs
 
-- `scripts/deploy.sh` - Initial deployment
-- `scripts/backup.sh` - Automated backups
-- `scripts/restore.sh` - Disaster recovery
-- `scripts/init-db.sql` - Database initialization
+- **Monitoring** - Grafana dashboards + Prometheus
+
+- **Object Storage** - MinIO S3-compatible storage
+
+### 11 Services Included
+
+1. Elasticsearch 8.15 - Vector + full-text search
+
+2. PostgreSQL 16 - Metadata database
+
+3. Redis 7 - Query caching
+
+4. MinIO - Object storage
+
+5. RAGFlow - Production UI
+
+6. FastAPI - Integration API
+
+7. Nginx - Reverse proxy
+
+8. Prometheus - Metrics collection
+
+9. Grafana - Visualization
+
+10. Elasticsearch Exporter - Metrics
+
+11. PostgreSQL Exporter - Metrics
 
 ---
 
-## 🐳 Docker Services
+## 💰 COST OPTIONS
 
-| Service | Port | Memory | Purpose |
-|---------|------|--------|---------|
-| Elasticsearch | 9200 | 16GB | Vector + full-text search |
-| PostgreSQL | 5432 | 4GB | Metadata + user database |
-| Redis | 6379 | 2GB | Query caching |
-| MinIO | 9000/9001 | 2GB | Object storage |
-| RAGFlow | 9380 | 8GB | Production UI |
-| API | 8000 | 4GB | Integration layer |
-| Nginx | 80/443 | 512MB | Reverse proxy |
-| Prometheus | 9090 | 1GB | Metrics collection |
-| Grafana | 3000 | 512MB | Visualization |
+### Hetzner Cloud (cx51) - Testing/MVP
 
-**Total RAM Usage:** ~38GB (90GB available on AX52)
+- **8 vCPUs, 32GB RAM**
 
----
+- **€26.40/month** ($29)
 
-## 📡 API Endpoints
+- Instant provisioning (5 min)
 
-### Health Check
-```bash
-GET /health
-Response: {
-  "status": "healthy",
-  "services": {
-    "elasticsearch": "ok",
-    "postgres": "ok",
-    "redis": "ok"
-  }
-}
-```
+- Perfect for testing and small teams
 
-### Search
-```bash
-POST /search
-Body: {
-  "query": "quarterly report",
-  "top_k": 10,
-  "search_mode": "hybrid"
-}
-```
+- **Save $771-1,471/month vs Azure**
 
-### Upload Document
-```bash
-POST /ingest/upload
-Form Data:
-  file: <file>
-  metadata: {"source": "manual", "author": "System"}
-```
+### Hetzner Dedicated (AX52) - Production
 
-### M365 Sync
-```bash
-POST /ingest/m365/sync
-Body: {
-  "source_type": "sharepoint",
-  "site_url": "https://tenant.sharepoint.com/sites/site",
-  "delta_sync": true
-}
-```
+- **16 cores, 128GB RAM**
+
+- **€108/month** ($117)
+
+- 2-4 hour provisioning
+
+- Perfect for production workloads
+
+- **Save $683-1,383/month vs Azure**
+
+### Azure Alternative
+
+- **$800-1,500/month**
+
+- **ROI: 1-2 months** on either Hetzner option!
 
 ---
 
-## 🔐 Security
+## 🎯 DEPLOYMENT GUIDES
 
-### Authentication
+Choose your path:
 
-- **Azure AD OAuth** for M365 integration
-- **JWT tokens** for API authentication
-- **RBAC** (Role-Based Access Control)
+### ⭐ CLI-Based (Recommended)
 
-### Data Protection
+## 100% Command-line automation - No browser needed
 
-- **Disk encryption** (LUKS) for sensitive data
-- **TLS 1.3** for all connections
-- **X-Pack Security** in Elasticsearch
-- **Secure password generation** (32-byte random)
+📄 **See:** [CLI_DEPLOYMENT_GUIDE.md](CLI_DEPLOYMENT_GUIDE.md)
 
-### Network Security
+```powershell
 
-- **UFW firewall** (SSH, HTTP, HTTPS only)
-- **Fail2ban** for brute-force protection
-- **Rate limiting** via Redis
+# Install tools
 
-### Enhanced Security Measures
+winget install Microsoft.AzureCLI
 
-Additional security enhancements have been implemented to further strengthen the system:
+# Download hcloud from GitHub
 
-- **Security Hardening Guide** - System-level security configurations, container security, network segmentation, and data encryption enhancements ([docs/SECURITY_HARDENING_GUIDE.md](docs/SECURITY_HARDENING_GUIDE.md))
-- **Monitoring and Alerting Configuration** - Log aggregation, intrusion detection, security event monitoring, and automated security scanning ([docs/MONITORING_AND_ALERTING_CONFIGURATION.md](docs/MONITORING_AND_ALERTING_CONFIGURATION.md))
-- **Disaster Recovery and Backup Security** - Secure backup storage, backup encryption, recovery point objectives, and recovery time objectives ([docs/DISASTER_RECOVERY_AND_BACKUP_SECURITY_PLAN.md](docs/DISASTER_RECOVERY_AND_BACKUP_SECURITY_PLAN.md))
+# Deploy
 
-For a comprehensive overview of all security enhancements, see [docs/SECURITY_ENHANCEMENTS_SUMMARY.md](docs/SECURITY_ENHANCEMENTS_SUMMARY.md).
+.\DEPLOY_COMPLETE_CLI.ps1 -CreateServer
+
+```
+
+### 📝 Step-by-Step
+
+## Detailed instructions for each step
+
+📄 **See:** [DEPLOYMENT_READY_GUIDE.md](DEPLOYMENT_READY_GUIDE.md)
+
+### 🚀 Quick Start
+
+## Get up and running fast
+
+📄 **See:** [START_HERE.md](START_HERE.md)
 
 ---
 
-## 💾 Backup & Recovery
+## 📦 WHAT'S INCLUDED
 
-### Automated Backups
+### Automation Scripts
 
-Daily backups at 2:00 AM (configured via cron):
+- ✅ `DEPLOY_COMPLETE_CLI.ps1` - 100% CLI automation ⭐
 
-```bash
-/data/m365-rag/scripts/backup.sh
-```
+- ✅ `DEPLOY_ONE_CLICK.ps1` - One-click deployment
 
-**Backup includes:**
-- Elasticsearch snapshots
-- PostgreSQL dumps
-- Redis data
-- Configuration files
-- Scripts
+- ✅ `prepare-env.ps1` - Environment setup
 
-**Retention:** 30 days
+- ✅ `create-azure-ad-app.ps1` - Azure AD via CLI
 
-### Manual Backup
+- ✅ `setup-hetzner-server.ps1` - Server creation via CLI
 
-```bash
-cd /data/m365-rag
-./scripts/backup.sh
-```
+- ✅ `deploy-to-server.ps1` - Automated deployment
 
-### Restore from Backup
-
-```bash
-cd /data/m365-rag
-./scripts/restore.sh <backup_date>
-# Example: ./scripts/restore.sh 20251018_020000
-```
-
-**RTO:** 4 hours  
-**RPO:** 1 hour
-
----
-
-## 📊 Monitoring
-
-### Grafana Dashboards
-
-Access: `http://YOUR_SERVER_IP:3000`
-
-**Pre-configured dashboards:**
-- Elasticsearch cluster health
-- API performance metrics
-- System resource usage
-- Query performance
-
-### Prometheus Metrics
-
-Access: `http://YOUR_SERVER_IP:9090`
-
-**Key metrics:**
-- Query latency (p50, p95, p99)
-- Document indexing rate
-- Cache hit/miss ratio
-- Error rates
-
-### Alerts
-
-Configured alerts for:
-- High CPU usage (>80%)
-- High memory usage (>85%)
-- Low disk space (<20%)
-- Elasticsearch cluster red/yellow
-- API errors (>5% rate)
-
----
-
-## 🔄 M365 Integration
-
-### Supported Sources
-
-- ✅ SharePoint (sites, document libraries)
-- ✅ OneDrive (personal files, folders)
-- ✅ Teams (chats, channels, files)
-- ✅ Outlook (email attachments)
-- ✅ Calendar (events, meetings)
-- ✅ Contacts (people, organizations)
-
-### Authentication Methods
-
-1. **Interactive Browser Auth** (recommended)
-2. **Device Code Flow** (fallback)
-3. **Application Permissions** (for service accounts)
-
-### Initial Sync
-
-```bash
-cd /data/m365-rag
-python3 api/m365_sync.py --source sharepoint --full
-```
-
-### Incremental Sync
-
-Automated hourly via cron:
-```bash
-0 * * * * cd /data/m365-rag && python3 api/m365_sync.py --source all --delta
-```
-
----
-
-## 🧪 Testing
-
-### Health Check
-
-```bash
-curl http://localhost:8000/health
-```
-
-### Search Test
-
-```bash
-curl -X POST http://localhost:8000/search \
-  -H "Content-Type: application/json" \
-  -d '{"query":"test","top_k":5}'
-```
-
-### Elasticsearch Test
-
-```bash
-curl -u elastic:PASSWORD http://localhost:9200/_cluster/health
-```
-
-### Load Testing
-
-```bash
-cd /data/m365-rag
-pip install locust
-locust -f tests/locustfile.py --host http://localhost:8000
-```
-
----
-
-## 🛠️ Maintenance
-
-### Daily Tasks
-
-```bash
-# Check system health
-docker compose ps
-curl http://localhost:8000/health
-
-# View logs
-docker compose logs -f --tail=100
-
-# Monitor resources
-docker stats
-```
-
-### Weekly Tasks
-
-```bash
-# Update Docker images
-docker compose pull
-docker compose up -d
-
-# Check backup logs
-tail -f /var/log/m365-rag-backup.log
-
-# Review slow queries
-docker compose exec elasticsearch cat /_cat/tasks
-```
-
-### Monthly Tasks
-
-```bash
-# System updates
-apt update && apt upgrade -y
-
-# Clean old logs
-find /data/m365-rag/logs -name "*.log" -mtime +30 -delete
-
-# Review capacity planning
-docker exec elasticsearch curl localhost:9200/_cat/allocation
-```
-
----
-
-## 🚨 Troubleshooting
-
-### Elasticsearch Won't Start
-
-```bash
-# Check logs
-docker compose logs elasticsearch
-
-# Common fixes:
-# 1. Increase memory
-docker compose down
-# Edit docker-compose.yml: increase ES_JAVA_OPTS
-docker compose up -d
-
-# 2. Fix permissions
-sudo chown -R 1000:1000 /data/m365-rag/data/elasticsearch
-```
-
-### High Memory Usage
-
-```bash
-# Check memory usage
-docker stats
-
-# Reduce Elasticsearch heap
-# Edit docker-compose.yml:
-ES_JAVA_OPTS: "-Xms8g -Xmx8g"  # Reduce from 16g
-```
-
-### Slow Queries
-
-```bash
-# Enable slow query logging
-docker exec elasticsearch curl -X PUT "localhost:9200/documents/_settings" \
-  -H 'Content-Type: application/json' \
-  -u elastic:PASSWORD \
-  -d '{"index.search.slowlog.threshold.query.warn": "2s"}'
-
-# Check slow queries
-docker compose logs elasticsearch | grep "took_millis"
-```
-
-### Services Not Starting
-
-```bash
-# Check Docker daemon
-systemctl status docker
-
-# Check disk space
-df -h
-
-# Check service logs
-docker compose logs --tail=100
-```
-
----
-
-## 📈 Performance Targets
-
-| Metric | Target | Current |
-|--------|--------|---------|
-| Query Latency (p50) | <500ms | - |
-| Query Latency (p95) | <2s | - |
-| Document Indexing | 100 docs/min | - |
-| Concurrent Users | 50+ | - |
-| System Uptime | 99.5% | - |
-
----
-
-## 📞 Support
+- ✅ `deploy.sh` - Server-side deployment (Bash)
 
 ### Documentation
 
-- Implementation Guide: `docs/IMPLEMENTATION_GUIDE.md`
-- Architecture Specification: `docs/ARCHITECTURE.md`
-- API Documentation: `docs/API.md`
+- 📖 CLI_DEPLOYMENT_GUIDE.md - CLI automation guide
 
-### Community
+- 📖 START_HERE.md - Quick 3-step guide
 
-- GitHub Issues
-- Discord: (TBD)
-- Email: support@example.com
+- 📖 DEPLOYMENT_READY_GUIDE.md - Complete guide
+
+- 📖 HETZNER_SERVER_SETUP.md - Server management
+
+- 📖 FINAL_DEPLOYMENT_SUMMARY.md - Complete summary
+
+- 📄 PASSWORDS_GENERATED.txt - Password reference
+
+- 📄 SERVER_INFO.txt - Server details (after creation)
+
+### Configuration
+
+- ✅ Complete `.env` file with secure passwords
+
+- ✅ Docker Compose for 11 services
+
+- ✅ Nginx reverse proxy config
+
+- ✅ Prometheus monitoring config
+
+- ✅ Grafana dashboards
+
+- ✅ SSL certificate generation
+
+- ✅ UFW firewall rules
+
+- ✅ Fail2ban security
+
+- ✅ Daily automated backups
 
 ---
 
-## 🎉 What's Next?
+## 🔒 SECURITY
+
+- **Secure Passwords** - 32-64 character cryptographic passwords
+
+- **SSL/TLS** - Automatic certificate generation
+
+- **Firewall** - UFW configured automatically
+
+- **Brute Force Protection** - Fail2ban configured
+
+- **JWT Authentication** - API security
+
+- **Automated Backups** - Daily at 2 AM
+
+- **1Password Integration** - Credential management
+
+---
+
+## 🌐 ACCESS URLS
 
 After deployment:
 
-1. **Configure M365 sync** - Connect your SharePoint sites
-2. **Upload test documents** - Verify multimodal processing
-3. **Set up monitoring alerts** - Configure email notifications
-4. **Train users** - Provide onboarding for RAGFlow UI
-5. **Plan scaling** - Monitor usage and plan capacity
+| Service | URL | Purpose |
+|---------|-----|---------|
+| RAGFlow UI | http://SERVER_IP:9380 | Main interface |
+| FastAPI | http://SERVER_IP:8000 | API endpoint |
+| API Docs | http://SERVER_IP:8000/docs | Interactive docs |
+| Grafana | http://SERVER_IP:3000 | Monitoring |
+| Prometheus | http://SERVER_IP:9090 | Metrics |
+| MinIO | http://SERVER_IP:9001 | Object storage |
 
 ---
 
-## 📝 License
+## 📊 SYSTEM REQUIREMENTS
 
-[Add your license here]
+### Minimum (Cloud cx51)
+
+- 8 vCPUs
+
+- 32GB RAM
+
+- 360GB SSD
+
+- Ubuntu 24.04 LTS
+
+### Recommended (Dedicated AX52)
+
+- 16 cores
+
+- 128GB RAM
+
+- 2x 3.84TB NVMe SSD
+
+- Ubuntu 24.04 LTS
 
 ---
 
-**Questions?** Check the documentation in `docs/` or open a GitHub issue.
+## 🚀 FEATURES
 
-**Ready to deploy?** Run `./scripts/deploy.sh` to get started!
+### M365 Integration
 
+- ✅ SharePoint document indexing
+
+- ✅ OneDrive file search
+
+- ✅ Teams message search
+
+- ✅ Email content search
+
+- ✅ Delegated authentication
+
+- ✅ Incremental sync
+
+### Search Capabilities
+
+- ✅ Vector/semantic search
+
+- ✅ Full-text keyword search
+
+- ✅ Hybrid search (combines both)
+
+- ✅ Metadata filtering
+
+- ✅ Multi-language support
+
+- ✅ Document ranking
+
+### API Features
+
+- ✅ RESTful API
+
+- ✅ Interactive docs (Swagger)
+
+- ✅ JWT authentication
+
+- ✅ Rate limiting
+
+- ✅ Query caching
+
+- ✅ Batch operations
+
+### Monitoring
+
+- ✅ Service health dashboards
+
+- ✅ Query performance metrics
+
+- ✅ Resource utilization
+
+- ✅ Error tracking
+
+- ✅ Alert configuration
+
+- ✅ Log aggregation
+
+---
+
+## ⏱️ DEPLOYMENT TIME
+
+### Cloud Server (cx51)
+
+- **Preparation:** 5 minutes
+
+- **Server Creation:** 5 minutes (automated)
+
+- **Deployment:** 15 minutes
+
+- **Total:** ~25-30 minutes
+
+### Dedicated Server (AX52)
+
+- **Preparation:** 5 minutes
+
+- **Server Ordering:** 10 minutes
+
+- **Wait for Provisioning:** 2-4 hours
+
+- **Deployment:** 15 minutes
+
+- **Total Active Time:** ~30 minutes
+
+---
+
+## 🆘 SUPPORT
+
+### Documentation (2)
+
+- [CLI Deployment Guide](CLI_DEPLOYMENT_GUIDE.md)
+
+- [Complete Deployment Guide](DEPLOYMENT_READY_GUIDE.md)
+
+- [Server Setup Guide](HETZNER_SERVER_SETUP.md)
+
+- [Quick Start](START_HERE.md)
+
+### Troubleshooting
+
+See the troubleshooting sections in:
+
+- [CLI_DEPLOYMENT_GUIDE.md](CLI_DEPLOYMENT_GUIDE.md#troubleshooting)
+
+- [DEPLOYMENT_READY_GUIDE.md](DEPLOYMENT_READY_GUIDE.md)
+
+### Hetzner Support
+
+- Status: https://status.hetzner.com/
+
+- Community: https://community.hetzner.com/
+
+- Docs: https://docs.hetzner.com/
+
+---
+
+## 📄 LICENSE
+
+This project includes:
+
+- Elasticsearch (Elastic License 2.0)
+
+- PostgreSQL (PostgreSQL License)
+
+- Redis (BSD 3-Clause)
+
+- MinIO (AGPL v3)
+
+- RAGFlow (Apache 2.0)
+
+- Custom integration code (MIT)
+
+See individual component licenses for details.
+
+---
+
+## 🎯 NEXT STEPS
+
+1. **Read:** [START_HERE.md](START_HERE.md)
+
+2. **Deploy:** Run `.\DEPLOY_COMPLETE_CLI.ps1 -CreateServer`
+
+3. **Access:** http://YOUR_SERVER_IP:9380
+
+4. **Enjoy:** Your production RAG system!
+
+---
+
+**Status:** ✅ **Production Ready**
+**Automation:** 100% CLI-based
+**Time to Deploy:** 25-30 minutes
+**Cost:** Starting at €26.40/month
+
+🚀 **Let's build something amazing!**

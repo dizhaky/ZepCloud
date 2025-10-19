@@ -1,4 +1,4 @@
-# 🎉 MICROSOFT GRAPH API ACTIVATED!
+# 🎉 MICROSOFT GRAPH API ACTIVATED
 
 **Date:** January 17, 2025
 **Status:** Microsoft Graph API successfully activated
@@ -30,9 +30,11 @@
 ### **Environment Variables Set:**
 
 ```bash
+
 M365_CLIENT_ID=d642ba9c-258e-45ca-bfcd-b6fe99ab7154
 M365_TENANT_ID=0454334e-d9a9-458c-9999-b3db378abae1
 M365_USE_DELEGATED_AUTH=true
+
 ```
 
 ### **Authentication Method:**
@@ -122,6 +124,7 @@ M365_USE_DELEGATED_AUTH=true
    ```
 
 4. **Teams Indexing:**
+
    ```bash
    python3 m365_teams_indexer.py
    ```
@@ -129,13 +132,17 @@ M365_USE_DELEGATED_AUTH=true
 ### **To Monitor Progress:**
 
 ```bash
+
 # Check logs
+
 tail -f sharepoint_sync.log
 tail -f onedrive_sync.log
 tail -f exchange_sync.log
 
 # Check processes
+
 ps aux | grep m365
+
 ```
 
 ---
@@ -174,7 +181,7 @@ ps aux | grep m365
 
 ---
 
-## 🎉 MISSION ACCOMPLISHED!
+## 🎉 MISSION ACCOMPLISHED
 
 **Microsoft Graph API Status:** ✅ ACTIVATED
 **Total Cost:** $0 (FREE within Microsoft 365 license)

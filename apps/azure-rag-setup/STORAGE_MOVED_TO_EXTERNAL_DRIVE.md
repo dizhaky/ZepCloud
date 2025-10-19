@@ -1,4 +1,4 @@
-# 🎉 M365 STORAGE MOVED TO EXTERNAL DRIVE!
+# 🎉 M365 STORAGE MOVED TO EXTERNAL DRIVE
 
 **Date:** January 17, 2025
 **Status:** Successfully moved to external drive
@@ -12,7 +12,9 @@
 ### **New Location:**
 
 ```
+
 /Volumes/Express 1M2/m365_local_storage/
+
 ```
 
 ### **What Was Moved:**
@@ -50,19 +52,23 @@
 ### **Directory Structure on External Drive:**
 
 ```
+
 /Volumes/Express 1M2/m365_local_storage/
 ├── m365_data.db          # SQLite database (144 MB)
 ├── documents/            # Actual document files
 │   └── sharepoint/       # SharePoint documents
 ├── metadata/             # Document metadata (JSON files)
 └── indexes/              # Search indexes
+
 ```
 
 ### **Configuration Updated:**
 
 ```bash
+
 LOCAL_STORAGE_PATH=/Volumes/Express 1M2/m365_local_storage
 LOCAL_STORAGE_ENABLED=true
+
 ```
 
 ### **Database Status:**
@@ -122,17 +128,23 @@ LOCAL_STORAGE_ENABLED=true
 ### **To Continue Indexing:**
 
 ```bash
+
 # The system will automatically use the external drive
+
 python3 m365_local_indexer.py
+
 ```
 
 ### **To Monitor Progress:**
 
 ```bash
+
 # Check external drive storage
+
 ls -la "/Volumes/Express 1M2/m365_local_storage/"
 
 # Check database status
+
 python3 -c "
 from local_storage_manager import LocalStorageManager
 storage = LocalStorageManager('/Volumes/Express 1M2/m365_local_storage')
@@ -140,13 +152,17 @@ stats = storage.get_storage_stats()
 print(f'Documents: {stats.get(\"total_documents\", 0)}')
 print(f'Size: {stats.get(\"storage_size_mb\", 0)} MB')
 "
+
 ```
 
 ### **To Backup:**
 
 ```bash
+
 # Backup entire M365 data
+
 cp -r "/Volumes/Express 1M2/m365_local_storage" /path/to/backup/location/
+
 ```
 
 ---
@@ -163,7 +179,7 @@ cp -r "/Volumes/Express 1M2/m365_local_storage" /path/to/backup/location/
 
 ---
 
-## 🎉 MISSION ACCOMPLISHED!
+## 🎉 MISSION ACCOMPLISHED
 
 ### **What We Achieved:**
 
@@ -194,7 +210,7 @@ cp -r "/Volumes/Express 1M2/m365_local_storage" /path/to/backup/location/
 
 **Your Microsoft 365 data is now stored on your external drive at $0 cost!** 🎉
 
-**Benefits:**
+## Benefits:
 
 - ✅ Freed up 442 MB on main drive
 - ✅ Portable storage

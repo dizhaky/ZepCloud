@@ -1,16 +1,17 @@
 # Bug Fixes Round 2 - M365 RAG System
 
-**Date:** October 19, 2025  
-**Status:** ✅ All 8 Bugs Fixed  
+**Date:** October 19, 2025
+**Status:** ✅ All 8 Bugs Fixed
 **Previous Round:** See `BUG_FIXES.md` for the first 10 bugs fixed
 
 ---
 
 ## Executive Summary
 
-This document details the second round of critical bugs identified and fixed in the M365 RAG System. All fixes have been tested and verified for production readiness.
+This document details the second round of critical bugs identified and fixed in the M365 RAG System. All fixes have been
+  tested and verified for production readiness.
 
-**Total Bugs Fixed This Round:** 8  
+**Total Bugs Fixed This Round:** 8
 **Cumulative Bugs Fixed:** 18
 
 ---
@@ -18,25 +19,34 @@ This document details the second round of critical bugs identified and fixed in 
 ## 🔧 Deployment & Configuration Fixes
 
 ### 1. SSL Certificates Not Generated During Deployment
-**File:** `scripts/deploy.sh`  
-**Lines:** 195-207 (new)  
+
+**File:** `scripts/deploy.sh`
+**Lines:** 195-207 (new)
 **Severity:** 🔴 Critical
 
-**Issue:**
+## Issue:
+
 - Elasticsearch SSL configuration referenced certificate files that don't exist by default
 - `docker-compose.yml` mounts `./config/elasticsearch/certs` and configures SSL paths
 - `generate-es-certs.sh` script exists but wasn't called during deployment
 - Elasticsearch would fail to start due to missing certificate files
 
-**Fix:**
+## Fix:
+
 Added Phase 6.5 to deployment script:
+
 ```bash
+
 # ============================================
+
 # PHASE 6.5: Generate SSL Certificates
-# ============================================
+
+# ============================================ (2)
+
 echo -e "${GREEN}🔐 Phase 6.5: Generating Elasticsearch SSL certificates...${NC}"
 
 # Check if certificates already exist
+
 if [ ! -f "$PROJECT_DIR/config/elasticsearch/certs/elasticsearch.crt" ]; then
     echo -e "${YELLOW}Generating self-signed certificates for Elasticsearch...${NC}"
     su - deploy -c "cd $PROJECT_DIR && bash scripts/generate-es-certs.sh"
@@ -44,9 +54,11 @@ if [ ! -f "$PROJECT_DIR/config/elasticsearch/certs/elasticsearch.crt" ]; then
 else
     echo -e "${YELLOW}⚠️  SSL certificates already exist, skipping generation${NC}"
 fi
+
 ```
 
-**Benefits:**
+## Benefits:
+
 - Certificates automatically generated on first deployment
 - Idempotent - checks if certs exist before generating
 - Prevents Elasticsearch startup failures
@@ -55,20 +67,25 @@ fi
 ---
 
 ### 2. Redundant M365 Auth Environment Variable Fallback
-**File:** `docker-compose.yml`  
-**Lines:** 242-249  
+
+**File:** `docker-compose.yml`
+**Lines:** 242-249
 **Severity:** 🟡 High
 
-**Issue:**
+## Issue: (2)
+
 - Docker Compose used fallback pattern: `${M365_CLIENT_ID:-${AZURE_CLIENT_ID}}`
 - `config_manager.py` already handles this fallback in code
 - Double fallback creates ambiguity and potential bugs
 - If `M365_*` variables are empty strings (not unset), fallback won't trigger
 - Would pass empty values instead of falling back to `AZURE_*`
 
-**Fix:**
+## Fix: (2)
+
 ```yaml
+
 # M365 Authentication (fallback handled in config_manager.py)
+
 - M365_CLIENT_ID=${M365_CLIENT_ID}
 - M365_CLIENT_SECRET=${M365_CLIENT_SECRET}
 - M365_TENANT_ID=${M365_TENANT_ID}
@@ -76,9 +93,11 @@ fi
 - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
 - AZURE_TENANT_ID=${AZURE_TENANT_ID}
 - M365_USE_DELEGATED_AUTH=${M365_USE_DELEGATED_AUTH:-true}
+
 ```
 
-**Rationale:**
+## Rationale:
+
 - Pass both sets of variables through to the container
 - Let `config_manager.py` handle the fallback logic in one place
 - Prevents empty string vs unset variable confusion
@@ -89,30 +108,37 @@ fi
 ## 🔒 Security & SSL Fixes
 
 ### 3. Elasticsearch Exporter Using HTTP Instead of HTTPS
-**File:** `docker-compose.yml`  
-**Lines:** 376-380  
+
+**File:** `docker-compose.yml`
+**Lines:** 376-380
 **Severity:** 🟡 High
 
-**Issue:**
+## Issue: (3)
+
 - Elasticsearch configured with SSL enabled (`xpack.security.http.ssl.enabled=true`)
 - Elasticsearch exporter used HTTP: `http://elastic:...@elasticsearch:9200`
 - HTTP connection would fail when connecting to HTTPS-enabled Elasticsearch
 - Metrics collection would be broken
 
-**Fix:**
+## Fix: (3)
+
 ```yaml
+
 elasticsearch-exporter:
   image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
   container_name: elasticsearch-exporter
   command:
+
     - '--es.uri=https://elastic:${ELASTIC_PASSWORD:-changeme}@elasticsearch:9200'
     - '--es.all'
     - '--es.indices'
     - '--es.shards'
     - '--es.ssl-skip-verify'  # Skip verification for self-signed certs
+
 ```
 
-**Changes:**
+## Changes:
+
 - Changed URI from `http://` to `https://`
 - Added `--es.ssl-skip-verify` flag for self-signed certificates
 - Maintains secure connection while allowing self-signed certs in Docker network
@@ -120,18 +146,22 @@ elasticsearch-exporter:
 ---
 
 ### 4. Restore Script Using HTTP Instead of HTTPS
-**File:** `scripts/restore.sh`  
-**Lines:** 98-105  
+
+**File:** `scripts/restore.sh`
+**Lines:** 98-105
 **Severity:** 🟡 High
 
-**Issue:**
+## Issue: (4)
+
 - System configured with `ES_USE_SSL=true`
 - Restore command used HTTP: `localhost:9200`
 - Would fail to connect because Elasticsearch listens on HTTPS
 - Restore operations would be broken
 
-**Fix:**
+## Fix: (4)
+
 ```bash
+
 docker exec elasticsearch curl -k -X POST "https://localhost:9200/_snapshot/backup/$BACKUP_DATE/_restore" \
     -u "elastic:$ELASTIC_PASSWORD" \
     -H 'Content-Type: application/json' \
@@ -140,9 +170,11 @@ docker exec elasticsearch curl -k -X POST "https://localhost:9200/_snapshot/back
         "ignore_unavailable": true,
         "include_global_state": false
     }' || echo -e "${RED}❌ Elasticsearch restore failed${NC}"
+
 ```
 
-**Changes:**
+## Changes: (2)
+
 - Added `-k` flag to skip certificate verification (self-signed certs)
 - Changed URL from `http://` to `https://`
 - Matches backup script's approach for consistency
@@ -152,39 +184,56 @@ docker exec elasticsearch curl -k -X POST "https://localhost:9200/_snapshot/back
 ## 💻 Code Quality Improvements
 
 ### 5. RAG Engine Type Annotation & Unreachable Code
-**File:** `api/main.py`  
-**Lines:** 8, 124, 578-579  
+
+**File:** `api/main.py`
+**Lines:** 8, 124, 578-579
 **Severity:** 🟠 Medium
 
-**Issue:**
+## Issue: (5)
+
 - `rag_engine` type annotation: `Any = None`
 - Variable immediately assigned in `lifespan` (never actually `None`)
 - Code checked `if not rag_engine` which was unreachable
 - Type hints didn't reflect actual behavior
 
-**Fix:**
+## Fix: (5)
+
 1. Added `Union` to imports:
+
 ```python
+
 from typing import List, Optional, Dict, Any, Union
+
 ```
 
 2. Updated type annotation:
+
 ```python
+
 # rag_engine is always initialized in lifespan - either RAGAnything or RAGEngineUnavailable stub
+
 rag_engine: Union[Any, "RAGEngineUnavailable"]  # type: ignore
+
 ```
 
 3. Removed unreachable check:
+
 ```python
-# Removed:
-# if not rag_engine:
+
+# Removed
+
+# if not rag_engine
+
 #     logger.warning("RAG engine not initialized")
+
 #     return
 
 # The check for RAG_ANYTHING_AVAILABLE (line 579) is sufficient
+
 ```
 
-**Benefits:**
+## Benefits: (2)
+
 - Type annotation reflects actual runtime behavior
 - Eliminates unreachable code
 - Clearer intent for future maintainers
@@ -192,25 +241,33 @@ rag_engine: Union[Any, "RAGEngineUnavailable"]  # type: ignore
 ---
 
 ### 6. Unstable Cache Key & Missing Error Handling
-**File:** `api/main.py`  
-**Lines:** 14, 440-454  
+
+**File:** `api/main.py`
+**Lines:** 14, 440-454
 **Severity:** 🟠 Medium
 
-**Issue:**
+## Issue: (6)
+
 - Cache key used Python's built-in `hash()` function
 - `hash()` returns different values across Python sessions (security feature)
 - Can produce negative values
 - No error handling for corrupt cache data or schema changes
 - Invalid cache would crash the application
 
-**Fix:**
+## Fix: (6)
+
 1. Added `hashlib` import:
+
 ```python
+
 import hashlib
+
 ```
 
 2. Stable hash with error handling:
+
 ```python
+
 try:
     # Check cache (use stable hash for cache key)
     query_hash = hashlib.md5(query.query.encode()).hexdigest()
@@ -227,9 +284,11 @@ try:
                 # Cache data is invalid/corrupt, log and continue with fresh search
                 logger.warning(f"Invalid cache data: {e}, performing fresh search")
                 await redis_client.delete(cache_key)
+
 ```
 
-**Benefits:**
+## Benefits: (3)
+
 - Stable cache keys across sessions (MD5 deterministic)
 - Graceful handling of corrupt cache data
 - Automatic cleanup of invalid entries
@@ -238,35 +297,43 @@ try:
 ---
 
 ### 7. RAG Stub Pattern Documentation
-**File:** `api/main.py`  
-**Lines:** 572-585  
+
+**File:** `api/main.py`
+**Lines:** 572-585
 **Severity:** 🟢 Low (Documentation)
 
-**Issue:**
+## Issue: (7)
+
 - Stub pattern not clearly documented
 - If `RAG_ANYTHING_AVAILABLE` check is bypassed, error message could be confusing
 - Future maintainers might not understand the defensive design
 
-**Fix:**
+## Fix: (7)
+
 Enhanced docstring:
+
 ```python
+
 async def process_document(
     file_path: str, doc_id: str, metadata: Dict
 ):
     """
     Process document with RAG-Anything
-    
+
     Note: rag_engine is always initialized in lifespan():
+
     - If RAG-Anything is available: real RAGAnything instance
     - If RAG-Anything is unavailable: RAGEngineUnavailable stub that raises clear errors
-    
+
     This function checks RAG_ANYTHING_AVAILABLE before using rag_engine to avoid
     triggering the stub's error messages. If this check is bypassed, the stub will
     raise RuntimeError with installation instructions.
     """
+
 ```
 
-**Benefits:**
+## Benefits: (4)
+
 - Clear explanation of defensive design pattern
 - Helps future maintainers understand the architecture
 - Documents expected behavior in edge cases
@@ -274,42 +341,49 @@ async def process_document(
 ---
 
 ### 8. ElasticsearchAdapter Initialization Clarity
-**File:** `api/storage_adapter.py`  
-**Lines:** 193-216  
+
+**File:** `api/storage_adapter.py`
+**Lines:** 193-216
 **Severity:** 🟢 Low (Documentation)
 
-**Issue:**
+## Issue: (8)
+
 - Unclear whether `__init__` should be async or sync
 - No documentation about correct usage pattern
 - Potential confusion when using async Elasticsearch client
 
-**Fix:**
+## Fix: (8)
+
 Enhanced class and method docstrings:
+
 ```python
+
 class ElasticsearchAdapter:
     """
     Adapter class to replace Azure AI Search with Elasticsearch
-    
+
     Note: This class uses synchronous __init__ (no async/await needed for instantiation).
     The instance methods are async and should be awaited when called.
-    
+
     Example:
         adapter = ElasticsearchAdapter(es_client)  # No await
         await adapter.index_document(doc_id, content)  # Await async methods
     """
-    
+
     def __init__(self, es_client):
         """
         Initialize with an Elasticsearch client (synchronous initialization)
-        
+
         Args:
             es_client: AsyncElasticsearch client instance
-        
+
         Note: Do NOT await this __init__ - it's synchronous by design.
         """
+
 ```
 
-**Benefits:**
+## Benefits: (5)
+
 - Crystal clear usage instructions
 - Example code shows correct pattern
 - Prevents async/await confusion
@@ -320,17 +394,20 @@ class ElasticsearchAdapter:
 ## 📊 Summary Statistics
 
 ### Bugs by Severity
+
 - 🔴 Critical: 1
 - 🟡 High: 3
 - 🟠 Medium: 2
 - 🟢 Low (Documentation): 2
 
 ### Bugs by Category
+
 - Deployment & Configuration: 2
 - Security & SSL: 2
 - Code Quality: 4
 
 ### Files Modified
+
 1. `scripts/deploy.sh` - Added certificate generation
 2. `docker-compose.yml` - Fixed env vars and SSL
 3. `scripts/restore.sh` - Fixed HTTPS connection
@@ -359,10 +436,12 @@ class ElasticsearchAdapter:
 **Status:** ✅ Ready for Deployment
 
 The system has now had **18 critical bugs fixed** across two rounds:
+
 - **Round 1:** 10 bugs (security, configuration, scripts, code quality)
 - **Round 2:** 8 bugs (deployment, SSL, caching, documentation)
 
 All fixes maintain:
+
 - ✅ Security best practices (SSL/TLS everywhere)
 - ✅ Robust error handling (graceful degradation)
 - ✅ Clear documentation (code comments and usage examples)
@@ -381,7 +460,6 @@ All fixes maintain:
 
 ---
 
-**Last Updated:** October 19, 2025  
-**Reviewed By:** Kilo Code (AI Assistant)  
+**Last Updated:** October 19, 2025
+**Reviewed By:** Kilo Code (AI Assistant)
 **Next Review:** Before production deployment
-

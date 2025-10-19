@@ -1,6 +1,6 @@
 # Security Documentation
 
-**Comprehensive security guides for Azure RAG Setup**
+## Comprehensive security guides for Azure RAG Setup
 
 ## Available Guides
 
@@ -8,7 +8,7 @@
 
 Complete guide for secure credential management using 1Password CLI.
 
-**Contents:**
+## Contents:
 
 - Prerequisites and setup
 - Stored credentials (Azure Search + M365)
@@ -18,7 +18,7 @@ Complete guide for secure credential management using 1Password CLI.
 - CI/CD integration
 - Troubleshooting
 
-**Quick Links:**
+## Quick Links:
 
 - Setup: `./scripts/1password/setup-azure-ad.sh`
 - Retrieve credentials: `./scripts/1password/get-m365-credentials.sh`
@@ -29,6 +29,7 @@ Complete guide for secure credential management using 1Password CLI.
 ## Security Architecture
 
 ```
+
 ┌─────────────────────────────────────────────────────────┐
 │                    1Password Vault                       │
 │  (Encrypted Credential Storage)                         │
@@ -66,6 +67,7 @@ Complete guide for secure credential management using 1Password CLI.
 │  ├── Microsoft 365 (SharePoint, OneDrive, etc.)         │
 │  └── Azure AD (Authentication)                          │
 └─────────────────────────────────────────────────────────┘
+
 ```
 
 ---
@@ -119,37 +121,50 @@ Complete guide for secure credential management using 1Password CLI.
 ### Development Environment
 
 ```bash
+
 # Always retrieve credentials at runtime
+
 source <(./scripts/1password/get-m365-credentials.sh)
 
 # Never commit secrets
+
 echo ".env" >> .gitignore
 echo "*.key" >> .gitignore
 echo "*secret*" >> .gitignore
+
 ```
 
 ### Production Environment
 
 ```bash
+
 # Use 1Password service accounts in CI/CD
+
 export OP_SERVICE_ACCOUNT_TOKEN="${OP_TOKEN}"
 
 # Load credentials at container startup
+
 ./scripts/1password/get-m365-credentials.sh
 
 # Implement secret scanning
+
 git secrets --install
+
 ```
 
 ### Team Collaboration
 
 ```bash
+
 # Share credentials via 1Password team vaults
+
 op vault create "Engineering"
 op item move "m365-rag-indexer-azure-ad" --vault "Engineering"
 
 # Set up access controls
+
 op vault group add "Engineering" "Developers" --permissions "read"
+
 ```
 
 ---
@@ -181,37 +196,50 @@ op vault group add "Engineering" "Developers" --permissions "read"
 ### Retrieve Credentials
 
 ```bash
+
 # M365 / Azure AD
+
 ./scripts/1password/get-m365-credentials.sh
 
 # Azure AI Search
+
 ./scripts/1password/get-azure-search-credentials.sh
+
 ```
 
 ### Update Credentials
 
 ```bash
+
 # Update Azure AD secret
+
 op item edit "m365-rag-indexer-azure-ad" \
   --field "Client Secret"="NEW_SECRET"
 
 # Update Azure Search key
+
 op item edit "Azure AI Search - TypingMind RAG" \
   --vault Private \
   "Admin Key[password]=NEW_KEY"
+
 ```
 
 ### Check Status
 
 ```bash
+
 # Verify 1Password CLI
+
 op account get
 
 # List stored items
+
 op item list | grep -i "azure\|m365"
 
 # Check credential expiry
+
 op item get "m365-rag-indexer-azure-ad" --fields "Secret Expiry"
+
 ```
 
 ---

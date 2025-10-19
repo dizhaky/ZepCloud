@@ -6,7 +6,7 @@
 
 ---
 
-## 🚨 IMMEDIATE ACTIONS TAKEN:
+## 🚨 IMMEDIATE ACTIONS TAKEN
 
 ### **✅ Processes Stopped:**
 
@@ -27,7 +27,7 @@
 
 ---
 
-## 📊 CURRENT STATE:
+## 📊 CURRENT STATE
 
 ### **What Was Running:**
 
@@ -45,7 +45,7 @@
 
 ---
 
-## 💰 COST IMPACT:
+## 💰 COST IMPACT
 
 ### **Costs Already Incurred:**
 
@@ -64,7 +64,7 @@
 
 ---
 
-## 🎯 NEXT STEPS:
+## 🎯 NEXT STEPS
 
 ### **1. Cost Analysis Complete:**
 
@@ -89,7 +89,7 @@
 
 ---
 
-## 📋 OPTIMIZATION IMPLEMENTATION PLAN:
+## 📋 OPTIMIZATION IMPLEMENTATION PLAN
 
 ### **Phase 1: Quick Wins (Immediate)**
 
@@ -110,20 +110,20 @@
 
 ---
 
-## 🚀 RECOMMENDED NEXT ACTION:
+## 🚀 RECOMMENDED NEXT ACTION
 
-**Implement Phase 1 optimizations before resuming sync:**
+## Implement Phase 1 optimizations before resuming sync:
 
 1. **Add date filtering** (last 2 years only)
 2. **Add size filtering** (skip large/tiny files)
 3. **Resume sync with optimizations**
 4. **Monitor cost savings**
 
-**This will reduce your monthly costs from $600-1,200 to $300-600, saving $3,000-7,000 per year!**
+## This will reduce your monthly costs from $600-1,200 to $300-600, saving $3,000-7,000 per year!
 
 ---
 
-## ⚠️ IMPORTANT NOTES:
+## ⚠️ IMPORTANT NOTES
 
 - **Current sync is stopped** - no new costs
 - **Data already processed** is minimal (~$25-50)
@@ -132,6 +132,6 @@
 
 ---
 
-**🎯 Ready to implement optimizations and resume with 30-50% cost reduction?**
+## 🎯 Ready to implement optimizations and resume with 30-50% cost reduction?
 
-**The system is safely stopped and ready for optimization before resuming!**
+## The system is safely stopped and ready for optimization before resuming!

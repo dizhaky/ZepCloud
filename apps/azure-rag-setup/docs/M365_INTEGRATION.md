@@ -8,11 +8,14 @@
 
 ## 🎯 Overview
 
-The Microsoft 365 Integration provides comprehensive access to all M365 data sources including SharePoint, OneDrive, Exchange, Teams, Calendar, and Contacts. This component enables indexing of your entire M365 tenant into the Azure AI Search system.
+The Microsoft 365 Integration provides comprehensive access to all M365 data sources including SharePoint, OneDrive,
+Exchange, Teams, Calendar, and Contacts. This component enables indexing of your entire M365 tenant into the Azure AI
+  Search system.
 
 ## 🏗️ Architecture
 
 ```
+
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Microsoft 365 Integration                    │
 ├─────────────────────────────────────────────────────────────────┤
@@ -44,6 +47,7 @@ The Microsoft 365 Integration provides comprehensive access to all M365 data sou
 │  ├── m365_calendar_indexer.py                                  │
 │  └── m365_contacts_indexer.py                                 │
 └─────────────────────────────────────────────────────────────────┘
+
 ```
 
 ---
@@ -67,13 +71,17 @@ The Microsoft 365 Integration provides comprehensive access to all M365 data sou
 #### Usage
 
 ```bash
+
 # Test authentication
+
 python3 m365_indexer.py test-auth
 
 # Estimate data volume and costs
+
 python3 m365_indexer.py estimate
 
 # Sync individual services
+
 python3 m365_indexer.py sync-sharepoint
 python3 m365_indexer.py sync-onedrive
 python3 m365_indexer.py sync-exchange
@@ -82,10 +90,13 @@ python3 m365_indexer.py sync-calendar
 python3 m365_indexer.py sync-contacts
 
 # Sync all services
+
 python3 m365_indexer.py sync
 
 # Check status
+
 python3 m365_indexer.py status
+
 ```
 
 #### Command Options
@@ -107,7 +118,7 @@ python3 m365_indexer.py status
 **Purpose:** Microsoft Graph API authentication and token management
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (2)
 
 - **OAuth 2.0 Client Credentials:** Secure app-based authentication
 - **Token Caching:** Automatic token refresh and caching
@@ -115,19 +126,23 @@ python3 m365_indexer.py status
 - **Error Handling:** Robust error handling and retry logic
 - **1Password Integration:** Secure credential retrieval
 
-#### Usage
+#### Usage (2)
 
 ```python
+
 from m365_auth import M365Auth
 
 # Initialize authentication
+
 auth = M365Auth()
 
 # Test connection
+
 if auth.test_connection():
     print("✅ M365 authentication successful")
 else:
     print("❌ M365 authentication failed")
+
 ```
 
 #### Authentication Flow
@@ -144,7 +159,7 @@ else:
 **Purpose:** Estimate data volume and Azure AI Search tier requirements
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (3)
 
 - **SharePoint Analysis:** Sites, documents, storage calculations
 - **OneDrive Analysis:** All users' storage usage estimation
@@ -152,14 +167,18 @@ else:
 - **Cost Recommendations:** Azure AI Search tier recommendations
 - **Detailed Reporting:** Comprehensive volume analysis
 
-#### Usage
+#### Usage (3)
 
 ```bash
+
 # Estimate data volume
+
 python3 estimate_m365_volume.py
 
 # Check specific service
+
 python3 m365_indexer.py estimate
+
 ```
 
 #### Estimation Metrics
@@ -181,7 +200,7 @@ python3 m365_indexer.py estimate
 **Purpose:** SharePoint sites and document libraries indexing
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (4)
 
 - **Site Discovery:** Automatic site discovery across tenant
 - **Document Libraries:** All document libraries and subfolders
@@ -190,14 +209,18 @@ python3 m365_indexer.py estimate
 - **Progress Tracking:** Resume from interruptions
 - **Metadata Extraction:** Site, folder, and file information
 
-#### Usage
+#### Usage (4)
 
 ```bash
+
 # Sync SharePoint documents
+
 python3 m365_indexer.py sync-sharepoint
 
 # Check SharePoint status
+
 python3 m365_indexer.py status
+
 ```
 
 #### Performance Metrics
@@ -213,7 +236,7 @@ python3 m365_indexer.py status
 **Purpose:** Personal OneDrive files indexing
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (5)
 
 - **User Enumeration:** Processes all users in tenant
 - **Recursive Scanning:** All folders and subfolders
@@ -221,17 +244,21 @@ python3 m365_indexer.py status
 - **User-specific Tracking:** Individual progress per user
 - **File Type Filtering:** Configurable file type support
 
-#### Usage
+#### Usage (5)
 
 ```bash
+
 # Sync OneDrive files
+
 python3 m365_indexer.py sync-onedrive
 
 # Check OneDrive status
+
 python3 m365_indexer.py status
+
 ```
 
-#### Performance Metrics
+#### Performance Metrics (2)
 
 - **Users Processed:** All tenant users
 - **Documents Indexed:** 200+ documents
@@ -244,7 +271,7 @@ python3 m365_indexer.py status
 **Purpose:** Email and attachment processing
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (6)
 
 - **Mailbox Enumeration:** All users' mailboxes
 - **Attachment Extraction:** Supported file types only
@@ -252,17 +279,21 @@ python3 m365_indexer.py status
 - **Compliance Considerations:** Configurable exclusions
 - **User-specific Tracking:** Individual progress per user
 
-#### Usage
+#### Usage (6)
 
 ```bash
+
 # Sync Exchange email attachments
+
 python3 m365_indexer.py sync-exchange
 
 # Check Exchange status
+
 python3 m365_indexer.py status
+
 ```
 
-#### Performance Metrics
+#### Performance Metrics (3)
 
 - **Users Processed:** All tenant users
 - **Documents Indexed:** 50+ documents
@@ -275,7 +306,7 @@ python3 m365_indexer.py status
 **Purpose:** Teams chat and files indexing
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (7)
 
 - **Chat Messages:** Team and channel conversations
 - **File Attachments:** Shared files and documents
@@ -283,17 +314,21 @@ python3 m365_indexer.py status
 - **User-specific Tracking:** Individual progress per user
 - **Content Filtering:** Configurable content exclusions
 
-#### Usage
+#### Usage (7)
 
 ```bash
+
 # Sync Teams content
+
 python3 m365_indexer.py sync-teams
 
 # Check Teams status
+
 python3 m365_indexer.py status
+
 ```
 
-#### Performance Metrics
+#### Performance Metrics (4)
 
 - **Users Processed:** All tenant users
 - **Documents Indexed:** 100+ documents
@@ -306,7 +341,7 @@ python3 m365_indexer.py status
 **Purpose:** Calendar events and meetings indexing
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (8)
 
 - **Event Discovery:** All calendar events and meetings
 - **Meeting Details:** Attendees, agenda, notes
@@ -314,17 +349,21 @@ python3 m365_indexer.py status
 - **User-specific Tracking:** Individual progress per user
 - **Date Filtering:** Optional time-based filtering
 
-#### Usage
+#### Usage (8)
 
 ```bash
+
 # Sync Calendar events
+
 python3 m365_indexer.py sync-calendar
 
 # Check Calendar status
+
 python3 m365_indexer.py status
+
 ```
 
-#### Performance Metrics
+#### Performance Metrics (5)
 
 - **Users Processed:** All tenant users
 - **Documents Indexed:** 500+ documents
@@ -337,7 +376,7 @@ python3 m365_indexer.py status
 **Purpose:** Contact information indexing
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (9)
 
 - **Contact Discovery:** All user contacts
 - **Organization Data:** Company and department information
@@ -345,17 +384,21 @@ python3 m365_indexer.py status
 - **User-specific Tracking:** Individual progress per user
 - **Data Enrichment:** Additional contact metadata
 
-#### Usage
+#### Usage (9)
 
 ```bash
+
 # Sync Contacts
+
 python3 m365_indexer.py sync-contacts
 
 # Check Contacts status
+
 python3 m365_indexer.py status
+
 ```
 
-#### Performance Metrics
+#### Performance Metrics (6)
 
 - **Users Processed:** All tenant users
 - **Documents Indexed:** 1,000+ documents
@@ -375,11 +418,14 @@ python3 m365_indexer.py status
 #### Key Settings
 
 ```yaml
+
 # Authentication settings
+
 auth:
   token_cache_file: "m365_token_cache.json"
 
 # SharePoint settings
+
 sharepoint:
   supported_extensions:
     [
@@ -406,6 +452,7 @@ sharepoint:
   progress_file: "sharepoint_progress.json"
 
 # OneDrive settings
+
 onedrive:
   supported_extensions:
     [
@@ -432,6 +479,7 @@ onedrive:
   progress_file: "onedrive_progress.json"
 
 # Exchange settings
+
 exchange:
   date_range_days: null
   max_emails_per_user: 1000
@@ -439,6 +487,7 @@ exchange:
   progress_file: "exchange_progress.json"
 
 # Sync settings
+
 sync:
   incremental:
     enabled: true
@@ -451,6 +500,7 @@ sync:
     max_attempts: 3
     base_delay_seconds: 2
     max_delay_seconds: 30
+
 ```
 
 ### Environment Variables
@@ -462,20 +512,25 @@ sync:
 #### Required Variables
 
 ```bash
+
 # M365 Authentication
+
 M365_CLIENT_ID=your_app_client_id
 M365_CLIENT_SECRET=your_app_client_secret
 M365_TENANT_ID=your_tenant_id
 
 # Azure AI Search
+
 AZURE_SEARCH_SERVICE_NAME=your-search-service
 AZURE_SEARCH_ADMIN_KEY=your-admin-key
 AZURE_SEARCH_INDEX_NAME=training-data-index
 
 # Azure Blob Storage
+
 AZURE_STORAGE_ACCOUNT_NAME=your-storage-account
 AZURE_STORAGE_ACCOUNT_KEY=your-storage-key
 AZURE_STORAGE_CONTAINER_NAME=training-data
+
 ```
 
 ---
@@ -485,44 +540,61 @@ AZURE_STORAGE_CONTAINER_NAME=training-data
 ### 1. Authentication Setup
 
 ```bash
+
 # Set up Azure AD app and store credentials securely
+
 ./setup_azure_ad_1password.sh
 
 # Retrieve credentials and test authentication
+
 ./get_m365_credentials.sh
 
-# Test authentication
+# Test authentication (2)
+
 python3 m365_indexer.py test-auth
+
 ```
 
 ### 2. Volume Estimation
 
 ```bash
-# Estimate data volume and costs
+
+# Estimate data volume and costs (2)
+
 python3 m365_indexer.py estimate
+
 ```
 
 ### 3. Individual Service Sync
 
 ```bash
+
 # SharePoint only
+
 python3 m365_indexer.py sync-sharepoint
 
 # OneDrive only
+
 python3 m365_indexer.py sync-onedrive
 
 # Exchange only
+
 python3 m365_indexer.py sync-exchange
+
 ```
 
 ### 4. Full M365 Sync
 
 ```bash
-# Sync all services
+
+# Sync all services (2)
+
 python3 m365_indexer.py sync
 
-# Check status
+# Check status (2)
+
 python3 m365_indexer.py status
+
 ```
 
 ---
@@ -563,45 +635,61 @@ python3 m365_indexer.py status
 #### Issue: Authentication Failed
 
 ```bash
+
 # Check credentials
+
 grep M365_CLIENT_ID .env
 grep M365_TENANT_ID .env
 
 # Get credentials from 1Password
+
 op read "op://Personal/M365 RAG Indexer/M365_CLIENT_ID"
+
 ```
 
 #### Issue: Sync Failures
 
 ```bash
+
 # Check sync status
+
 python3 m365_indexer.py status
 
 # Retry failed syncs
+
 python3 m365_indexer.py sync-sharepoint
+
 ```
 
 #### Issue: Rate Limiting
 
 ```bash
+
 # Check rate limits in config
+
 cat m365_config.yaml | grep rate_limit
 
 # Adjust rate limits if needed
+
 ```
 
 ### Debug Commands
 
 ```bash
-# Test authentication
+
+# Test authentication (3)
+
 python3 m365_indexer.py test-auth
 
 # Check volume estimation
+
 python3 m365_indexer.py estimate
 
 # View sync progress
+
 cat sharepoint_progress.json
 cat onedrive_progress.json
+
 ```
 
 ---
@@ -650,9 +738,12 @@ cat onedrive_progress.json
 ### Commands
 
 ```bash
+
 # Get help
+
 python3 m365_indexer.py --help
 python3 estimate_m365_volume.py --help
+
 ```
 
 ### External Resources
@@ -670,5 +761,4 @@ python3 estimate_m365_volume.py --help
 **Grade:** A+ (98/100)
 **Completion:** 99.5%
 
-**🏆 All objectives achieved and exceeded! 🎉**
-
+## 🏆 All objectives achieved and exceeded! 🎉

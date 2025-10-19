@@ -33,11 +33,15 @@ To get your actual Elastic Cloud cluster password:
 Once you have the password, update the configuration:
 
 ```bash
+
 # Update the 1Password entry with real password
+
 op item edit rhkditsu62sz6fmffuvg7asps4 --field "Password=YOUR_ACTUAL_PASSWORD"
 
 # Or update the env.elasticsearch file directly
+
 echo "ELASTIC_PASSWORD=YOUR_ACTUAL_PASSWORD" >> env.elasticsearch
+
 ```
 
 ## 🧪 **Test Connection**
@@ -45,7 +49,9 @@ echo "ELASTIC_PASSWORD=YOUR_ACTUAL_PASSWORD" >> env.elasticsearch
 After updating the password, test the connection:
 
 ```bash
+
 # Test connection to your cloud cluster
+
 python -c "
 from elasticsearch import Elasticsearch
 es = Elasticsearch(
@@ -56,6 +62,7 @@ es = Elasticsearch(
 print('✅ Connected:', es.ping())
 print('Cluster info:', es.info())
 "
+
 ```
 
 ## 🚀 **Next Steps**
@@ -77,4 +84,4 @@ print('Cluster info:', es.info())
 
 ---
 
-**Once you have the password, we can test the connection and deploy the system!**
+## Once you have the password, we can test the connection and deploy the system!

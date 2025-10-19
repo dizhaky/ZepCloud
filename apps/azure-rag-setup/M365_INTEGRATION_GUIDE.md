@@ -1,6 +1,7 @@
 # Microsoft 365 Integration Guide
 
-This guide explains how to set up and use the Microsoft 365 Graph API integration for indexing SharePoint, OneDrive, and Exchange data into your Azure AI Search RAG system.
+This guide explains how to set up and use the Microsoft 365 Graph API integration for indexing SharePoint, OneDrive, and
+  Exchange data into your Azure AI Search RAG system.
 
 ## Overview
 
@@ -16,14 +17,14 @@ The M365 integration allows you to index documents from:
 
 You need to register an Azure AD application with the following permissions:
 
-#### Required API Permissions:
+#### Required API Permissions
 
 - `Sites.Read.All` - Read all SharePoint sites
 - `Files.Read.All` - Read all files in OneDrive and SharePoint
 - `Mail.Read` - Read all mailboxes
 - `User.Read.All` - Read all users in the organization
 
-#### Steps to Register:
+#### Steps to Register
 
 1. **Go to Azure Portal** → Azure Active Directory → App registrations
 2. **Click "New registration"**
@@ -32,7 +33,7 @@ You need to register an Azure AD application with the following permissions:
 5. **Redirect URI**: Leave blank for now
 6. **Click "Register"**
 
-#### Configure API Permissions:
+#### Configure API Permissions
 
 1. **Go to "API permissions"** in your app
 2. **Click "Add a permission"**
@@ -45,7 +46,7 @@ You need to register an Azure AD application with the following permissions:
    - User.Read.All
 6. **Click "Grant admin consent"** (requires Global Admin)
 
-#### Generate Client Secret:
+#### Generate Client Secret
 
 1. **Go to "Certificates & secrets"**
 2. **Click "New client secret"**
@@ -54,7 +55,7 @@ You need to register an Azure AD application with the following permissions:
 5. **Click "Add"**
 6. **Copy the secret value** (you won't see it again!)
 
-#### Get Application ID and Tenant ID:
+#### Get Application ID and Tenant ID
 
 1. **Application (client) ID**: Found on the "Overview" page
 2. **Directory (tenant) ID**: Found on the "Overview" page
@@ -64,16 +65,21 @@ You need to register an Azure AD application with the following permissions:
 Add these variables to your `.env` file:
 
 ```bash
+
 # Microsoft 365 App Credentials
+
 M365_CLIENT_ID=your_application_client_id
 M365_CLIENT_SECRET=your_client_secret_value
 M365_TENANT_ID=your_tenant_id
+
 ```
 
 ### 3. Install Dependencies
 
 ```bash
+
 pip install -r requirements.txt
+
 ```
 
 ## Usage
@@ -81,7 +87,9 @@ pip install -r requirements.txt
 ### Test Authentication
 
 ```bash
+
 python3 m365_indexer.py test-auth
+
 ```
 
 This will verify your credentials and test the Microsoft Graph API connection.
@@ -91,7 +99,9 @@ This will verify your credentials and test the Microsoft Graph API connection.
 Before indexing, estimate how much data you'll be processing:
 
 ```bash
+
 python3 m365_indexer.py estimate
+
 ```
 
 This will:
@@ -106,20 +116,27 @@ This will:
 Start with SharePoint documents:
 
 ```bash
+
 # Sync all SharePoint sites
+
 python3 m365_indexer.py sync-sharepoint
 
 # Sync specific site
+
 python3 m365_indexer.py sync-sharepoint --site "site-id-here"
 
 # Limit number of sites (for testing)
+
 python3 m365_indexer.py sync-sharepoint --limit 3
+
 ```
 
 ### Check Status
 
 ```bash
+
 python3 m365_indexer.py status
+
 ```
 
 Shows:
@@ -132,7 +149,9 @@ Shows:
 ### Full Sync (All Services)
 
 ```bash
+
 python3 m365_indexer.py sync
+
 ```
 
 Currently syncs SharePoint only. OneDrive and Exchange sync will be added in future phases.
@@ -144,31 +163,42 @@ Edit `m365_config.yaml` to customize:
 ### File Types
 
 ```yaml
+
 sharepoint:
   supported_extensions:
+
     - pdf
     - docx
     - xlsx
+
     # ... add more as needed
+
 ```
 
 ### Size Limits
 
 ```yaml
+
 sharepoint:
   max_file_size_mb: 100 # Skip files larger than 100MB
+
 ```
 
 ### Exclusions
 
 ```yaml
+
 exclusions:
   file_patterns:
+
     - "*.tmp"
     - "~*"
+
   folder_patterns:
+
     - "*/_vti_*"
     - "*/Forms"
+
 ```
 
 ## File Organization
@@ -176,6 +206,7 @@ exclusions:
 Documents are organized in Azure Blob Storage as:
 
 ```
+
 training-data/
 ├── sharepoint/
 │   ├── Site_Name/
@@ -188,6 +219,7 @@ training-data/
 │   └── User_Name/
 └── exchange/          # (future)
     └── User_Name/
+
 ```
 
 ## Progress Tracking
@@ -203,13 +235,17 @@ The system tracks progress in JSON files:
 ### Check Indexer Status
 
 ```bash
+
 python3 maintenance.py --non-interactive --action health
+
 ```
 
 ### View Detailed Logs
 
 ```bash
+
 tail -f m365_indexer.log
+
 ```
 
 ## Troubleshooting
@@ -316,20 +352,27 @@ tail -f m365_indexer.log
 ### Common Commands Reference
 
 ```bash
+
 # Test everything is working
+
 python3 m365_indexer.py test-auth
 
 # See what data you have
+
 python3 m365_indexer.py estimate
 
 # Start indexing
+
 python3 m365_indexer.py sync-sharepoint
 
 # Check progress
+
 python3 m365_indexer.py status
 
 # View system health
+
 python3 maintenance.py --non-interactive --action health
+
 ```
 
 ### Getting Help

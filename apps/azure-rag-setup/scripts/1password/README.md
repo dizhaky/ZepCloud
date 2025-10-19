@@ -1,6 +1,6 @@
 # 1Password Scripts
 
-**Helper scripts for managing credentials with 1Password CLI**
+## Helper scripts for managing credentials with 1Password CLI
 
 ## Available Scripts
 
@@ -24,14 +24,19 @@
 All scripts should be run from the project root:
 
 ```bash
+
 # Azure AD setup
+
 ./scripts/1password/setup-azure-ad.sh
 
 # Get credentials
+
 ./scripts/1password/get-m365-credentials.sh
 
 # Create Azure Search item
+
 ./scripts/1password/create-azure-search-item.sh
+
 ```
 
 ## Requirements

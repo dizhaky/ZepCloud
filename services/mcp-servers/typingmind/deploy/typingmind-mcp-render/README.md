@@ -17,14 +17,19 @@ A Model Context Protocol (MCP) server designed for TypingMind, deployed on Rende
 ### Option 2: Render CLI
 
 ```bash
+
 # Install Render CLI
+
 npm install -g @render/cli
 
 # Login to Render
+
 render login
 
 # Deploy
+
 render deploy
+
 ```
 
 ## 🔧 Environment Variables
@@ -47,6 +52,7 @@ Set these in Render dashboard:
 Add this to TypingMind's "Edit Servers":
 
 ```json
+
 {
   "mcpServers": {
     "memory": {
@@ -75,6 +81,7 @@ Add this to TypingMind's "Edit Servers":
     }
   }
 }
+
 ```
 
 ## 🔒 Security

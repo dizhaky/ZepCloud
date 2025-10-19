@@ -2,7 +2,8 @@
 
 ## 🎯 **Correct Architecture: Cloud-Based Elasticsearch**
 
-The Elasticsearch + RAG-Anything + OlmoCR system is designed to use **cloud-based Elasticsearch services**, not local installations.
+The Elasticsearch + RAG-Anything + OlmoCR system is designed to use **cloud-based Elasticsearch services**, not local
+  installations.
 
 ## ☁️ **Recommended Cloud Options**
 
@@ -34,23 +35,29 @@ The current implementation needs to be updated to use cloud Elasticsearch:
 ### **Environment Variables**
 
 ```bash
+
 # Cloud Elasticsearch Configuration
+
 ELASTIC_HOST=https://your-cluster.es.region.cloud.es.io:443
 ELASTIC_USERNAME=elastic
 ELASTIC_PASSWORD=your-password
 ELASTIC_INDEX=m365-documents
+
 ```
 
 ### **Connection Settings**
 
 ```python
+
 # Updated connection for cloud Elasticsearch
+
 es = Elasticsearch(
     Config.ELASTIC_HOST,
     basic_auth=(Config.ELASTIC_USERNAME, Config.ELASTIC_PASSWORD),
     verify_certs=True,
     ssl_show_warn=False
 )
+
 ```
 
 ## 🚀 **Next Steps**
@@ -82,4 +89,4 @@ es = Elasticsearch(
 
 ---
 
-**The system is designed for cloud deployment, not local Elasticsearch installation.**
+## The system is designed for cloud deployment, not local Elasticsearch installation.

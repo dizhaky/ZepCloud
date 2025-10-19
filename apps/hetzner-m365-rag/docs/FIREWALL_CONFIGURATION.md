@@ -2,11 +2,13 @@
 
 ## Overview
 
-This document describes the firewall configuration for the M365 RAG System in a production environment. The firewall is a critical security component that controls network access to and from the system.
+This document describes the firewall configuration for the M365 RAG System in a production environment. The firewall is
+  a critical security component that controls network access to and from the system.
 
 ## Firewall Technology
 
-The M365 RAG System uses **UFW (Uncomplicated Firewall)** as the firewall management tool. UFW provides a simplified interface for managing iptables firewall rules.
+The M365 RAG System uses **UFW (Uncomplicated Firewall)** as the firewall management tool. UFW provides a simplified
+  interface for managing iptables firewall rules.
 
 ## Default Policies
 
@@ -15,7 +17,8 @@ The firewall is configured with the following default policies:
 - **Incoming connections**: DENY (default deny policy)
 - **Outgoing connections**: ALLOW (default allow policy)
 
-This configuration follows security best practices by explicitly allowing only necessary incoming connections while permitting all outgoing traffic.
+This configuration follows security best practices by explicitly allowing only necessary incoming connections while
+  permitting all outgoing traffic.
 
 ## Allowed Incoming Connections
 
@@ -34,10 +37,11 @@ The following ports are open for incoming connections:
 While SSH access is allowed on port 22, it is highly recommended to:
 
 1. **Restrict SSH access to specific IP addresses**:
+
    ```bash
    # Remove open SSH rule
    sudo ufw delete allow 22/tcp
-   
+
    # Allow SSH only from specific IP
    sudo ufw allow from YOUR_IP_ADDRESS to any port 22
    ```
@@ -61,8 +65,11 @@ HTTP (port 80) and HTTPS (port 443) are open to allow web interface access. In a
 To prevent brute force attacks, you can implement rate limiting:
 
 ```bash
+
 # Rate limit SSH connections (6 connections per 30 seconds)
+
 sudo ufw limit ssh
+
 ```
 
 ### Logging
@@ -70,11 +77,15 @@ sudo ufw limit ssh
 Enable logging for security monitoring:
 
 ```bash
+
 # Enable logging
+
 sudo ufw logging on
 
 # Set log level (low, medium, high, full)
+
 sudo ufw logging medium
+
 ```
 
 ## Management Commands
@@ -82,50 +93,69 @@ sudo ufw logging medium
 ### Viewing Rules
 
 ```bash
+
 # View all rules with numbers
+
 sudo ufw status numbered
 
 # View verbose status
+
 sudo ufw status verbose
+
 ```
 
 ### Adding Rules
 
 ```bash
+
 # Allow a specific port
+
 sudo ufw allow PORT_NUMBER
 
 # Allow a specific port with comment
+
 sudo ufw allow PORT_NUMBER comment 'DESCRIPTION'
 
 # Allow a specific IP
+
 sudo ufw allow from IP_ADDRESS
 
 # Allow a specific IP to a specific port
+
 sudo ufw allow from IP_ADDRESS to any port PORT_NUMBER
+
 ```
 
 ### Deleting Rules
 
 ```bash
+
 # Delete by rule
+
 sudo ufw delete allow PORT_NUMBER
 
 # Delete by number (use 'ufw status numbered' to see numbers)
+
 sudo ufw delete RULE_NUMBER
+
 ```
 
 ### Disabling/Enabling
 
 ```bash
+
 # Disable firewall
+
 sudo ufw disable
 
 # Enable firewall
+
 sudo ufw enable
 
 # Reset all rules
+
 sudo ufw reset
+
 ```
 
 ## Monitoring
@@ -133,11 +163,15 @@ sudo ufw reset
 Regular monitoring of the firewall is essential for security:
 
 ```bash
+
 # View firewall logs
+
 sudo tail -f /var/log/ufw.log
 
 # View recent firewall activity
+
 sudo grep UFW /var/log/syslog
+
 ```
 
 ## Backup and Restore
@@ -145,15 +179,21 @@ sudo grep UFW /var/log/syslog
 ### Backup Rules
 
 ```bash
+
 # Export current rules
+
 sudo ufw status numbered > firewall-rules-backup.txt
+
 ```
 
 ### Restore Rules
 
 ```bash
+
 # Manually reapply rules from backup
+
 # Or use the setup-firewall.sh script
+
 ```
 
 ## Troubleshooting
@@ -167,14 +207,19 @@ sudo ufw status numbered > firewall-rules-backup.txt
 ### Diagnostic Commands
 
 ```bash
+
 # Check if firewall is active
+
 sudo ufw status
 
 # Test port connectivity
+
 nc -zv HOSTNAME PORT
 
 # View network connections
+
 sudo netstat -tulpn
+
 ```
 
 ## Best Practices
@@ -186,4 +231,5 @@ sudo netstat -tulpn
 5. **Monitoring**: Monitor firewall logs for suspicious activity
 6. **Updates**: Keep the system and firewall software updated
 
-This firewall configuration provides a solid security foundation for the M365 RAG System while allowing necessary access for administration and user services.
+This firewall configuration provides a solid security foundation for the M365 RAG System while allowing necessary access
+  for administration and user services.

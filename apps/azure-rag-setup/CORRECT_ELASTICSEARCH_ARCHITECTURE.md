@@ -40,13 +40,17 @@
 ## 🔧 **System Architecture**
 
 ```
+
 M365 Data → RAG-Anything → OlmoCR → Cloud Elasticsearch → API Server → TypingMind
-```
-
-**NOT:**
 
 ```
+
+## NOT:
+
+```
+
 M365 Data → RAG-Anything → OlmoCR → Local Elasticsearch → API Server → TypingMind
+
 ```
 
 ## 📋 **Next Steps**
@@ -65,4 +69,4 @@ M365 Data → RAG-Anything → OlmoCR → Local Elasticsearch → API Server →
 
 ---
 
-**The system is designed for cloud deployment, not local Elasticsearch installation.**
+## The system is designed for cloud deployment, not local Elasticsearch installation.

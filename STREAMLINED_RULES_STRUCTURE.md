@@ -1,14 +1,18 @@
 # Streamlined Rules Structure
 
 ## Date
+
 October 19, 2025
 
 ## Overview
-This document provides a comprehensive overview of the streamlined rules structure for the ZepCloud project. The structure has been optimized to eliminate redundancy while maintaining clear organization and easy maintenance.
+
+This document provides a comprehensive overview of the streamlined rules structure for the ZepCloud project. The
+  structure has been optimized to eliminate redundancy while maintaining clear organization and easy maintenance.
 
 ## Current Structure
 
 ### Root Level
+
 - **`.cursorrules`** - Main Kilo Code methodology (1,006 lines)
   - Contains systematic workflow methodology
   - Automation settings (YOLO mode)
@@ -18,6 +22,7 @@ This document provides a comprehensive overview of the streamlined rules structu
   - ByteRover integration instructions
 
 ### Modular Rules Directory (`.cursor/rules/`)
+
 The modular rules are organized by technology stack and purpose:
 
 1. **`byterover-rules.mdc`** - ByteRover MCP integration (24 lines)
@@ -46,27 +51,32 @@ The modular rules are organized by technology stack and purpose:
    - **Key Features**: Server patterns, tool definitions, error handling
 
 ### Configuration Files
+
 - **`.cursor/mcp.json`** - MCP server configuration
 - **`.cursor/README.md`** - Documentation for the cursor configuration
 
 ## Benefits of Current Structure
 
 ### ✅ Single Source of Truth
+
 - Root `.cursorrules` contains the main methodology
 - Modular files contain technology-specific patterns
 - No duplicate content across files
 
 ### ✅ Modular Organization
+
 - Specific concerns separated into dedicated files
 - Easy to enable/disable specific rule sets
 - Clear separation by technology stack
 
 ### ✅ Easy Maintenance
+
 - Update once, apply everywhere
 - Version control friendly
 - Clear file naming and organization
 
 ### ✅ Context-Aware Application
+
 - Rules activate based on file type
 - Project-specific patterns in dedicated files
 - No rule conflicts or duplication
@@ -96,6 +106,7 @@ The modular rules are organized by technology stack and purpose:
 ## Recent Cleanup (October 2025)
 
 ### Files Removed
+
 The following redundant files were removed to eliminate duplication:
 
 - `AGENTS.md` (root directory)
@@ -106,27 +117,33 @@ The following redundant files were removed to eliminate duplication:
 - `.kilocode/rules/byterover-rules.md`
 - `.clinerules/byterover-rules.md`
 
-All removed files contained identical content to `.cursor/rules/byterover-rules.mdc`, which remains as the canonical source for ByteRover integration rules.
+All removed files contained identical content to `.cursor/rules/byterover-rules.mdc`, which remains as the canonical
+  source for ByteRover integration rules.
 
 ## Best Practices for Rule Management
 
 ### Adding New Rules
+
 1. For general methodology updates: Edit root `.cursorrules`
 2. For technology-specific patterns: Edit the appropriate `.mdc` file
 3. For new technology stacks: Create a new `.mdc` file with proper frontmatter
 
 ### Frontmatter Format for .mdc Files
+
 ```yaml
+
 ---
 description: What this rule file covers
 alwaysApply: true/false
 globs: ["file/patterns/*.ext"]  # Optional
 ---
+
 ```
 
 ## Quick Reference
 
 ### Common Tasks
+
 - **Update automation settings**: Edit root `.cursorrules`
 - **Add Python pattern**: Edit `.cursor/rules/python-backend.mdc`
 - **Add TypeScript pattern**: Edit `.cursor/rules/typescript-frontend.mdc`
@@ -134,11 +151,13 @@ globs: ["file/patterns/*.ext"]  # Optional
 - **Add MCP server pattern**: Edit `.cursor/rules/mcp-servers.mdc`
 
 ### For Detailed Information
+
 - **Main Rules**: `.cursorrules` - Complete Kilo Code methodology
 - **Technology Patterns**: Individual `.mdc` files
 - **Project Documentation**: `docs/` folder
 
 ## Verification
+
 - All rule files are properly organized
 - No duplicate content exists
 - Context-aware application works correctly

@@ -7,14 +7,19 @@ A local Model Context Protocol (MCP) server for TypingMind running on your Mac.
 ### Start the Server
 
 ```bash
+
 # Option 1: Using npm script
+
 npm start
 
 # Option 2: Using shell script
+
 ./start-mcp.sh
 
 # Option 3: Direct command
+
 PORT=8080 npx @typingmind/mcp p1Lhz4LCAH_uooyVkeLDH
+
 ```
 
 ## 🔧 Configure TypingMind
@@ -31,6 +36,7 @@ PORT=8080 npx @typingmind/mcp p1Lhz4LCAH_uooyVkeLDH
 Once connected, click **"Edit Servers"** and add this JSON:
 
 ```json
+
 {
   "mcpServers": {
     "memory": {
@@ -59,6 +65,7 @@ Once connected, click **"Edit Servers"** and add this JSON:
     }
   }
 }
+
 ```
 
 ## 🎯 Available MCP Servers

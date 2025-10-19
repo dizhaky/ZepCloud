@@ -1,13 +1,14 @@
 # Quick Start Guide
+
 ## Get Your M365 RAG System Running in 30 Minutes
 
 ---
 
 ## Prerequisites
 
-✅ Hetzner AX52 server with Ubuntu 24.04  
-✅ OpenAI API key  
-✅ M365 tenant with admin access  
+✅ Hetzner AX52 server with Ubuntu 24.04
+✅ OpenAI API key
+✅ M365 tenant with admin access
 ✅ Domain name (optional)
 
 ---
@@ -15,10 +16,13 @@
 ## Step 1: Upload Files (5 minutes)
 
 ```bash
+
 # From your local machine
+
 cd path/to/hetzner-m365-rag
 tar -czf deploy.tar.gz .
 scp deploy.tar.gz root@YOUR_SERVER_IP:/tmp/
+
 ```
 
 ---
@@ -26,20 +30,25 @@ scp deploy.tar.gz root@YOUR_SERVER_IP:/tmp/
 ## Step 2: Run Deployment (10 minutes)
 
 ```bash
+
 # SSH into server
+
 ssh root@YOUR_SERVER_IP
 
 # Extract and deploy
+
 cd /tmp
 tar -xzf deploy.tar.gz -C /tmp/m365-rag-deploy
 cd /tmp/m365-rag-deploy
 chmod +x scripts/deploy.sh
 ./scripts/deploy.sh
+
 ```
 
-**Answer "yes" when prompted.**
+## Answer "yes" when prompted.
 
 The script will:
+
 - ✅ Update system packages
 - ✅ Configure firewall
 - ✅ Install Docker
@@ -53,10 +62,13 @@ The script will:
 ## Step 3: Configure API Keys (5 minutes)
 
 ```bash
+
 # Edit environment file
+
 vi /data/m365-rag/.env
 
-# Add your keys:
+# Add your keys
+
 OPENAI_API_KEY=sk-your-key-here
 AZURE_CLIENT_ID=your-client-id
 AZURE_TENANT_ID=your-tenant-id
@@ -64,8 +76,10 @@ AZURE_TENANT_ID=your-tenant-id
 # Save and exit (:wq)
 
 # Restart services
+
 cd /data/m365-rag
 docker compose restart
+
 ```
 
 ---
@@ -73,15 +87,20 @@ docker compose restart
 ## Step 4: Verify Deployment (5 minutes)
 
 ```bash
+
 # Check all services are running
+
 docker compose ps
 
 # Test API health
+
 curl http://localhost:8000/health
 
 # Test Elasticsearch
+
 curl -u elastic:$(grep ELASTIC_PASSWORD .env | cut -d'=' -f2) \
   http://localhost:9200/_cluster/health
+
 ```
 
 **Expected:** All services should show "healthy" or "running"
@@ -93,22 +112,31 @@ curl -u elastic:$(grep ELASTIC_PASSWORD .env | cut -d'=' -f2) \
 Open in your browser:
 
 **RAGFlow UI** (Main Interface)
+
 ```
+
 http://YOUR_SERVER_IP:9380
+
 ```
 
 **Grafana** (Monitoring)
+
 ```
+
 http://YOUR_SERVER_IP:3000
 Username: admin
 Password: (check .env for GRAFANA_PASSWORD)
+
 ```
 
 **MinIO Console** (Storage)
+
 ```
+
 http://YOUR_SERVER_IP:9001
 Username: minioadmin
 Password: (check .env for MINIO_ROOT_PASSWORD)
+
 ```
 
 ---
@@ -140,8 +168,10 @@ Password: (check .env for MINIO_ROOT_PASSWORD)
 ### C. Test Authentication
 
 ```bash
+
 cd /data/m365-rag
 python3 api/m365_auth.py
+
 ```
 
 Follow the browser authentication prompt.
@@ -149,19 +179,21 @@ Follow the browser authentication prompt.
 ### D. Start Initial Sync
 
 ```bash
+
 curl -X POST http://localhost:8000/ingest/m365/sync \
   -H "Content-Type: application/json" \
   -d '{
     "source_type": "sharepoint",
     "delta_sync": false
   }'
+
 ```
 
 Monitor progress in RAGFlow UI.
 
 ---
 
-## What's Next?
+## What's Next
 
 ### Test the System
 
@@ -183,6 +215,7 @@ Monitor progress in RAGFlow UI.
 ### Production Configuration
 
 1. **Set up SSL:**
+
    ```bash
    certbot certonly --standalone -d your-domain.com
    ```
@@ -210,40 +243,55 @@ Monitor progress in RAGFlow UI.
 ### Services Won't Start
 
 ```bash
+
 # Check Docker daemon
+
 systemctl status docker
 
 # View logs
+
 docker compose logs --tail=100
 
 # Restart all services
+
 docker compose down && docker compose up -d
+
 ```
 
 ### Elasticsearch Issues
 
 ```bash
+
 # Check cluster health
+
 curl -u elastic:PASSWORD http://localhost:9200/_cluster/health
 
-# View logs
+# View logs (2)
+
 docker compose logs elasticsearch --tail=100
 
 # Restart Elasticsearch
+
 docker compose restart elasticsearch
+
 ```
 
 ### Can't Access UIs
 
 ```bash
+
 # Check firewall
+
 ufw status
 
 # Check nginx
+
 docker compose logs nginx
 
 # Verify ports are open
+
 netstat -tuln | grep -E '8000|9380|3000'
+
 ```
 
 ---
@@ -269,11 +317,10 @@ netstat -tuln | grep -E '8000|9380|3000'
 - [x] Backups scheduled
 - [x] Monitoring active
 
-**🎉 Congratulations! Your M365 RAG System is live!**
+## 🎉 Congratulations! Your M365 RAG System is live!
 
 ---
 
 **Pro Tip:** Bookmark the RAGFlow UI and Grafana dashboards for quick access.
 
 **Need more features?** Check the [full documentation](README.md) for advanced configuration options.
-

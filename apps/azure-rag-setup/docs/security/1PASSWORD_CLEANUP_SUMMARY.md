@@ -9,13 +9,13 @@
 
 ### 📁 Documentation Consolidation
 
-**Before:**
+## Before:
 
 - `1PASSWORD_INTEGRATION_COMPLETE.md` (root)
 - `1PASSWORD_AZURE_SEARCH_SUMMARY.md` (root)
 - `1PASSWORD_SETUP_GUIDE.md` (root)
 
-**After:**
+## After:
 
 - ✅ Consolidated into `docs/security/1PASSWORD_GUIDE.md`
 - ✅ Created `docs/security/README.md` with navigation
@@ -27,14 +27,14 @@
 
 ### 🔧 Script Organization
 
-**Before (Root Directory):**
+## Before (Root Directory):
 
 - `setup_azure_ad_1password.sh`
 - `get_m365_credentials.sh`
 - `setup_credentials_manual.sh`
 - `create_1password_azure_search.sh`
 
-**After (scripts/1password/):**
+## After (scripts/1password/):
 
 - ✅ `setup-azure-ad.sh` (moved + renamed)
 - ✅ `get-m365-credentials.sh` (moved + renamed)
@@ -51,7 +51,7 @@
 
 ### 📝 Reference Updates
 
-**Files Updated:**
+## Files Updated:
 
 - ✅ `README.md` - Updated paths to scripts
 - ✅ `README.md` - Added link to new 1Password guide
@@ -64,6 +64,7 @@
 ## New Structure
 
 ```
+
 azure-rag-setup/
 ├── docs/
 │   └── security/
@@ -83,6 +84,7 @@ azure-rag-setup/
 │       └── get-credentials.sh              # Generic retrieval
 │
 └── README.md (updated references)
+
 ```
 
 ---
@@ -122,25 +124,31 @@ azure-rag-setup/
 If you have scripts or references to old paths, update them:
 
 ```bash
+
 # OLD
+
 ./setup_azure_ad_1password.sh
 ./get_m365_credentials.sh
 
 # NEW
+
 ./scripts/1password/setup-azure-ad.sh
 ./scripts/1password/get-m365-credentials.sh
+
 ```
 
 ### For Documentation Links
 
 ```markdown
-# OLD
+
+# OLD (2)
 
 [Setup Guide](1PASSWORD_SETUP_GUIDE.md)
 
-# NEW
+# NEW (2)
 
 [Setup Guide](docs/security/1PASSWORD_GUIDE.md)
+
 ```
 
 ---
@@ -150,7 +158,9 @@ If you have scripts or references to old paths, update them:
 All cleanup verified:
 
 ```bash
+
 # Old files removed from root
+
 ✅ 1PASSWORD_INTEGRATION_COMPLETE.md - DELETED
 ✅ 1PASSWORD_AZURE_SEARCH_SUMMARY.md - DELETED
 ✅ 1PASSWORD_SETUP_GUIDE.md - DELETED
@@ -160,6 +170,7 @@ All cleanup verified:
 ✅ create_1password_azure_search.sh - DELETED
 
 # New files created
+
 ✅ docs/security/1PASSWORD_GUIDE.md - CREATED
 ✅ docs/security/README.md - CREATED
 ✅ scripts/1password/setup-azure-ad.sh - CREATED
@@ -170,8 +181,10 @@ All cleanup verified:
 ✅ scripts/1password/README.md - CREATED
 
 # References updated
+
 ✅ README.md - UPDATED
 ✅ docs/SECURITY.md - UPDATED
+
 ```
 
 ---
@@ -199,29 +212,38 @@ All cleanup verified:
 ### Documentation
 
 ```bash
+
 # Main guide
+
 docs/security/1PASSWORD_GUIDE.md
 
 # Security overview
+
 docs/security/README.md
+
 ```
 
 ### Scripts
 
 ```bash
+
 # Azure AD setup
+
 ./scripts/1password/setup-azure-ad.sh
 
 # Get credentials
+
 ./scripts/1password/get-m365-credentials.sh
 ./scripts/1password/get-azure-search-credentials.sh
 
 # Create items
+
 ./scripts/1password/create-azure-search-item.sh
+
 ```
 
 ---
 
-**Cleanup completed successfully! 🎉**
+## Cleanup completed successfully! 🎉
 
 All 1Password files are now organized and consolidated.

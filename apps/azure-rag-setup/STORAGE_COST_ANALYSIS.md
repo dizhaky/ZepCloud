@@ -1,4 +1,4 @@
-# 💰 STORAGE COST ANALYSIS - WHY SO EXPENSIVE?
+# 💰 STORAGE COST ANALYSIS - WHY SO EXPENSIVE
 
 **Date:** October 18, 2025
 **Question:** Why are Azure AI Search storage costs so high?
@@ -6,7 +6,7 @@
 
 ---
 
-## 🔍 THE REAL REASON FOR HIGH COSTS:
+## 🔍 THE REAL REASON FOR HIGH COSTS
 
 ### **Azure AI Search is NOT just storage - it's a premium search service:**
 
@@ -20,7 +20,7 @@
 
 ---
 
-## 📊 COST COMPARISON BREAKDOWN:
+## 📊 COST COMPARISON BREAKDOWN
 
 ### **Regular Storage vs AI Search:**
 
@@ -29,52 +29,61 @@
 | **Azure Blob Storage** | $0.0184           | **$5.52/month** | Just storage                   |
 | **Azure AI Search**    | $2.30             | **$690/month**  | Storage + AI Search + Indexing |
 
-**Difference: 125x more expensive!**
+## Difference: 125x more expensive!
 
 ---
 
-## 🎯 WHY AI SEARCH COSTS SO MUCH:
+## 🎯 WHY AI SEARCH COSTS SO MUCH
 
 ### **1. Full-Text Indexing (Major Cost Driver)**
 
 ```
+
 Your Documents → AI Search Processing → Searchable Index
 1.2M documents × 300KB each = 360GB raw data
 AI Search creates indexes = 360GB × 2-3x = 720GB-1TB indexed data
+
 ```
 
 ### **2. Vector Embeddings (AI Processing)**
 
 ```
+
 Each document → AI analysis → Vector embedding
 1.2M documents × 1,536 dimensions = Massive vector database
 This enables semantic search (finding meaning, not just keywords)
+
 ```
 
 ### **3. Advanced Query Processing**
 
 ```
+
 User Query → AI Search Engine → Results
+
 - Semantic understanding
 - Relevance scoring
 - Multi-language support
 - Typo tolerance
 - Context awareness
+
 ```
 
 ### **4. Real-Time Capabilities**
 
 ```
+
 - Sub-second search across 1.2M documents
 - Complex queries with filters
 - Faceted search
 - Auto-complete
 - Suggestions
+
 ```
 
 ---
 
-## 💡 WHAT YOU'RE ACTUALLY PAYING FOR:
+## 💡 WHAT YOU'RE ACTUALLY PAYING FOR
 
 ### **Not Just Storage - You're Getting:**
 
@@ -104,7 +113,7 @@ User Query → AI Search Engine → Results
 
 ---
 
-## 🔍 DETAILED COST BREAKDOWN:
+## 🔍 DETAILED COST BREAKDOWN
 
 ### **Your Data Volume:**
 
@@ -129,7 +138,7 @@ User Query → AI Search Engine → Results
 
 ---
 
-## 🎯 COST OPTIMIZATION STRATEGIES:
+## 🎯 COST OPTIMIZATION STRATEGIES
 
 ### **1. Reduce Data Volume (30-50% savings)**
 
@@ -151,7 +160,7 @@ User Query → AI Search Engine → Results
 
 ---
 
-## 📊 ALTERNATIVE APPROACHES:
+## 📊 ALTERNATIVE APPROACHES
 
 ### **Option 1: Hybrid Approach**
 
@@ -173,7 +182,7 @@ User Query → AI Search Engine → Results
 
 ---
 
-## 🚨 THE REALITY CHECK:
+## 🚨 THE REALITY CHECK
 
 ### **Azure AI Search is Premium for a Reason:**
 
@@ -191,11 +200,11 @@ User Query → AI Search Engine → Results
 
 ---
 
-## 💡 RECOMMENDATION:
+## 💡 RECOMMENDATION
 
 ### **The costs are high because you're getting enterprise-grade AI search capabilities.**
 
-**Options:**
+## Options:
 
 1. **Accept the cost** for premium AI search (justify by business value)
 2. **Implement optimizations** to reduce costs by 30-50%
@@ -204,4 +213,5 @@ User Query → AI Search Engine → Results
 
 ---
 
-**🎯 The high costs reflect the premium AI search capabilities you're getting - it's not just storage, it's a sophisticated search engine that can understand meaning and context across 1.2M documents!**
+**🎯 The high costs reflect the premium AI search capabilities you're getting - it's not just storage, it's a
+  sophisticated search engine that can understand meaning and context across 1.2M documents!**

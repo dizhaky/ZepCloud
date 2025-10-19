@@ -1,10 +1,11 @@
 # 1Password Integration Guide
 
-**Complete guide for secure credential management in Azure RAG Setup**
+## Complete guide for secure credential management in Azure RAG Setup
 
 ## Overview
 
-This project uses 1Password CLI for secure credential management, eliminating plain-text secrets in code and configuration files.
+This project uses 1Password CLI for secure credential management, eliminating plain-text secrets in code and
+  configuration files.
 
 ### Benefits
 
@@ -21,20 +22,27 @@ This project uses 1Password CLI for secure credential management, eliminating pl
 ### 1. Install 1Password CLI
 
 ```bash
+
 # macOS (using Homebrew)
+
 brew install 1password-cli
 
 # Or download from: https://1password.com/downloads/command-line/
+
 ```
 
 ### 2. Sign in to 1Password CLI
 
 ```bash
+
 # Sign in to your 1Password account
+
 op signin
 
 # Verify you're signed in
+
 op account get
+
 ```
 
 ---
@@ -49,7 +57,7 @@ This project manages two main credential sets in 1Password:
 **Vault:** Private
 **Item ID:** `7c4x36zlnyjri2wg3ctzq7cg7u`
 
-**Fields:**
+## Fields:
 
 - Service Name: `typingmind-search-danizhaky`
 - Search Endpoint: `https://typingmind-search-danizhaky.search.windows.net`
@@ -66,7 +74,7 @@ This project manages two main credential sets in 1Password:
 **Item:** `m365-rag-indexer-azure-ad`
 **Vault:** Private
 
-**Fields:**
+## Fields: (2)
 
 - Application ID: Azure AD app client ID
 - Client Secret: Azure AD app secret
@@ -85,21 +93,29 @@ This project manages two main credential sets in 1Password:
 ### Setup Azure AD App with 1Password
 
 ```bash
+
 # Automated setup (creates Azure AD app + stores in 1Password)
+
 ./scripts/1password/setup-azure-ad.sh
 
 # Manual setup guidance
+
 ./scripts/1password/setup-manual.sh
+
 ```
 
 ### Retrieve Credentials
 
 ```bash
+
 # Get M365 credentials and test authentication
+
 ./scripts/1password/get-m365-credentials.sh
 
 # Get Azure Search credentials
+
 ./scripts/1password/get-azure-search-credentials.sh
+
 ```
 
 ---
@@ -109,28 +125,37 @@ This project manages two main credential sets in 1Password:
 ### Azure AI Search
 
 ```bash
+
 # Get all information
+
 op item get "Azure AI Search - TypingMind RAG" --vault Private
 
 # Get specific fields
+
 op item get "Azure AI Search - TypingMind RAG" --fields "Service Name" --vault Private
 op item get "Azure AI Search - TypingMind RAG" --fields "Admin Key" --reveal --vault Private
 op item get "Azure AI Search - TypingMind RAG" --fields "Query Key" --reveal --vault Private
 
 # Get as JSON
+
 op item get "Azure AI Search - TypingMind RAG" --format json --vault Private
+
 ```
 
 ### M365/Azure AD
 
 ```bash
-# Get all information
+
+# Get all information (2)
+
 op item get "m365-rag-indexer-azure-ad"
 
-# Get specific fields
+# Get specific fields (2)
+
 op item get "m365-rag-indexer-azure-ad" --fields "Application ID"
 op item get "m365-rag-indexer-azure-ad" --fields "Client Secret" --reveal
 op item get "m365-rag-indexer-azure-ad" --fields "Tenant ID"
+
 ```
 
 ---
@@ -140,36 +165,45 @@ op item get "m365-rag-indexer-azure-ad" --fields "Tenant ID"
 ### 1Password References (op:// URIs)
 
 ```bash
-# Azure AI Search
+
+# Azure AI Search (2)
+
 op://Private/Azure AI Search - TypingMind RAG/Admin Key
 op://Private/Azure AI Search - TypingMind RAG/Service Name
 op://Private/Azure AI Search - TypingMind RAG/Index Name
 
 # M365 / Azure AD
+
 op://Private/m365-rag-indexer-azure-ad/Application ID
 op://Private/m365-rag-indexer-azure-ad/Client Secret
 op://Private/m365-rag-indexer-azure-ad/Tenant ID
+
 ```
 
 ### Example Shell Script
 
 ```bash
+
 #!/bin/bash
 
 # Load credentials from 1Password
+
 SEARCH_SERVICE=$(op item get "Azure AI Search - TypingMind RAG" --fields "Service Name" --vault Private)
 SEARCH_KEY=$(op item get "Azure AI Search - TypingMind RAG" --fields "Admin Key" --reveal --vault Private)
 INDEX_NAME=$(op item get "Azure AI Search - TypingMind RAG" --fields "Index Name" --vault Private)
 
 # Use in API calls
+
 curl -X GET \
   "https://${SEARCH_SERVICE}.search.windows.net/indexes/${INDEX_NAME}/docs?api-version=2023-11-01&search=*" \
   -H "api-key: ${SEARCH_KEY}"
+
 ```
 
 ### Example Python Script
 
 ```python
+
 import subprocess
 import json
 
@@ -185,8 +219,10 @@ def get_1password_field(item_name: str, field_name: str, vault: str = "Private")
     return result.stdout.strip()
 
 # Usage
+
 search_service = get_1password_field("Azure AI Search - TypingMind RAG", "Service Name")
 search_key = get_1password_field("Azure AI Search - TypingMind RAG", "Admin Key")
+
 ```
 
 ---
@@ -196,21 +232,27 @@ search_key = get_1password_field("Azure AI Search - TypingMind RAG", "Admin Key"
 ### Update Credentials
 
 ```bash
+
 # Update a specific field
+
 op item edit "Azure AI Search - TypingMind RAG" \
   --vault Private \
   "Admin Key[password]=NEW_KEY_HERE"
 
 # Update M365 status
+
 op item edit "m365-rag-indexer-azure-ad" \
   --field "Status"="Active" \
   --field "Last Updated"="$(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+
 ```
 
 ### Rotate Client Secret
 
 ```bash
+
 # Generate new secret via Azure CLI
+
 NEW_SECRET=$(az ad app credential reset \
   --id "your_app_id" \
   --display-name "M365-Indexer-Secret-v2" \
@@ -218,21 +260,27 @@ NEW_SECRET=$(az ad app credential reset \
   --query "password" -o tsv)
 
 # Update in 1Password
+
 op item edit "m365-rag-indexer-azure-ad" \
   --field "Client Secret"="$NEW_SECRET" \
   --field "Secret Name"="M365-Indexer-Secret-v2" \
   --field "Last Rotated"="$(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+
 ```
 
 ### Share with Team
 
 ```bash
+
 # Share item with team member
+
 op item share "m365-rag-indexer-azure-ad" --email "teammate@company.com"
 
 # Or create a team vault and move the item
+
 op vault create "Engineering" --description "Engineering team vault"
 op item move "m365-rag-indexer-azure-ad" --vault "Engineering"
+
 ```
 
 ---
@@ -242,6 +290,7 @@ op item move "m365-rag-indexer-azure-ad" --vault "Engineering"
 ### 1. Vault Organization
 
 ```
+
 📁 Personal Vault
 ├── 🔐 Azure AI Search - TypingMind RAG
 ├── 🔐 m365-rag-indexer-azure-ad
@@ -251,6 +300,7 @@ op item move "m365-rag-indexer-azure-ad" --vault "Engineering"
 ├── 🔐 Production Azure AI Search
 ├── 🔐 Production M365 App
 └── 🔐 Production Database Credentials
+
 ```
 
 ### 2. Access Control
@@ -262,13 +312,16 @@ op item move "m365-rag-indexer-azure-ad" --vault "Engineering"
 ### 3. Secret Rotation Schedule
 
 ```bash
+
 # Set up rotation reminders
+
 op item edit "m365-rag-indexer-azure-ad" \
   --field "Next Rotation"="2025-06-01" \
   --field "Rotation Schedule"="Every 6 months"
+
 ```
 
-**Recommended rotation schedule:**
+## Recommended rotation schedule:
 
 - Azure AD Client Secrets: Every 6 months
 - Azure Search Admin Keys: Every 12 months
@@ -281,6 +334,7 @@ op item edit "m365-rag-indexer-azure-ad" \
 ### GitHub Actions
 
 ```yaml
+
 name: Deploy
 
 on: [push]
@@ -289,29 +343,37 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+
       - uses: actions/checkout@v3
 
       - name: Install 1Password CLI
+
         uses: 1password/install-cli-action@v1
 
       - name: Load credentials
+
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
         run: |
           echo "M365_CLIENT_ID=$(op item get m365-rag-indexer-azure-ad --fields 'Application ID')" >> $GITHUB_ENV
-          echo "M365_CLIENT_SECRET=$(op item get m365-rag-indexer-azure-ad --fields 'Client Secret' --reveal)" >> $GITHUB_ENV
+echo "M365_CLIENT_SECRET=$(op item get m365-rag-indexer-azure-ad --fields 'Client Secret' --reveal)" >>
+  $GITHUB_ENV
 
       - name: Deploy
+
         run: |
           # Your deployment steps here
+
 ```
 
 ### Docker Integration
 
 ```dockerfile
+
 FROM python:3.11
 
 # Install 1Password CLI
+
 RUN curl -sS https://downloads.1password.com/linux/keys/1password.asc | \
     gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg && \
     echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian stable main' | \
@@ -324,7 +386,9 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 
 # App will load credentials from 1Password at runtime
+
 CMD ["python3", "m365_indexer.py", "sync"]
+
 ```
 
 ---
@@ -336,51 +400,71 @@ CMD ["python3", "m365_indexer.py", "sync"]
 #### 1. "Not logged in to 1Password CLI"
 
 ```bash
+
 # Solution: Sign in
+
 op signin
 
 # For long sessions, use --raw flag to save session token
+
 eval $(op signin --raw)
+
 ```
 
 #### 2. "Item not found"
 
 ```bash
+
 # Check if item exists
+
 op item list | grep -i "search\|m365"
 
 # List all items in vault
+
 op item list --vault Private
+
 ```
 
 #### 3. "Permission denied"
 
 ```bash
+
 # Check vault permissions
+
 op vault list
 
 # Verify you have access to the vault
+
 op vault get Private
+
 ```
 
 #### 4. "jq command not found"
 
 ```bash
+
 # Install jq
+
 brew install jq
 
 # Or use Python for JSON parsing
+
 op item get "item-name" --format json | python3 -c "import sys, json; print(json.load(sys.stdin)['fields'][0]['value'])"
+
 ```
 
 ### Debug Mode
 
 ```bash
+
 # Enable debug output
+
 export OP_DEBUG=1
 
 # Run commands to see detailed output
+
 ./scripts/1password/get-m365-credentials.sh
+
 ```
 
 ---
@@ -409,6 +493,7 @@ export OP_DEBUG=1
    ```
 
 4. **Start using the system**
+
    ```bash
    python3 m365_indexer.py sync-sharepoint
    ```
@@ -416,12 +501,16 @@ export OP_DEBUG=1
 ### Daily Usage
 
 ```bash
+
 # Retrieve credentials when needed
+
 source <(./scripts/1password/get-m365-credentials.sh)
 
 # Use environment variables in scripts
+
 echo $M365_CLIENT_ID
 echo $M365_TENANT_ID
+
 ```
 
 ---

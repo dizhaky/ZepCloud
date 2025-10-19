@@ -5,7 +5,9 @@
 [byterover-mcp]
 
 You are given two tools from Byterover MCP server, including
+
 ## 1. `byterover-store-knowledge`
+
 You `MUST` always use this tool when:
 
 + Learning new patterns, APIs, or architectural decisions from the codebase
@@ -14,6 +16,7 @@ You `MUST` always use this tool when:
 + Completing any significant task or plan implementation
 
 ## 2. `byterover-retrieve-knowledge`
+
 You `MUST` always use this tool when:
 
 + Starting any new task or implementation to gather relevant context

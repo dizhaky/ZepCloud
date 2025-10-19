@@ -1,4 +1,4 @@
-# 🎉 M365 Integration - PRODUCTION SUCCESS!
+# 🎉 M365 Integration - PRODUCTION SUCCESS
 
 ## ✅ IMPLEMENTATION COMPLETE
 
@@ -6,19 +6,19 @@ The Microsoft 365 integration is now **LIVE and SYNCING** in production!
 
 ### 📊 Current Status (as of 2025-10-18 03:09 UTC)
 
-**Azure Blob Storage:**
+## Azure Blob Storage:
 
 - Total documents: **2,277 blobs**
 - M365/SharePoint documents: **15 documents** (and growing)
 - Recent uploads (last hour): **908 documents**
 
-**Azure AI Search Index:**
+## Azure AI Search Index:
 
 - Indexed documents: **2,252 documents**
 - Storage size: **1,747.93 MB**
 - Search functionality: ✅ **Working perfectly**
 
-**M365 Sync Progress:**
+## M365 Sync Progress:
 
 - SharePoint sites found: **42 sites**
 - Documents being processed: **Ongoing**
@@ -26,16 +26,18 @@ The Microsoft 365 integration is now **LIVE and SYNCING** in production!
 
 ### 🔐 Authentication Solution
 
-**Problem Solved:**
+## Problem Solved:
 
 - Original issue: Application permissions weren't granted to service principal
 - Device code flow: Blocked by organizational conditional access policies (Error 53003)
 - **Final solution:** Interactive browser authentication with delegated permissions
 
-**Implementation:**
+## Implementation:
 
 ```python
+
 # m365_auth_interactive.py
+
 from msal import PublicClientApplication
 
 app = PublicClientApplication(
@@ -44,42 +46,46 @@ app = PublicClientApplication(
 )
 
 # Interactive browser authentication
+
 result = app.acquire_token_interactive(
     scopes=scopes,
     prompt="select_account"
 )
-```
-
-**Configuration:**
 
 ```
+
+## Configuration:
+
+```
+
 M365_CLIENT_ID=d642ba9c-258e-45ca-bfcd-b6fe99ab7154
 M365_TENANT_ID=0454334e-d9a9-458c-9999-b3db378abae1
 M365_USE_DELEGATED_AUTH=true
+
 ```
 
 ### 📁 Files Created/Modified
 
-**Authentication Modules:**
+## Authentication Modules:
 
 - `m365_auth_interactive.py` - Interactive browser authentication (primary)
 - `m365_auth_delegated.py` - Device code flow (fallback)
 - `m365_auth.py` - Unified auth interface
 - `m365_auth_app.py` - Original app-only auth (preserved)
 
-**Indexer Modules:**
+## Indexer Modules:
 
 - `m365_sharepoint_indexer.py` - SharePoint document indexing
 - `m365_onedrive_indexer.py` - OneDrive file indexing
 - `m365_exchange_indexer.py` - Exchange email/attachment indexing
 - `m365_indexer.py` - Unified CLI tool
 
-**Configuration:**
+## Configuration: (2)
 
 - `.env` - Updated with delegated auth credentials
 - `m365_config.yaml` - M365 integration settings
 
-**Documentation:**
+## Documentation:
 
 - `DELEGATED_AUTH_COMPLETE.md` - Full authentication guide
 - `M365_INTEGRATION_GUIDE.md` - Complete integration documentation
@@ -87,49 +93,55 @@ M365_USE_DELEGATED_AUTH=true
 
 ### 🚀 How to Use
 
-**Run Full Sync:**
+## Run Full Sync:
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 m365_indexer.py sync
+
 ```
 
-**Check Status:**
+## Check Status:
 
 ```bash
+
 python3 m365_indexer.py status
 python3 maintenance.py --non-interactive --action health
+
 ```
 
-**Individual Service Sync:**
+## Individual Service Sync:
 
 ```bash
+
 python3 m365_indexer.py sync-sharepoint
 python3 m365_indexer.py sync-onedrive
 python3 m365_indexer.py sync-exchange
+
 ```
 
 ### 📊 Expected Results
 
-**SharePoint (42 sites):**
+## SharePoint (42 sites):
 
 - Document libraries from all sites
 - Supported file types: PDF, DOCX, XLSX, PPTX, TXT, etc.
 - Incremental sync for efficiency
 
-**OneDrive (All users):**
+## OneDrive (All users):
 
 - Personal OneDrive files
 - Shared documents
 - User-specific metadata
 
-**Exchange (All users):**
+## Exchange (All users):
 
 - Email attachments
 - Supported file types from emails
 - Organized by user and date
 
-**Total Expected:**
+## Total Expected:
 
 - **Hundreds of thousands of documents**
 - **Complete organizational knowledge base**
@@ -148,19 +160,19 @@ python3 m365_indexer.py sync-exchange
 
 ### 📈 Performance Metrics
 
-**Sync Speed:**
+## Sync Speed:
 
 - SharePoint: ~14 documents in 30 seconds
 - Processing rate: ~1.4 seconds per document
 - Upload rate: ~908 documents per hour
 
-**Storage:**
+## Storage:
 
 - Total: 1,747.93 MB
 - Average document size: ~768 KB
 - File types: PDF (1,771), DOCX (192), XLSX (128), and more
 
-**Search Performance:**
+## Search Performance:
 
 - Query '\*': 2,252 results
 - Query 'document': 760 results
@@ -169,7 +181,7 @@ python3 m365_indexer.py sync-exchange
 
 ### 🔧 Technical Details
 
-**Azure AD App:**
+## Azure AD App:
 
 - App Name: M365 RAG Indexer Delegated
 - App ID: d642ba9c-258e-45ca-bfcd-b6fe99ab7154
@@ -177,13 +189,13 @@ python3 m365_indexer.py sync-exchange
 - Auth Method: Interactive browser flow
 - Permissions: Sites.Read.All, Files.Read.All, Mail.Read, User.Read.All
 
-**Azure Resources:**
+## Azure Resources:
 
 - Storage Account: Azure Blob Storage (training-data container)
 - Search Service: Azure AI Search
 - Index: Document index with 2,252+ documents
 
-**Integration Points:**
+## Integration Points:
 
 - TypingMind: Azure AI Search plugin configured
 - Railway API: Backend endpoint for context retrieval
@@ -201,19 +213,19 @@ python3 m365_indexer.py sync-exchange
 
 ### 🚀 Next Steps
 
-**Immediate:**
+## Immediate:
 
 - Monitor sync progress
 - Verify all 42 SharePoint sites are processed
 - Check OneDrive and Exchange sync
 
-**Short-term:**
+## Short-term:
 
 - Set up automated sync schedule (cron jobs)
 - Configure incremental sync for efficiency
 - Monitor storage and index size
 
-**Long-term:**
+## Long-term:
 
 - Optimize sync performance
 - Add exclusion rules if needed
@@ -222,11 +234,14 @@ python3 m365_indexer.py sync-exchange
 
 ### 💡 Key Learnings
 
-**Problem:** Application permissions in Azure AD can show as "Granted" in the portal but not actually be applied to the service principal.
+**Problem:** Application permissions in Azure AD can show as "Granted" in the portal but not actually be applied to the
+  service principal.
 
-**Solution:** Delegated permissions with interactive browser authentication bypass this issue by using the user's own access rights.
+**Solution:** Delegated permissions with interactive browser authentication bypass this issue by using the user's own
+  access rights.
 
-**Best Practice:** For organizations with strict conditional access policies, interactive browser authentication is more reliable than device code flow.
+**Best Practice:** For organizations with strict conditional access policies, interactive browser authentication is more
+  reliable than device code flow.
 
 ### 🎯 Final Status
 

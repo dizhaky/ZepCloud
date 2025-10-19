@@ -15,9 +15,11 @@
 ### **1. Login to Elastic Cloud**
 
 ```
+
 URL: https://cloud.elastic.co
 Username: dizhaky@gmail.com
 Password: buf4XUZ_uaj3xrc1bcf
+
 ```
 
 ### **2. Navigate to Your Deployment**
@@ -54,10 +56,12 @@ If you already have the Elasticsearch password saved somewhere:
 ## 📝 **What to Provide**
 
 ```
+
 Username: elastic
 Password: [the password you get from resetting]
+
 ```
 
 ---
 
-**Once you provide the Elasticsearch password, I'll immediately update everything and deploy the system!**
+## Once you provide the Elasticsearch password, I'll immediately update everything and deploy the system!

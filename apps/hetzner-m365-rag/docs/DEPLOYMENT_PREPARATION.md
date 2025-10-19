@@ -2,7 +2,8 @@
 
 ## Overview
 
-This document explains how to use the deployment preparation script (`deployment-prep.sh`) to check system dependencies, validate environment configuration, and prepare for deploying the M365 RAG System in a production environment.
+This document explains how to use the deployment preparation script (`deployment-prep.sh`) to check system dependencies,
+  validate environment configuration, and prepare for deploying the M365 RAG System in a production environment.
 
 ## Purpose
 
@@ -29,14 +30,19 @@ Before running the deployment preparation script, ensure you have:
 To run the deployment preparation script:
 
 ```bash
+
 # Navigate to the scripts directory
+
 cd /path/to/m365-rag-system/scripts
 
 # Make the script executable
+
 chmod +x deployment-prep.sh
 
 # Run the script (as root or with sudo for full functionality)
+
 sudo ./deployment-prep.sh
+
 ```
 
 ## Script Phases
@@ -115,30 +121,34 @@ This phase provides guidance on completing the deployment process.
 ### Common Issues
 
 1. **Missing Dependencies**:
+
    ```bash
    # Install Docker
    sudo apt install docker.io docker-compose
-   
+
    # Install other dependencies
    sudo apt install git curl openssl ufw
    ```
 
 2. **Environment File Not Found**:
+
    ```bash
    # Copy example environment file
    cp .env.example .env
-   
+
    # Edit with your values
    nano .env
    ```
 
 3. **Weak Passwords**:
+
    ```bash
    # Generate strong passwords
    openssl rand -base64 32
    ```
 
 4. **Firewall Not Configured**:
+
    ```bash
    # Run firewall setup script
    sudo ./setup-firewall.sh
@@ -147,17 +157,23 @@ This phase provides guidance on completing the deployment process.
 ### Diagnostic Commands
 
 ```bash
+
 # Check Docker status
+
 systemctl status docker
 
 # Check environment variables
+
 cat .env
 
 # Check firewall status
+
 sudo ufw status
 
 # Check SSL certificates
+
 ls -la config/elasticsearch/certs/
+
 ```
 
 ## Azure AD Application Setup
@@ -197,11 +213,15 @@ The script validates that passwords meet security requirements:
 Ensure your `.env` file is properly secured:
 
 ```bash
+
 # Set proper permissions
+
 chmod 600 .env
 
 # Never commit to version control
+
 echo ".env" >> .gitignore
+
 ```
 
 ## Next Steps After Preparation
@@ -212,6 +232,7 @@ After running the deployment preparation script:
 2. **Update Environment File** with your credentials
 3. **Generate SSL Certificates** if needed
 4. **Run Deployment Script**:
+
    ```bash
    ./deploy.sh
    ```
@@ -221,8 +242,11 @@ After running the deployment preparation script:
 You can automate the preparation check in your deployment pipeline:
 
 ```bash
+
 # Run preparation check and exit on failure
+
 ./deployment-prep.sh && echo "Preparation successful" || echo "Preparation failed"
+
 ```
 
 ## Best Practices
@@ -233,4 +257,5 @@ You can automate the preparation check in your deployment pipeline:
 4. **Dependency Updates**: Keep system dependencies updated
 5. **Backup Configuration**: Ensure backup configuration is properly set up
 
-This deployment preparation process ensures your M365 RAG System is properly configured and ready for production deployment.
+This deployment preparation process ensures your M365 RAG System is properly configured and ready for production
+  deployment.

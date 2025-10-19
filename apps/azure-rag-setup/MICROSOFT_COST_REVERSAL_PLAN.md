@@ -38,52 +38,71 @@
 ### **Step 1: Stop All Azure Services**
 
 ```bash
+
 # Delete Azure AI Search Service
+
 az search service delete --name typingmind-search-danizhaky --resource-group typingmind-rag-rg
 
 # Delete Azure Storage Account
+
 az storage account delete --name typingmindragstorage --resource-group typingmind-rag-rg
 
 # Delete Azure Cognitive Services
+
 az cognitiveservices account delete --name typingmind-rag-cognitive --resource-group typingmind-rag-rg
 
 # Delete Resource Group (if no other resources)
+
 az group delete --name typingmind-rag-rg --yes
+
 ```
 
 ### **Step 2: Disable Microsoft 365 Integration**
 
 ```bash
+
 # Stop all M365 sync processes
+
 pkill -f "m365_indexer"
 pkill -f "m365_sync"
 
 # Disable cron jobs
+
 crontab -r
 
 # Remove M365 credentials
+
 rm -f ~/.m365_credentials.json
+
 ```
 
 ### **Step 3: Clean Up Configuration Files**
 
 ```bash
+
 # Remove Azure configuration
+
 rm -f azure-rag-summary.json
 rm -f typingmind-azure-config.json
 rm -f m365_config.yaml
 
 # Remove environment variables
+
 rm -f .env
 rm -f env.example
+
 ```
 
 ### **Step 4: Update Project Documentation**
 
 ```bash
+
 # Update README to reflect cost-free status
+
 # Remove all Azure references
+
 # Update deployment guides
+
 ```
 
 ---

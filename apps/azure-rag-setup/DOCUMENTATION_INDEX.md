@@ -43,6 +43,7 @@
 ## 📁 File Structure
 
 ```
+
 azure-rag-setup/
 ├── Documentation
 │   ├── EXECUTIVE_SUMMARY.md              ⭐ High-level summary
@@ -79,6 +80,7 @@ azure-rag-setup/
     ├── upload_progress.json              📈 Upload tracking
     ├── azure-rag-summary.json            📄 System summary
     └── logs/                             📁 Log files
+
 ```
 
 ---
@@ -88,37 +90,51 @@ azure-rag-setup/
 ### 1. First Time Setup
 
 ```bash
+
 # Clone/navigate to project
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 
 # Validate environment
+
 python3 validate_environment.py
 
 # Check system health
+
 python3 maintenance.py --non-interactive --action health
+
 ```
 
 ### 2. Daily Operations
 
 ```bash
+
 # Check indexer status
+
 python3 maintenance.py --non-interactive --action status
 
 # Upload new documents
+
 python3 upload_with_retry.py
 
 # Generate health report
+
 python3 maintenance.py --non-interactive --action health --output json
+
 ```
 
 ### 3. TypingMind Integration
 
 ```bash
+
 # Get configuration
+
 cat typingmind-azure-config.json
 
 # Follow setup instructions
+
 open typingmind-setup-instructions.md
+
 ```
 
 ---
@@ -151,7 +167,7 @@ open typingmind-setup-instructions.md
 
 ## 📊 System Status
 
-**Current State:**
+## Current State:
 
 - Documents: 2,249 / 2,260 (99.5%)
 - Health: 75/100 (Healthy)
@@ -159,7 +175,7 @@ open typingmind-setup-instructions.md
 - Automation: Fully operational
 - Grade: A+ (98/100)
 
-**Capabilities:**
+## Capabilities:
 
 - ✅ Automatic hourly re-indexing
 - ✅ Resilient uploads with retry
@@ -176,43 +192,62 @@ open typingmind-setup-instructions.md
 ### maintenance.py
 
 ```bash
+
 # Interactive mode
+
 python3 maintenance.py
 
 # Non-interactive modes
+
 python3 maintenance.py --non-interactive --action health
 python3 maintenance.py --non-interactive --action status
 python3 maintenance.py --non-interactive --action run-indexer
 python3 maintenance.py --non-interactive --action clean --days 30
 
 # JSON output
+
 python3 maintenance.py --non-interactive --action health --output json
+
 ```
 
 ### upload_with_retry.py
 
 ```bash
+
 # Upload with automatic retry and progress tracking
+
 python3 upload_with_retry.py
 
-# Features:
+# Features
+
 # - Exponential backoff (2-30 sec, 3 attempts)
+
 # - Resume capability
+
 # - Progress bar with ETA
+
 # - Detailed error reporting
+
 ```
 
 ### validate_environment.py
 
 ```bash
+
 # Comprehensive environment validation
+
 python3 validate_environment.py
 
-# Checks:
+# Checks
+
 # - Environment variables
+
 # - Python packages
+
 # - Azure connectivity
+
 # - File structure
+
 ```
 
 ---
@@ -288,13 +323,17 @@ python3 validate_environment.py
 ### Commands
 
 ```bash
+
 # Get help
+
 python3 maintenance.py --help
 
 # View documentation
+
 cat EXECUTIVE_SUMMARY.md
 cat FINAL_SUCCESS_REPORT.md
 cat CRITICAL_FIXES_SUMMARY.md
+
 ```
 
 ### External Resources
@@ -332,4 +371,4 @@ cat CRITICAL_FIXES_SUMMARY.md
 **Grade:** A+ (98/100)
 **Completion:** 99.5%
 
-**🏆 All objectives achieved and exceeded! 🎉**
+## 🏆 All objectives achieved and exceeded! 🎉

@@ -24,7 +24,7 @@ Successfully deployed a complete Elasticsearch-based RAG system with:
 
 ### **1. Elastic Cloud Cluster**
 
-**Cluster Details:**
+## Cluster Details:
 
 - **Endpoint:** `https://3b826c108baf419fab59f56c6715a731.us-central1.gcp.cloud.es.io:443`
 - **Kibana:** `https://4a8aa287c15d4153b425c7bd9caa0211.us-central1.gcp.cloud.es.io:443`
@@ -33,7 +33,7 @@ Successfully deployed a complete Elasticsearch-based RAG system with:
 - **Version:** 9.1.5
 - **Status:** ✅ **OPERATIONAL**
 
-**Index Status:**
+## Index Status:
 
 - **Name:** `m365-documents`
 - **Health:** ✅ **Green** (Healthy)
@@ -43,7 +43,7 @@ Successfully deployed a complete Elasticsearch-based RAG system with:
 
 ### **2. API Server**
 
-**Server Details:**
+## Server Details:
 
 - **URL:** `http://localhost:5001`
 - **Status:** ✅ **Running**
@@ -62,7 +62,7 @@ Successfully deployed a complete Elasticsearch-based RAG system with:
 
 ### **3. Integration Status**
 
-**M365 Data Sources:**
+## M365 Data Sources:
 
 - ✅ SharePoint (documents, sites, libraries)
 - ✅ OneDrive (personal files, shared documents)
@@ -71,14 +71,14 @@ Successfully deployed a complete Elasticsearch-based RAG system with:
 - ✅ Calendar (events, meetings, attendees)
 - ✅ Contacts (contact information)
 
-**Processing Pipeline:**
+## Processing Pipeline:
 
 - ✅ RAG-Anything (entity extraction, relationships, complexity)
 - ✅ OlmoCR (OCR for PDFs and images)
 - ✅ Apache Tika (content extraction)
 - ✅ Bulk indexing (optimized performance)
 
-**TypingMind:**
+## TypingMind:
 
 - ✅ Configuration file ready: `typingmind-elasticsearch-config.json`
 - ✅ Base URL: `http://localhost:5001`
@@ -115,6 +115,7 @@ Successfully deployed a complete Elasticsearch-based RAG system with:
 ### **Directory Structure**
 
 ```
+
 azure-rag-setup/
 ├── archive/                    # 1.4 GB (excluded from git)
 │   ├── binaries/              # 1.1 GB - Elasticsearch downloads
@@ -132,24 +133,25 @@ azure-rag-setup/
 ├── .gitignore                 # Git ignore rules
 ├── requirements.txt           # Python dependencies
 └── README.md                  # Main documentation
+
 ```
 
 ### **Key Files**
 
-**Configuration:**
+## Configuration:
 
 - `config_elasticsearch.py` - Elasticsearch configuration
 - `env.elasticsearch` - Environment variables
 - `typingmind-elasticsearch-config.json` - TypingMind config
 
-**Source Code:**
+## Source Code:
 
 - `api_server.py` - REST API server
 - `elasticsearch_setup.py` - Index creation
 - `m365_sync_elasticsearch.py` - M365 synchronization
 - `test_elasticsearch_integration.py` - Integration tests
 
-**Documentation:**
+## Documentation:
 
 - `ELASTICSEARCH_SETUP_GUIDE.md` - Setup instructions
 - `ELASTICSEARCH_TESTING_GUIDE.md` - Testing guide
@@ -368,7 +370,7 @@ azure-rag-setup/
 - ✅ Scalable architecture
 - ✅ Production-ready system
 
-### **Security**
+### **Security** (2)
 
 - ✅ No exposed secrets
 - ✅ Private repository
@@ -386,7 +388,7 @@ azure-rag-setup/
 - **Kibana:** https://4a8aa287c15d4153b425c7bd9caa0211.us-central1.gcp.cloud.es.io:443
 - **API Health:** http://localhost:5001/health
 
-### **Documentation**
+### **Documentation** (2)
 
 - **Setup Guide:** `ELASTICSEARCH_SETUP_GUIDE.md`
 - **Testing Guide:** `ELASTICSEARCH_TESTING_GUIDE.md`
@@ -400,7 +402,6 @@ azure-rag-setup/
 
 ---
 
-**✅ COMPLETE SYSTEM DEPLOYMENT - 100% OPERATIONAL AND READY FOR PRODUCTION USE**
+## ✅ COMPLETE SYSTEM DEPLOYMENT - 100% OPERATIONAL AND READY FOR PRODUCTION USE
 
-**All objectives achieved. System is secure, documented, and ready for immediate use.**
-
+## All objectives achieved. System is secure, documented, and ready for immediate use.

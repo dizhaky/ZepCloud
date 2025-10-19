@@ -7,14 +7,19 @@ A Model Context Protocol (MCP) server designed for TypingMind, deployed on Railw
 ### Option 1: Railway CLI
 
 ```bash
+
 # Install Railway CLI
+
 npm install -g @railway/cli
 
 # Login to Railway
+
 railway login
 
 # Deploy from this directory
+
 railway up
+
 ```
 
 ### Option 2: Railway Dashboard
@@ -52,11 +57,15 @@ Set these in Railway dashboard:
 ## 🛠️ Local Development
 
 ```bash
+
 # Install dependencies
+
 npm install
 
 # Start development server
+
 npm run dev
+
 ```
 
 ## 🔒 Security

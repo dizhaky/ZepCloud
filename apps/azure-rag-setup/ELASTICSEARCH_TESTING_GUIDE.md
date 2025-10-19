@@ -2,7 +2,8 @@
 
 ## 🎯 Testing Overview
 
-This guide provides step-by-step instructions for testing the complete Elasticsearch-based RAG system with RAG-Anything and OlmoCR integration.
+This guide provides step-by-step instructions for testing the complete Elasticsearch-based RAG system with RAG-Anything
+  and OlmoCR integration.
 
 ## 📋 Prerequisites
 
@@ -17,15 +18,20 @@ This guide provides step-by-step instructions for testing the complete Elasticse
 ### Environment Setup
 
 ```bash
+
 # Clone the repository
+
 git clone <repository-url>
 cd azure-rag-setup
 
 # Install Python dependencies
+
 pip install -r requirements-elasticsearch.txt
 
 # Copy environment configuration
+
 cp env.elasticsearch .env
+
 ```
 
 ## 🚀 Phase 1: Infrastructure Testing
@@ -33,63 +39,91 @@ cp env.elasticsearch .env
 ### Step 1: Start Infrastructure Services
 
 ```bash
+
 # Start all services with Docker Compose
+
 docker-compose up -d
 
 # Wait for services to initialize (60 seconds)
+
 echo "Waiting for services to start..."
 sleep 60
 
 # Verify all containers are running
+
 docker-compose ps
-```
-
-**Expected Output:**
 
 ```
+
+## Expected Output:
+
+```
+
 NAME                IMAGE                                                      STATUS
 m365-elasticsearch  docker.elastic.co/elasticsearch/elasticsearch:8.11.0      Up (healthy)
 m365-kibana         docker.elastic.co/kibana/kibana:8.11.0                  Up
 m365-tika           apache/tika:latest-full                                  Up (healthy)
+
 ```
 
 ### Step 2: Test Elasticsearch Connection
 
 ```bash
+
 # Test Elasticsearch health
+
 curl -u elastic:YourStrongPassword123! http://localhost:9200/_cluster/health
 
-# Expected response:
+# Expected response
+
 # {
+
 #   "cluster_name": "docker-cluster",
+
 #   "status": "green",
+
 #   "timed_out": false,
+
 #   "number_of_nodes": 1,
+
 #   "number_of_data_nodes": 1,
+
 #   "active_primary_shards": 0,
+
 #   "active_shards": 0,
+
 #   "relocating_shards": 0,
+
 #   "initializing_shards": 0,
+
 #   "unassigned_shards": 0
+
 # }
+
 ```
 
 ### Step 3: Test Kibana Connection
 
 ```bash
+
 # Test Kibana accessibility
+
 curl http://localhost:5601
 
 # Expected: HTML response with Kibana interface
+
 ```
 
 ### Step 4: Test Apache Tika Connection
 
 ```bash
+
 # Test Tika server
+
 curl http://localhost:9998/tika
 
 # Expected: "Apache Tika Server" response
+
 ```
 
 ## 🧪 Phase 2: API Testing
@@ -97,37 +131,53 @@ curl http://localhost:9998/tika
 ### Step 1: Create Elasticsearch Index
 
 ```bash
+
 # Create the index with RAG-Anything mappings
+
 python elasticsearch_setup.py
 
-# Expected output:
+# Expected output
+
 # ✅ Index created successfully
+
 # ✅ Mappings configured with RAG-Anything enhancements
+
 # ✅ Ready for document indexing
+
 ```
 
 ### Step 2: Start API Server
 
 ```bash
+
 # Start the Flask API server
+
 python api_server.py
 
-# Expected output:
+# Expected output (2)
+
 # * Running on http://127.0.0.1:5000
+
 # * Debug mode: on
+
 # ✅ API server started successfully
+
 ```
 
 ### Step 3: Run Comprehensive Test Suite
 
 ```bash
+
 # Run the complete integration test
+
 python test_elasticsearch_integration.py
-```
-
-**Expected Test Results:**
 
 ```
+
+## Expected Test Results:
+
+```
+
 🧪 Elasticsearch + RAG-Anything + OlmoCR Integration Test
 ============================================================
 Test started: 2024-01-XX XX:XX:XX
@@ -181,6 +231,7 @@ Statistics Endpoint: ✅ PASSED
 Overall: 8/8 tests passed (100.0%)
 
 🎉 All tests passed! Integration is working correctly.
+
 ```
 
 ## 📊 Phase 3: Data Synchronization Testing
@@ -190,43 +241,58 @@ Overall: 8/8 tests passed (100.0%)
 Edit `.env` file with your Azure credentials:
 
 ```bash
+
 # Azure AD Configuration (from 1Password)
+
 AZURE_TENANT_ID=your-tenant-id-here
 AZURE_CLIENT_ID=your-client-id-here
 AZURE_CLIENT_SECRET=your-client-secret-here
 
 # Elasticsearch Configuration
+
 ELASTIC_HOST=http://localhost:9200
 ELASTIC_USERNAME=elastic
 ELASTIC_PASSWORD=YourStrongPassword123!
 ELASTIC_INDEX=m365-documents
+
 ```
 
 ### Step 2: Test M365 Authentication
 
 ```bash
+
 # Test Microsoft Graph authentication
+
 python -c "from utils.graph_client import GraphClientWrapper; GraphClientWrapper()"
 
-# Expected output:
+# Expected output (3)
+
 # ✅ Microsoft Graph authentication successful
+
 # ✅ Tenant: your-tenant-name
-# ✅ Permissions: Sites.Read.All, Files.Read.All, etc.
+
+# ✅ Permissions: Sites.Read.All, Files.Read.All, etc
+
 ```
 
 ### Step 3: Start Data Synchronization
 
 ```bash
+
 # Start M365 data sync
+
 python m365_sync_elasticsearch.py
 
 # Monitor progress
+
 tail -f m365_sync.log
-```
-
-**Expected Sync Process:**
 
 ```
+
+## Expected Sync Process:
+
+```
+
 2024-01-XX XX:XX:XX - INFO - Starting M365 Elasticsearch Sync...
 2024-01-XX XX:XX:XX - INFO - Microsoft Graph authentication successful
 2024-01-XX XX:XX:XX - INFO - Starting SharePoint sync with RAG-Anything...
@@ -238,19 +304,25 @@ tail -f m365_sync.log
 2024-01-XX XX:XX:XX - INFO - Document indexed successfully
 ...
 2024-01-XX XX:XX:XX - INFO - Sync completed: 150 documents indexed
+
 ```
 
 ### Step 4: Verify Data in Elasticsearch
 
 ```bash
+
 # Check document count
+
 curl -u elastic:YourStrongPassword123! http://localhost:9200/m365-documents/_count
 
 # Check index statistics
+
 curl -u elastic:YourStrongPassword123! http://localhost:9200/m365-documents/_stats
 
 # View sample documents
+
 curl -u elastic:YourStrongPassword123! http://localhost:9200/m365-documents/_search?size=5
+
 ```
 
 ## 🔍 Phase 4: Search Functionality Testing
@@ -258,30 +330,47 @@ curl -u elastic:YourStrongPassword123! http://localhost:9200/m365-documents/_sea
 ### Step 1: Test Basic Search
 
 ```bash
+
 # Test simple search
+
 curl -X POST http://localhost:5000/search \
   -H "Content-Type: application/json" \
   -d '{"query": "quarterly report", "size": 5}'
 
-# Expected response:
-# {
+# Expected response (2)
+
+# { (2)
+
 #   "total": 3,
+
 #   "results": [
-#     {
+
+# { (3)
+
 #       "id": "doc-123",
+
 #       "title": "Q4 Quarterly Report",
+
 #       "content": "Quarterly financial results...",
+
 #       "source": "sharepoint",
+
 #       "score": 0.95
-#     }
+
+# } (2)
+
 #   ]
-# }
+
+# } (3)
+
 ```
 
 ### Step 2: Test Advanced Search
 
 ```bash
+
 # Test filtered search
+
 curl -X POST http://localhost:5000/search/advanced \
   -H "Content-Type: application/json" \
   -d '{
@@ -292,12 +381,15 @@ curl -X POST http://localhost:5000/search/advanced \
     },
     "size": 10
   }'
+
 ```
 
 ### Step 3: Test Multimodal Search
 
 ```bash
+
 # Test multimodal content search
+
 curl -X POST http://localhost:5000/search/multimodal \
   -H "Content-Type: application/json" \
   -d '{
@@ -305,12 +397,15 @@ curl -X POST http://localhost:5000/search/multimodal \
     "content_types": ["tables", "charts"],
     "size": 5
   }'
+
 ```
 
 ### Step 4: Test Entity Search
 
 ```bash
+
 # Test entity-based search
+
 curl -X POST http://localhost:5000/search/entity \
   -H "Content-Type: application/json" \
   -d '{
@@ -318,6 +413,7 @@ curl -X POST http://localhost:5000/search/entity \
     "entity_type": "person",
     "size": 5
   }'
+
 ```
 
 ## 🎯 Phase 5: TypingMind Integration Testing
@@ -327,6 +423,7 @@ curl -X POST http://localhost:5000/search/entity \
 Create or update `typingmind-elasticsearch-config.json`:
 
 ```json
+
 {
   "name": "M365 Elasticsearch with RAG-Anything",
   "description": "Enhanced search with multimodal processing",
@@ -344,27 +441,35 @@ Create or update `typingmind-elasticsearch-config.json`:
     "advanced_filtering": true
   }
 }
+
 ```
 
 ### Step 2: Test TypingMind Connection
 
 ```bash
+
 # Test health endpoint
+
 curl http://localhost:5000/health
 
 # Test context endpoint
+
 curl http://localhost:5000/context
 
 # Test store endpoint
+
 curl -X POST http://localhost:5000/store \
   -H "Content-Type: application/json" \
   -d '{"content": "Test information", "metadata": {"source": "test"}}'
+
 ```
 
 ### Step 3: Test Search Integration
 
 ```bash
+
 # Test search endpoint with TypingMind format
+
 curl -X POST http://localhost:5000/search \
   -H "Content-Type: application/json" \
   -d '{
@@ -372,6 +477,7 @@ curl -X POST http://localhost:5000/search \
     "size": 5,
     "include_metadata": true
   }'
+
 ```
 
 ## 📊 Phase 6: Performance Testing
@@ -379,7 +485,9 @@ curl -X POST http://localhost:5000/search \
 ### Step 1: Load Testing
 
 ```bash
+
 # Test concurrent searches
+
 for i in {1..10}; do
   curl -X POST http://localhost:5000/search \
     -H "Content-Type: application/json" \
@@ -388,111 +496,140 @@ done
 wait
 
 # Check response times
+
 curl -w "@curl-format.txt" -X POST http://localhost:5000/search \
   -H "Content-Type: application/json" \
   -d '{"query": "performance test", "size": 10}'
+
 ```
 
 ### Step 2: Memory and Resource Monitoring
 
 ```bash
+
 # Monitor Docker container resources
+
 docker stats
 
 # Check Elasticsearch cluster health
+
 curl -u elastic:YourStrongPassword123! http://localhost:9200/_cluster/health
 
 # Check API server performance
+
 curl http://localhost:5000/stats
+
 ```
 
 ## 🚨 Troubleshooting Common Issues
 
 ### Issue 1: Elasticsearch Won't Start
 
-**Symptoms:**
+## Symptoms:
 
 - Container exits immediately
 - "OutOfMemoryError" in logs
 - Connection refused errors
 
-**Solutions:**
+## Solutions:
 
 ```bash
+
 # Check available memory
+
 free -h
 
 # Increase memory allocation in docker-compose.yml
+
 # Change: - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
+
 # To: - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
 
 # Restart containers
+
 docker-compose down
 docker-compose up -d
+
 ```
 
 ### Issue 2: Authentication Failures
 
-**Symptoms:**
+## Symptoms: (2)
 
 - "Authentication failed" errors
 - "Invalid credentials" messages
 - Graph API connection failures
 
-**Solutions:**
+## Solutions: (2)
 
 ```bash
+
 # Verify Azure credentials
+
 cat .env | grep AZURE
 
 # Test Graph API connection
+
 python -c "from utils.graph_client import GraphClientWrapper; GraphClientWrapper()"
 
 # Check tenant permissions
+
 # Ensure admin consent is granted for required permissions
+
 ```
 
 ### Issue 3: API Server Errors
 
-**Symptoms:**
+## Symptoms: (3)
 
 - "Connection refused" to API endpoints
 - "Internal server error" responses
 - Elasticsearch connection failures
 
-**Solutions:**
+## Solutions: (3)
 
 ```bash
+
 # Check API server logs
+
 python api_server.py
 
 # Verify Elasticsearch connectivity
+
 curl -u elastic:YourStrongPassword123! http://localhost:9200
 
 # Check port availability
+
 netstat -tulpn | grep :5000
+
 ```
 
 ### Issue 4: Slow Indexing Performance
 
-**Symptoms:**
+## Symptoms: (4)
 
 - Very slow document processing
 - Timeout errors during sync
 - High memory usage
 
-**Solutions:**
+## Solutions: (4)
 
 ```bash
+
 # Adjust batch size in .env
+
 BATCH_SIZE=100  # Reduce for slower systems
 
 # Increase Elasticsearch memory
-# Edit docker-compose.yml:
+
+# Edit docker-compose.yml
+
 # - "ES_JAVA_OPTS=-Xms8g -Xmx8g"
 
 # Check system resources
+
 htop
+
 ```
 
 ## 📈 Success Criteria
@@ -563,11 +700,12 @@ htop
 
 ---
 
-## 🎉 Testing Complete!
+## 🎉 Testing Complete
 
-Once all tests pass, you'll have a fully functional, cost-effective alternative to Azure AI Search with enhanced multimodal processing capabilities.
+Once all tests pass, you'll have a fully functional, cost-effective alternative to Azure AI Search with enhanced
+  multimodal processing capabilities.
 
-**Key Benefits Validated:**
+## Key Benefits Validated:
 
 - ✅ **80-90% cost savings** compared to Azure
 - ✅ **Enhanced search capabilities** with multimodal processing
@@ -575,7 +713,7 @@ Once all tests pass, you'll have a fully functional, cost-effective alternative 
 - ✅ **Production-ready** infrastructure
 - ✅ **Comprehensive monitoring** and health checks
 
-**Ready for Production Deployment!**
+## Ready for Production Deployment!
 
 ---
 

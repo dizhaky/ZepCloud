@@ -8,11 +8,14 @@
 
 ## 🎯 Overview
 
-The RAG-Anything Features provide advanced document relationship extraction, multimodal content detection, and enhanced search capabilities. This component transforms your document collection into an intelligent knowledge graph with rich metadata and relationships.
+The RAG-Anything Features provide advanced document relationship extraction, multimodal content detection, and enhanced
+search capabilities. This component transforms your document collection into an intelligent knowledge graph with rich
+  metadata and relationships.
 
 ## 🏗️ Architecture
 
 ```
+
 ┌─────────────────────────────────────────────────────────────────┐
 │                      RAG-Anything Features                      │
 ├─────────────────────────────────────────────────────────────────┤
@@ -40,6 +43,7 @@ The RAG-Anything Features provide advanced document relationship extraction, mul
 │  ├── Multimodal Content Flags                                 │
 │  └── Backward Compatible                                       │
 └─────────────────────────────────────────────────────────────────┘
+
 ```
 
 ---
@@ -64,17 +68,23 @@ The RAG-Anything Features provide advanced document relationship extraction, mul
 #### Usage
 
 ```bash
+
 # Check system status
+
 python3 orchestrate_rag_anything.py --status
 
 # Test sync (2 sites, ~5 minutes)
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 2
 
 # Full sync (42 sites, ~90 minutes)
+
 python3 orchestrate_rag_anything.py --source sharepoint
 
 # Batch sync (10 sites at a time)
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 10
+
 ```
 
 #### Command Options
@@ -91,7 +101,7 @@ python3 orchestrate_rag_anything.py --source sharepoint --limit 10
 **Purpose:** Extract document relationships and build knowledge graphs
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (2)
 
 - **Entity Extraction:** Extract people, organizations, topics
 - **Co-occurrence Tracking:** Track entity relationships
@@ -100,22 +110,28 @@ python3 orchestrate_rag_anything.py --source sharepoint --limit 10
 - **Relationship Scoring:** Automatic relationship scoring
 - **Graph Export:** JSON export for visualization
 
-#### Usage
+#### Usage (2)
 
 ```python
+
 from raganything_processor.graph_builder import GraphBuilder
 
 # Initialize graph builder
+
 builder = GraphBuilder()
 
 # Process documents
+
 builder.process_documents(documents)
 
 # Get relationships
+
 relationships = builder.get_relationships()
 
 # Export graph
+
 builder.export_graph("sharepoint_graph.json")
+
 ```
 
 #### Relationship Types
@@ -132,7 +148,7 @@ builder.export_graph("sharepoint_graph.json")
 **Purpose:** Enhanced SharePoint indexing with relationship extraction
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (3)
 
 - **Base SharePoint Functionality:** All standard SharePoint features
 - **Relationship Extraction:** Document relationship building
@@ -141,14 +157,18 @@ builder.export_graph("sharepoint_graph.json")
 - **Progress Tracking:** Enhanced progress tracking
 - **Error Handling:** Robust error handling
 
-#### Usage
+#### Usage (3)
 
 ```bash
+
 # Use enhanced indexer
+
 python3 m365_sharepoint_indexer_enhanced.py
 
 # Or through orchestrator
+
 python3 orchestrate_rag_anything.py --source sharepoint
+
 ```
 
 #### Enhanced Features
@@ -165,7 +185,7 @@ python3 orchestrate_rag_anything.py --source sharepoint
 **Purpose:** Update Azure AI Search schema with enhanced fields
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (4)
 
 - **Schema Evolution:** Add new fields without downtime
 - **Backward Compatibility:** Maintain existing functionality
@@ -173,11 +193,14 @@ python3 orchestrate_rag_anything.py --source sharepoint
 - **Index Updates:** Update existing index schema
 - **Error Handling:** Robust error handling
 
-#### Usage
+#### Usage (4)
 
 ```bash
+
 # Update Azure schema
+
 python3 update_azure_schema_enhanced.py
+
 ```
 
 #### Schema Changes
@@ -307,39 +330,55 @@ python3 update_azure_schema_enhanced.py
 ### 1. Check System Status
 
 ```bash
+
 # Check RAG-Anything status
+
 python3 orchestrate_rag_anything.py --status
+
 ```
 
 ### 2. Test with Small Dataset
 
 ```bash
+
 # Test with 2 sites
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 2
+
 ```
 
 ### 3. Update Azure Schema
 
 ```bash
+
 # Update schema with enhanced fields
+
 python3 update_azure_schema_enhanced.py
+
 ```
 
 ### 4. Full Sync
 
 ```bash
+
 # Full SharePoint sync with enhanced features
+
 python3 orchestrate_rag_anything.py --source sharepoint
+
 ```
 
 ### 5. View Results
 
 ```bash
+
 # View graph statistics
+
 cat sharepoint_graph.json | python3 -m json.tool | grep -A 5 "stats"
 
 # View progress
+
 cat sharepoint_progress.json | python3 -m json.tool
+
 ```
 
 ---
@@ -349,7 +388,9 @@ cat sharepoint_progress.json | python3 -m json.tool
 ### Find Documents with Tables
 
 ```
+
 Show me all documents that contain tables
+
 ```
 
 _Behind the scenes:_ `filter: "has_tables eq true"`
@@ -357,7 +398,9 @@ _Behind the scenes:_ `filter: "has_tables eq true"`
 ### Find Related Documents
 
 ```
+
 Find documents related to "employee benefits"
+
 ```
 
 _Behind the scenes:_ Search + `relationship_score` ranking
@@ -365,7 +408,9 @@ _Behind the scenes:_ Search + `relationship_score` ranking
 ### Find Highly Cited Documents
 
 ```
+
 Show me the most referenced documents
+
 ```
 
 _Behind the scenes:_ `orderby: "cites_count desc"`
@@ -373,7 +418,9 @@ _Behind the scenes:_ `orderby: "cites_count desc"`
 ### Find Documents by Shared Entities
 
 ```
+
 All documents mentioning "Dan Izhaky"
+
 ```
 
 _Behind the scenes:_ Search + entity co-occurrence
@@ -381,7 +428,9 @@ _Behind the scenes:_ Search + entity co-occurrence
 ### Find Documents with Equations
 
 ```
+
 Find documents containing mathematical equations
+
 ```
 
 _Behind the scenes:_ `filter: "has_equations eq true"`
@@ -430,16 +479,20 @@ _Behind the scenes:_ `filter: "has_equations eq true"`
 - **Multimodal Detection:** Content detection
 - **Integration:** Full system integration
 
-#### Usage
+#### Usage (5)
 
 ```bash
+
 # Run all tests
+
 python3 -m pytest test_rag_anything_integration.py -v
 
 # Run specific tests
+
 python3 -m pytest test_rag_anything_integration.py::TestRAGAnythingIntegration::test_1_graph_builder -v
 python3 -m pytest test_rag_anything_integration.py::TestRAGAnythingIntegration::test_2_azure_ai_search_schema -v
 python3 -m pytest test_rag_anything_integration.py::TestRAGAnythingIntegration::test_3_enhanced_sharepoint_indexer -v
+
 ```
 
 #### Test Results
@@ -459,20 +512,25 @@ python3 -m pytest test_rag_anything_integration.py::TestRAGAnythingIntegration::
 ### Environment Variables
 
 ```bash
+
 # Azure AI Search
+
 AZURE_SEARCH_SERVICE_NAME=your-search-service
 AZURE_SEARCH_ADMIN_KEY=your-admin-key
 AZURE_SEARCH_INDEX_NAME=training-data-index
 
 # Azure Blob Storage
+
 AZURE_STORAGE_ACCOUNT_NAME=your-storage-account
 AZURE_STORAGE_ACCOUNT_KEY=your-storage-key
 AZURE_STORAGE_CONTAINER_NAME=training-data
 
 # M365 Authentication
+
 M365_CLIENT_ID=your_app_client_id
 M365_CLIENT_SECRET=your_app_client_secret
 M365_TENANT_ID=your_tenant_id
+
 ```
 
 ### Configuration Files
@@ -490,19 +548,24 @@ M365_TENANT_ID=your_tenant_id
 #### Issue: Graph Not Building
 
 ```bash
+
 # Check graph file
+
 if [ -f sharepoint_graph.json ]; then
     echo "✅ Graph file exists"
     python3 -c "import json; json.load(open('sharepoint_graph.json'))" && echo "✅ Valid JSON" || echo "❌ Invalid JSON"
 else
     echo "❌ Graph file not found - run a sync first"
 fi
+
 ```
 
 #### Issue: Schema Update Failed
 
 ```bash
+
 # Check Azure connectivity
+
 python3 -c "
 import os
 from dotenv import load_dotenv
@@ -524,25 +587,33 @@ if response.status_code == 200:
 else:
     print(f'❌ Error: {response.status_code}')
 "
+
 ```
 
 #### Issue: Sync Interrupted
 
 ```bash
+
 # Resume with batch processing
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 5
 
 # Check progress
+
 cat sharepoint_progress.json | python3 -m json.tool | head -20
+
 ```
 
 ### Debug Commands
 
 ```bash
+
 # Check system health
+
 python3 orchestrate_rag_anything.py --status
 
-# View graph statistics
+# View graph statistics (2)
+
 cat sharepoint_graph.json | python3 -c "
 import json, sys
 data = json.load(sys.stdin)
@@ -553,6 +624,7 @@ if docs > 0:
     density = rels / docs
     print(f'Graph density: {density:.2f} relationships/doc')
 "
+
 ```
 
 ---
@@ -600,9 +672,12 @@ if docs > 0:
 ### Commands
 
 ```bash
+
 # Get help
+
 python3 orchestrate_rag_anything.py --help
 python3 update_azure_schema_enhanced.py --help
+
 ```
 
 ### External Resources
@@ -619,5 +694,4 @@ python3 update_azure_schema_enhanced.py --help
 **Grade:** A+ (98/100)
 **Completion:** 99.5%
 
-**🏆 All objectives achieved and exceeded! 🎉**
-
+## 🏆 All objectives achieved and exceeded! 🎉

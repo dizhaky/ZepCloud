@@ -10,17 +10,21 @@
 ### **Check System Status**
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 orchestrate_rag_anything.py --status
-```
-
-**Expected Output:**
 
 ```
+
+## Expected Output:
+
+```
+
 📊 RAG-Anything Integration Status
 📁 SharePoint: 69 documents, 60 relationships
 📊 Graph: 69 documents, 3 entities
 ✅ All enhanced features operational
+
 ```
 
 ---
@@ -30,19 +34,25 @@ python3 orchestrate_rag_anything.py --status
 #### **Test Sync (2 sites, ~5 minutes)**
 
 ```bash
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 2
+
 ```
 
 #### **Full Sync (42 sites, ~90 minutes)**
 
 ```bash
+
 python3 orchestrate_rag_anything.py --source sharepoint
+
 ```
 
 #### **Batch Sync (10 sites at a time)**
 
 ```bash
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 10
+
 ```
 
 ---
@@ -52,18 +62,23 @@ python3 orchestrate_rag_anything.py --source sharepoint --limit 10
 #### **Graph Statistics**
 
 ```bash
+
 cat sharepoint_graph.json | python3 -m json.tool | grep -A 5 "stats"
+
 ```
 
 #### **Progress Tracking**
 
 ```bash
+
 cat sharepoint_progress.json | python3 -m json.tool
+
 ```
 
 #### **Recent Documents**
 
 ```bash
+
 cat sharepoint_graph.json | python3 -c "
 import json, sys
 data = json.load(sys.stdin)
@@ -74,6 +89,7 @@ for doc_id, info in docs:
     print(f\"   Related: {len(info.get('related_documents', []))}\")
     print()
 "
+
 ```
 
 ---
@@ -83,6 +99,7 @@ for doc_id, info in docs:
 #### **Query Documents with Tables**
 
 ```bash
+
 curl -X POST "https://$(grep AZURE_SEARCH_SERVICE_NAME .env | cut -d= -f2).search.windows.net/indexes/training-data-index/docs/search?api-version=2023-11-01" \
   -H "Content-Type: application/json" \
   -H "api-key: $(grep AZURE_SEARCH_ADMIN_KEY .env | cut -d= -f2)" \
@@ -92,11 +109,13 @@ curl -X POST "https://$(grep AZURE_SEARCH_SERVICE_NAME .env | cut -d= -f2).searc
     "select": "metadata_storage_name,tables_count",
     "top": 5
   }' | python3 -m json.tool
+
 ```
 
 #### **Query Highly Connected Documents**
 
 ```bash
+
 curl -X POST "https://$(grep AZURE_SEARCH_SERVICE_NAME .env | cut -d= -f2).search.windows.net/indexes/training-data-index/docs/search?api-version=2023-11-01" \
   -H "Content-Type: application/json" \
   -H "api-key: $(grep AZURE_SEARCH_ADMIN_KEY .env | cut -d= -f2)" \
@@ -107,27 +126,32 @@ curl -X POST "https://$(grep AZURE_SEARCH_SERVICE_NAME .env | cut -d= -f2).searc
     "select": "metadata_storage_name,relationship_score",
     "top": 5
   }' | python3 -m json.tool
+
 ```
 
 ---
 
 ### **Update Azure Schema**
 
-**Add new enhanced fields to existing index:**
+## Add new enhanced fields to existing index:
 
 ```bash
+
 python3 update_azure_schema_enhanced.py
-```
-
-**Expected Output:**
 
 ```
+
+## Expected Output: (2)
+
+```
+
 ✅ Index schema updated successfully!
 📊 Final index has 40 fields
 🎯 New Capabilities Enabled:
    ✅ Multimodal content detection
    ✅ Document relationship tracking
    ✅ Graph-based search and filtering
+
 ```
 
 ---
@@ -137,20 +161,27 @@ python3 update_azure_schema_enhanced.py
 #### **All Tests**
 
 ```bash
+
 python3 -m pytest test_rag_anything_integration.py -v
+
 ```
 
 #### **Specific Test**
 
 ```bash
+
 # Test graph builder
+
 python3 -m pytest test_rag_anything_integration.py::TestRAGAnythingIntegration::test_1_graph_builder -v
 
 # Test Azure schema
+
 python3 -m pytest test_rag_anything_integration.py::TestRAGAnythingIntegration::test_2_azure_ai_search_schema -v
 
 # Test indexer
+
 python3 -m pytest test_rag_anything_integration.py::TestRAGAnythingIntegration::test_3_enhanced_sharepoint_indexer -v
+
 ```
 
 ---
@@ -160,7 +191,9 @@ python3 -m pytest test_rag_anything_integration.py::TestRAGAnythingIntegration::
 ### **Find Documents with Tables**
 
 ```
+
 Show me all documents that contain tables
+
 ```
 
 _Behind the scenes:_ `filter: "has_tables eq true"`
@@ -168,7 +201,9 @@ _Behind the scenes:_ `filter: "has_tables eq true"`
 ### **Find Related Documents**
 
 ```
+
 Find documents related to "employee benefits"
+
 ```
 
 _Behind the scenes:_ Search + `relationship_score` ranking
@@ -176,7 +211,9 @@ _Behind the scenes:_ Search + `relationship_score` ranking
 ### **Find Highly Cited Documents**
 
 ```
+
 Show me the most referenced documents
+
 ```
 
 _Behind the scenes:_ `orderby: "cites_count desc"`
@@ -188,18 +225,24 @@ _Behind the scenes:_ `orderby: "cites_count desc"`
 ### **Issue: Authentication Failed**
 
 ```bash
+
 # Check credentials
+
 grep M365_CLIENT_ID .env
 grep M365_TENANT_ID .env
 
 # Get credentials from 1Password
+
 op read "op://Personal/M365 RAG Indexer/M365_CLIENT_ID"
+
 ```
 
 ### **Issue: Azure Connection Failed**
 
 ```bash
+
 # Verify Azure credentials
+
 python3 -c "
 import os
 from dotenv import load_dotenv
@@ -221,28 +264,36 @@ if response.status_code == 200:
 else:
     print(f'❌ Error: {response.status_code}')
 "
+
 ```
 
 ### **Issue: Graph Not Building**
 
 ```bash
+
 # Check graph file
+
 if [ -f sharepoint_graph.json ]; then
     echo "✅ Graph file exists"
     python3 -c "import json; json.load(open('sharepoint_graph.json'))" && echo "✅ Valid JSON" || echo "❌ Invalid JSON"
 else
     echo "❌ Graph file not found - run a sync first"
 fi
+
 ```
 
 ### **Issue: Sync Interrupted**
 
 ```bash
+
 # Resume with batch processing
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 5
 
 # Check progress
+
 cat sharepoint_progress.json | python3 -m json.tool | head -20
+
 ```
 
 ---
@@ -252,6 +303,7 @@ cat sharepoint_progress.json | python3 -m json.tool | head -20
 ### **System Health Check**
 
 ```bash
+
 echo "=== RAG-Anything Health Check ==="
 echo ""
 echo "📁 Files:"
@@ -266,12 +318,15 @@ grep -q "AZURE_SEARCH_SERVICE_NAME" .env && echo "  ✅ Azure credentials" || ec
 echo ""
 echo "📊 Status:"
 python3 orchestrate_rag_anything.py --status 2>&1 | grep -E "(Documents|Relationships|Entities)" | head -5
+
 ```
 
 ### **Performance Metrics**
 
 ```bash
+
 # Documents per site
+
 cat sharepoint_progress.json | python3 -c "
 import json, sys
 data = json.load(sys.stdin)
@@ -283,6 +338,7 @@ for site_id, info in sites.items():
 "
 
 # Graph density
+
 cat sharepoint_graph.json | python3 -c "
 import json, sys
 data = json.load(sys.stdin)
@@ -293,6 +349,7 @@ if docs > 0:
     density = rels / docs
     print(f'Graph density: {density:.2f} relationships/doc')
 "
+
 ```
 
 ---
@@ -304,23 +361,33 @@ if docs > 0:
 Edit crontab:
 
 ```bash
+
 crontab -e
+
 ```
 
 Add line:
 
 ```
-0 3 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 orchestrate_rag_anything.py --source sharepoint >> /tmp/rag_sync.log 2>&1
+
+0 3 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 orchestrate_rag_anything.py --source sharepoint >>
+  /tmp/rag_sync.log 2>&1
+
 ```
 
 ### **2. Monitor Logs**
 
 ```bash
+
 # View recent sync activity
+
 tail -f /tmp/rag_sync.log
 
 # Check last sync time
-cat sharepoint_progress.json | python3 -c "import json, sys; print('Last sync:', json.load(sys.stdin).get('last_sync', 'Never'))"
+
+cat sharepoint_progress.json | python3 -c "import json, sys; print('Last sync:', json.load(sys.stdin).get('last_sync',
+  'Never'))"
+
 ```
 
 ### **3. Verify TypingMind Access**
@@ -328,7 +395,9 @@ cat sharepoint_progress.json | python3 -c "import json, sys; print('Last sync:',
 Open TypingMind and test:
 
 ```
+
 Find documents with tables about employee benefits
+
 ```
 
 Expected: Documents matching query with enhanced table content
@@ -350,23 +419,29 @@ Expected: Documents matching query with enhanced table content
 ### **Daily Check**
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 orchestrate_rag_anything.py --status
+
 ```
 
 ### **Weekly Sync**
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 orchestrate_rag_anything.py --source sharepoint
+
 ```
 
 ### **Monthly Verification**
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 -m pytest test_rag_anything_integration.py -v
 python3 orchestrate_rag_anything.py --status
+
 ```
 
 ---

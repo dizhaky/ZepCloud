@@ -2,7 +2,8 @@
 
 ## Overview
 
-This guide explains how to test and verify that all MCP (Model Context Protocol) servers are working correctly in the ZepCloud project.
+This guide explains how to test and verify that all MCP (Model Context Protocol) servers are working correctly in the
+  ZepCloud project.
 
 ## Quick Start
 
@@ -11,11 +12,15 @@ This guide explains how to test and verify that all MCP (Model Context Protocol)
 Run the health check script:
 
 ```bash
+
 # Using npm script
+
 npm run mcp:health
 
 # Or directly with Node.js
+
 node scripts/mcp-health-check.js
+
 ```
 
 ### Manual Health Check
@@ -23,37 +28,44 @@ node scripts/mcp-health-check.js
 Test each MCP server individually in Cursor:
 
 1. **ByteRover Knowledge Management**
+
    ```typescript
    mcp_byterover-mcp_byterover-retrieve-knowledge({ query: "test", limit: 1 })
    mcp_byterover-mcp_byterover-store-knowledge({ messages: "Health check" })
    ```
 
 2. **Git Operations**
+
    ```typescript
    mcp_git_git_status({ repo_path: "." })
    ```
 
 3. **Task Management**
+
    ```typescript
    mcp_task-master-ai_get_tasks({ projectRoot: "C:\\Dev\\ZepCloud" })
    ```
 
 4. **Browser Automation**
+
    ```typescript
    mcp_kapture_list_tabs({})
    ```
 
 5. **Memory System**
+
    ```typescript
    // Test memory operations if available
    ```
 
 6. **Filesystem Access**
+
    ```typescript
    list_dir({ target_directory: "." })
    ```
 
 7. **GitHub Integration**
+
    ```typescript
    // Test GitHub operations if token configured
    ```
@@ -63,6 +75,7 @@ Test each MCP server individually in Cursor:
 ### ✅ All Servers Working
 
 ```
+
 ## MCP Server Health Check Results
 
 | Server | Status | Notes |
@@ -74,11 +87,13 @@ Test each MCP server individually in Cursor:
 | Memory | ✅ Working | Session memory available |
 | Filesystem | ✅ Working | File operations functional |
 | GitHub | ✅ Working | GitHub API integration ready |
+
 ```
 
 ### ⚠️ Some Servers Need Attention
 
 ```
+
 | Server | Status | Notes |
 |--------|--------|-------|
 | ByteRover | ✅ Working | Knowledge management functional |
@@ -88,6 +103,7 @@ Test each MCP server individually in Cursor:
 | Memory | ✅ Working | Session memory available |
 | Filesystem | ✅ Working | File operations functional |
 | GitHub | ⚠️ Needs Token | Configure GITHUB_PERSONAL_ACCESS_TOKEN |
+
 ```
 
 ## Troubleshooting
@@ -97,6 +113,7 @@ Test each MCP server individually in Cursor:
 **Error**: `Memory access requires authentication`
 
 **Solution**:
+
 1. Visit https://byterover.dev
 2. Create/login to account
 3. Install ByteRover Cursor extension
@@ -108,6 +125,7 @@ Test each MCP server individually in Cursor:
 **Error**: `git command not found`
 
 **Solution**:
+
 1. Install Git: https://git-scm.com/downloads
 2. Verify: `git --version`
 3. Configure: `git config --global user.name "Your Name"`
@@ -117,6 +135,7 @@ Test each MCP server individually in Cursor:
 **Error**: `task-master-ai not found`
 
 **Solution**:
+
 1. Check `.cursor/mcp.json` configuration
 2. Verify `task-master-ai` is in mcpServers
 3. Restart Cursor to reload MCP servers
@@ -126,6 +145,7 @@ Test each MCP server individually in Cursor:
 **Error**: `Browser not found`
 
 **Solution**:
+
 1. Install Chrome/Chromium browser
 2. Check `BROWSER_PATH` in `.cursor/mcp.json`
 3. Update browser path if needed
@@ -135,6 +155,7 @@ Test each MCP server individually in Cursor:
 **Error**: `Memory server not responding`
 
 **Solution**:
+
 1. Check memory MCP configuration
 2. Verify Node.js is installed
 3. Test with: `npx @modelcontextprotocol/server-memory`
@@ -144,6 +165,7 @@ Test each MCP server individually in Cursor:
 **Error**: `Permission denied`
 
 **Solution**:
+
 1. Check file permissions
 2. Verify project path in configuration
 3. Run as administrator if needed
@@ -153,8 +175,10 @@ Test each MCP server individually in Cursor:
 **Error**: `GitHub token required`
 
 **Solution**:
+
 1. Generate token: https://github.com/settings/tokens
 2. Add to `.cursor/mcp.json`:
+
    ```json
    "github": {
      "env": {
@@ -170,6 +194,7 @@ Test each MCP server individually in Cursor:
 Main MCP server configuration:
 
 ```json
+
 {
   "mcpServers": {
     "byterover-mcp": {
@@ -207,11 +232,13 @@ Main MCP server configuration:
     }
   }
 }
+
 ```
 
 ### `scripts/mcp-health-check.js`
 
 Automated health check script that:
+
 - Tests all configured MCP servers
 - Reports status and errors
 - Provides troubleshooting suggestions
@@ -224,12 +251,15 @@ Automated health check script that:
 Always test MCP servers before starting development:
 
 ```bash
+
 npm run mcp:health
+
 ```
 
 ### 2. Monitor Server Status
 
 Check server status regularly:
+
 - After configuration changes
 - After Cursor updates
 - When experiencing issues
@@ -275,6 +305,7 @@ Check server status regularly:
 Add custom servers to `.cursor/mcp.json`:
 
 ```json
+
 {
   "mcpServers": {
     "custom-server": {
@@ -286,6 +317,7 @@ Add custom servers to `.cursor/mcp.json`:
     }
   }
 }
+
 ```
 
 ### Environment Variables
@@ -293,11 +325,15 @@ Add custom servers to `.cursor/mcp.json`:
 Set environment variables for MCP servers:
 
 ```bash
+
 # Windows
+
 set GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_token_here
 
 # Linux/Mac
+
 export GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_token_here
+
 ```
 
 ### Debugging MCP Servers
@@ -305,6 +341,7 @@ export GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_token_here
 Enable debug logging:
 
 ```json
+
 {
   "mcpServers": {
     "server-name": {
@@ -313,6 +350,7 @@ Enable debug logging:
     }
   }
 }
+
 ```
 
 ## References
@@ -324,5 +362,5 @@ Enable debug logging:
 
 ---
 
-**Last Updated**: October 19, 2025  
+**Last Updated**: October 19, 2025
 **Version**: 1.0

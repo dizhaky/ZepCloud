@@ -6,17 +6,20 @@
 
 ---
 
-**📖 For complete 1Password integration guide, see [security/1PASSWORD_GUIDE.md](security/1PASSWORD_GUIDE.md)**
+## 📖 For complete 1Password integration guide, see [security/1PASSWORD_GUIDE.md](security/1PASSWORD_GUIDE.md)
 
 ---
 
 ## 🎯 Overview
 
-The Security & 1Password Integration provides enterprise-grade credential management, secure authentication, and comprehensive security controls for the Azure RAG system. This component ensures all credentials are stored securely and accessed safely.
+The Security & 1Password Integration provides enterprise-grade credential management, secure authentication, and
+comprehensive security controls for the Azure RAG system. This component ensures all credentials are stored securely
+  and accessed safely.
 
 ## 🏗️ Architecture
 
 ```
+
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Security & 1Password Integration             │
 ├─────────────────────────────────────────────────────────────────┤
@@ -44,6 +47,7 @@ The Security & 1Password Integration provides enterprise-grade credential manage
 │  ├── setup_credentials_manual.sh (Manual Setup)                │
 │  └── 1PASSWORD_SETUP_GUIDE.md (Documentation)                  │
 └─────────────────────────────────────────────────────────────────┘
+
 ```
 
 ---
@@ -67,11 +71,15 @@ The Security & 1Password Integration provides enterprise-grade credential manage
 #### Usage
 
 ```bash
+
 # Run automated setup
+
 ./scripts/1password/setup-azure-ad.sh
 
 # Follow manual permission steps
+
 # (Add API permissions in Azure Portal)
+
 ```
 
 #### Setup Process
@@ -88,7 +96,7 @@ The Security & 1Password Integration provides enterprise-grade credential manage
 **Purpose:** Retrieve and test M365 credentials from 1Password
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (2)
 
 - **Credential Retrieval:** Get credentials from 1Password
 - **Authentication Testing:** Test credential validity
@@ -96,14 +104,18 @@ The Security & 1Password Integration provides enterprise-grade credential manage
 - **Validation:** Comprehensive credential validation
 - **Error Handling:** Robust error handling
 
-#### Usage
+#### Usage (2)
 
 ```bash
+
 # Retrieve credentials and test
+
 ./scripts/1password/get-m365-credentials.sh
 
 # Test authentication
+
 python3 m365_indexer.py test-auth
+
 ```
 
 #### Credential Management
@@ -120,7 +132,7 @@ python3 m365_indexer.py test-auth
 **Purpose:** Manual credential setup guidance
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (3)
 
 - **Step-by-step Guide:** Detailed setup instructions
 - **Permission Configuration:** API permission setup
@@ -128,14 +140,18 @@ python3 m365_indexer.py test-auth
 - **Validation Steps:** Credential validation
 - **Troubleshooting:** Common issue resolution
 
-#### Usage
+#### Usage (3)
 
 ```bash
+
 # Follow manual setup
+
 ./scripts/1password/setup-manual.sh
 
 # Or follow the guide
+
 cat docs/security/1PASSWORD_GUIDE.md
+
 ```
 
 #### Manual Setup Steps
@@ -152,7 +168,7 @@ cat docs/security/1PASSWORD_GUIDE.md
 **Purpose:** Comprehensive 1Password integration guide
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (4)
 
 - **1Password CLI Setup:** CLI installation and configuration
 - **Credential Storage:** Secure credential storage
@@ -160,20 +176,25 @@ cat docs/security/1PASSWORD_GUIDE.md
 - **Access Control:** Permission management
 - **Audit Trail:** Access logging and monitoring
 
-#### Usage
+#### Usage (4)
 
 ```bash
+
 # Install 1Password CLI
+
 brew install 1password-cli
 
 # Sign in to 1Password
+
 op signin
 
 # Store credentials
+
 op item create --category=login --title="M365 RAG Indexer" \
   --field="Client ID"=your_client_id \
   --field="Client Secret"=your_client_secret \
   --field="Tenant ID"=your_tenant_id
+
 ```
 
 ---
@@ -193,15 +214,21 @@ op item create --category=login --title="M365 RAG Indexer" \
 #### Before (Plain Text)
 
 ```bash
+
 # .env file with secrets
+
 M365_CLIENT_SECRET=abc123def456ghi789  # ❌ Exposed in code
+
 ```
 
 #### After (1Password)
 
 ```bash
+
 # .env file with 1Password references
+
 M365_CLIENT_SECRET=$(op item get m365-rag-indexer --fields "Client Secret" --format json | jq -r '.value')  # ✅ Secure
+
 ```
 
 ### 2. Authentication Security
@@ -247,6 +274,7 @@ M365_CLIENT_SECRET=$(op item get m365-rag-indexer --fields "Client Secret" --for
 ### Security Layers
 
 ```
+
 ┌─────────────────────────────────────────────────────────────────┐
 │                        Security Layers                          │
 ├─────────────────────────────────────────────────────────────────┤
@@ -274,9 +302,10 @@ M365_CLIENT_SECRET=$(op item get m365-rag-indexer --fields "Client Secret" --for
 │  ├── Compliance ready                                           │
 │  └── Admin consent required                                    │
 └─────────────────────────────────────────────────────────────────┘
+
 ```
 
-### Security Controls
+### Security Controls (2)
 
 #### Credential Security
 
@@ -309,45 +338,62 @@ M365_CLIENT_SECRET=$(op item get m365-rag-indexer --fields "Client Secret" --for
 ### 1. 1Password CLI Setup
 
 ```bash
-# Install 1Password CLI
+
+# Install 1Password CLI (2)
+
 brew install 1password-cli
 
-# Sign in to 1Password
+# Sign in to 1Password (2)
+
 op signin
 
 # Verify connection
+
 op account list
+
 ```
 
 ### 2. Azure AD App Setup
 
 ```bash
-# Run automated setup
+
+# Run automated setup (2)
+
 ./scripts/1password/setup-azure-ad.sh
 
-# Follow manual permission steps
-# (Add API permissions in Azure Portal)
+# Follow manual permission steps (2)
+
+# (Add API permissions in Azure Portal) (2)
+
 ```
 
 ### 3. Credential Testing
 
 ```bash
-# Retrieve credentials and test
+
+# Retrieve credentials and test (2)
+
 ./scripts/1password/get-m365-credentials.sh
 
-# Test authentication
+# Test authentication (2)
+
 python3 m365_indexer.py test-auth
+
 ```
 
 ### 4. Environment Setup
 
 ```bash
+
 # Check environment variables
+
 grep M365_CLIENT_ID .env
 grep M365_TENANT_ID .env
 
 # Validate environment
+
 python3 validate_environment.py
+
 ```
 
 ---
@@ -363,32 +409,41 @@ python3 validate_environment.py
 #### Required Variables
 
 ```bash
+
 # M365 Authentication (from 1Password)
+
 M365_CLIENT_ID=$(op item get m365-rag-indexer --fields "Client ID" --format json | jq -r '.value')
 M365_CLIENT_SECRET=$(op item get m365-rag-indexer --fields "Client Secret" --format json | jq -r '.value')
 M365_TENANT_ID=$(op item get m365-rag-indexer --fields "Tenant ID" --format json | jq -r '.value')
 
 # Azure AI Search
+
 AZURE_SEARCH_SERVICE_NAME=your-search-service
 AZURE_SEARCH_ADMIN_KEY=your-admin-key
 AZURE_SEARCH_INDEX_NAME=training-data-index
 
 # Azure Blob Storage
+
 AZURE_STORAGE_ACCOUNT_NAME=your-storage-account
 AZURE_STORAGE_ACCOUNT_KEY=your-storage-key
 AZURE_STORAGE_CONTAINER_NAME=training-data
+
 ```
 
 #### Optional Variables
 
 ```bash
+
 # Logging
+
 LOG_LEVEL=INFO
 LOG_FILE=m365_indexer.log
 
 # Security
+
 TOKEN_CACHE_FILE=m365_token_cache.json
 AUDIT_LOG_FILE=audit.log
+
 ```
 
 ### 1Password Configuration
@@ -396,27 +451,35 @@ AUDIT_LOG_FILE=audit.log
 #### Credential Storage
 
 ```bash
+
 # Store M365 credentials
+
 op item create --category=login --title="M365 RAG Indexer" \
   --field="Client ID"=your_client_id \
   --field="Client Secret"=your_client_secret \
   --field="Tenant ID"=your_tenant_id
 
 # Store Azure credentials
+
 op item create --category=login --title="Azure RAG Search" \
   --field="Service Name"=your_search_service \
   --field="Admin Key"=your_admin_key \
   --field="Index Name"=training-data-index
+
 ```
 
 #### Team Sharing
 
 ```bash
+
 # Share credentials with team
+
 op item share m365-rag-indexer --vault=team-vault
 
 # Set permissions
+
 op item share m365-rag-indexer --vault=team-vault --permissions=read
+
 ```
 
 ---
@@ -428,53 +491,73 @@ op item share m365-rag-indexer --vault=team-vault --permissions=read
 #### Issue: 1Password CLI Not Found
 
 ```bash
-# Install 1Password CLI
+
+# Install 1Password CLI (3)
+
 brew install 1password-cli
 
 # Verify installation
+
 op --version
 
 # Sign in
+
 op signin
+
 ```
 
 #### Issue: Authentication Failed
 
 ```bash
+
 # Check credentials
+
 op item get m365-rag-indexer
 
-# Test authentication
+# Test authentication (3)
+
 python3 m365_indexer.py test-auth
 
-# Check environment variables
+# Check environment variables (2)
+
 grep M365_CLIENT_ID .env
+
 ```
 
 #### Issue: Permission Denied
 
 ```bash
+
 # Check 1Password permissions
+
 op item get m365-rag-indexer --fields "Client ID"
 
 # Check Azure AD permissions
+
 # (Verify API permissions in Azure Portal)
+
 ```
 
 ### Debug Commands
 
 ```bash
+
 # Check 1Password connection
+
 op account list
 
 # Test credential retrieval
+
 op item get m365-rag-indexer --fields "Client ID" --format json
 
-# Test authentication
+# Test authentication (4)
+
 python3 m365_indexer.py test-auth
 
 # Check environment
+
 python3 validate_environment.py
+
 ```
 
 ---
@@ -489,7 +572,7 @@ python3 validate_environment.py
 - **Access Control:** 100% (Role-based access control)
 - **Audit Logging:** 100% (Comprehensive audit trail)
 
-### Security Controls
+### Security Controls (3)
 
 - **1Password Integration:** ✅ Active
 - **Azure AD Authentication:** ✅ Active
@@ -549,9 +632,12 @@ python3 validate_environment.py
 ### Commands
 
 ```bash
+
 # Get help
+
 ./scripts/1password/setup-azure-ad.sh --help
 ./scripts/1password/get-m365-credentials.sh --help
+
 ```
 
 ### External Resources
@@ -569,4 +655,4 @@ python3 validate_environment.py
 **Grade:** A+ (98/100)
 **Completion:** 99.5%
 
-**🏆 All objectives achieved and exceeded! 🎉**
+## 🏆 All objectives achieved and exceeded! 🎉

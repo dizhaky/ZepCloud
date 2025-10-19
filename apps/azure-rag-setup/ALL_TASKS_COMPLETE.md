@@ -14,7 +14,8 @@ All four requested tasks have been completed successfully:
 3. ✅ **Exchange Sync Started**
 4. ✅ **Automated Scheduling Configured**
 
-The M365 RAG system is now fully operational with automated syncing across all three data sources (SharePoint, OneDrive, Exchange).
+The M365 RAG system is now fully operational with automated syncing across all three data sources (SharePoint, OneDrive,
+  Exchange).
 
 ---
 
@@ -22,20 +23,20 @@ The M365 RAG system is now fully operational with automated syncing across all t
 
 **Status:** ✅ COMPLETE
 
-**Configuration:**
+## Configuration:
 
 - **Endpoint:** `https://typingmind-search-danizhaky.search.windows.net`
 - **Index:** `azureblob-index`
 - **API Key:** Configured and working
 - **Indexer:** Running hourly to process new documents
 
-**Test Results:**
+## Test Results:
 
 - Search endpoint: ✅ Accessible
 - Indexer: ✅ Running
 - Document processing: ✅ Active
 
-**What's Working:**
+## What's Working:
 
 - M365 documents are being uploaded to Azure Blob Storage
 - Azure AI Search indexer processes documents hourly
@@ -48,13 +49,13 @@ The M365 RAG system is now fully operational with automated syncing across all t
 
 **Status:** ✅ COMPLETE AND RUNNING
 
-**Configuration:**
+## Configuration: (2)
 
 - **Target:** All users' OneDrive files
 - **Method:** Microsoft Graph API with delegated permissions
 - **Authentication:** Interactive browser flow (user context)
 
-**Current Progress:**
+## Current Progress:
 
 - **Total documents in storage:** 2,309 blobs
 - **OneDrive documents syncing:** Active
@@ -64,7 +65,7 @@ The M365 RAG system is now fully operational with automated syncing across all t
   - `onedrive/Amber_Mulcahy/Documents_afterSentDocuments_docs14/abc2.doc`
   - `onedrive/Amber_Mulcahy/Documents_afterSentDocuments_docs11/ghi2.pdf`
 
-**What's Working:**
+## What's Working: (2)
 
 - ✅ User enumeration via Microsoft Graph API
 - ✅ OneDrive file discovery for all users
@@ -72,7 +73,7 @@ The M365 RAG system is now fully operational with automated syncing across all t
 - ✅ Background sync process running
 - ✅ Progress tracking and logging
 
-**Expected Volume:**
+## Expected Volume:
 
 - Estimated: 1,000-5,000 documents across all users
 - Current: Actively syncing
@@ -83,13 +84,13 @@ The M365 RAG system is now fully operational with automated syncing across all t
 
 **Status:** ✅ COMPLETE AND RUNNING
 
-**Configuration:**
+## Configuration: (3)
 
 - **Target:** Email attachments for all users
 - **Method:** Microsoft Graph API with delegated permissions
 - **Authentication:** Interactive browser flow (user context)
 
-**What's Working:**
+## What's Working: (3)
 
 - ✅ User enumeration via Microsoft Graph API
 - ✅ Email attachment discovery
@@ -97,7 +98,7 @@ The M365 RAG system is now fully operational with automated syncing across all t
 - ✅ Background sync process running
 - ✅ Progress tracking and logging
 
-**Expected Volume:**
+## Expected Volume: (2)
 
 - Estimated: 500-2,000 attachments across all users
 - Current: Actively syncing
@@ -108,12 +109,14 @@ The M365 RAG system is now fully operational with automated syncing across all t
 
 **Status:** ✅ COMPLETE AND INSTALLED
 
-**Cron Jobs Configured:**
+## Cron Jobs Configured:
 
 ### 1. Full M365 Sync (Every 6 Hours)
 
 ```bash
+
 0 */6 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && ./m365_sync_cron.sh
+
 ```
 
 - Syncs SharePoint, OneDrive, and Exchange
@@ -124,7 +127,10 @@ The M365 RAG system is now fully operational with automated syncing across all t
 ### 2. Indexer Run (Every Hour)
 
 ```bash
-0 * * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action run-indexer >> logs/indexer_cron.log 2>&1
+
+0 * * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action
+  run-indexer >> logs/indexer_cron.log 2>&1
+
 ```
 
 - Processes newly uploaded documents
@@ -134,30 +140,44 @@ The M365 RAG system is now fully operational with automated syncing across all t
 ### 3. Daily Health Check (9 AM)
 
 ```bash
-0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action health >> logs/health_cron.log 2>&1
+
+0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action health
+  >> logs/health_cron.log 2>&1
+
 ```
 
 - Generates health report
 - Monitors system status
 - Tracks sync progress
 
-**Scripts Created:**
+## Scripts Created:
 
 - ✅ `m365_sync_cron.sh` - Main sync orchestration script
 - ✅ `setup_cron.sh` - Cron installation helper
 - ✅ `m365_crontab.txt` - Cron configuration reference
 
-**Verification:**
+## Verification:
 
 ```bash
+
 $ crontab -l | grep M365
+
 # M365 RAG Sync - Automated scheduling
+
 # Run full M365 sync every 6 hours
+
 0 */6 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && ./m365_sync_cron.sh
+
 # Run indexer every hour to process new documents
-0 * * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action run-indexer >> logs/indexer_cron.log 2>&1
+
+0 * * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action
+  run-indexer >> logs/indexer_cron.log 2>&1
+
 # Daily health check at 9 AM
-0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action health >> logs/health_cron.log 2>&1
+
+0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action health
+  >> logs/health_cron.log 2>&1
+
 ```
 
 ---
@@ -181,20 +201,20 @@ $ crontab -l | grep M365
 
 ### M365 Data Sources
 
-**SharePoint (42 sites):**
+## SharePoint (42 sites):
 
 - ✅ Sites discovered
 - ✅ Documents syncing
 - ✅ Background process active
 
-**OneDrive (All users):**
+## OneDrive (All users):
 
 - ✅ Users enumerated
 - ✅ Files syncing
 - ✅ 938 documents uploaded in last hour
 - ✅ Background process active
 
-**Exchange (All users):**
+## Exchange (All users):
 
 - ✅ Users enumerated
 - ✅ Attachments syncing
@@ -239,31 +259,39 @@ $ crontab -l | grep M365
 
 ### Monitoring Commands
 
-**Check sync status:**
+## Check sync status:
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 m365_indexer.py status
+
 ```
 
-**Check storage:**
+## Check storage:
 
 ```bash
+
 python3 check_storage.py
+
 ```
 
-**View health report:**
+## View health report:
 
 ```bash
+
 python3 maintenance.py --non-interactive --action health
+
 ```
 
-**View sync logs:**
+## View sync logs:
 
 ```bash
+
 tail -f logs/m365_sync_*.log
 tail -f logs/indexer_cron.log
 tail -f logs/health_cron.log
+
 ```
 
 ---
@@ -279,7 +307,7 @@ Based on the current sync rate and M365 environment:
 | Exchange    | TBD            | 500-2,000 attachments  | 🔄 Syncing    |
 | **TOTAL**   | **2,309 docs** | **4,000-10,000+ docs** | 🔄 **Active** |
 
-**Timeline:**
+## Timeline:
 
 - At current rate (~938 docs/hour), full sync should complete within 4-12 hours
 - Automated scheduling ensures ongoing updates
@@ -306,7 +334,7 @@ Based on the current sync rate and M365 environment:
 
 ## 📚 DOCUMENTATION
 
-**Complete Documentation:**
+## Complete Documentation:
 
 - `M365_INTEGRATION_SUCCESS.md` - Integration success summary
 - `DELEGATED_AUTH_COMPLETE.md` - Authentication guide
@@ -315,7 +343,7 @@ Based on the current sync rate and M365 environment:
 - `1PASSWORD_SETUP_GUIDE.md` - Credential management
 - `ALL_TASKS_COMPLETE.md` - This document
 
-**Scripts:**
+## Scripts:
 
 - `m365_indexer.py` - Main M365 sync tool
 - `m365_sync_cron.sh` - Automated sync script
@@ -323,7 +351,7 @@ Based on the current sync rate and M365 environment:
 - `check_storage.py` - Storage monitoring
 - `test_typingmind.py` - TypingMind integration test
 
-**Configuration:**
+## Configuration: (4)
 
 - `.env` - Environment variables (M365 credentials)
 - `m365_config.yaml` - M365 integration settings
@@ -335,14 +363,14 @@ Based on the current sync rate and M365 environment:
 
 ### System State: ✅ PRODUCTION READY
 
-**All requested tasks completed:**
+## All requested tasks completed:
 
 - ✅ TypingMind integration tested
 - ✅ OneDrive sync started
 - ✅ Exchange sync started
 - ✅ Automated scheduling configured
 
-**System is now:**
+## System is now:
 
 - ✅ Fully operational
 - ✅ Self-sustaining
@@ -350,10 +378,11 @@ Based on the current sync rate and M365 environment:
 - ✅ Continuously indexing
 - ✅ Production-ready
 
-**No further action required.**
+## No further action required.
 
-The M365 RAG system will continue to operate automatically, syncing all SharePoint sites, OneDrive files, and Exchange attachments every 6 hours, with hourly indexing to ensure all content is searchable in TypingMind.
+The M365 RAG system will continue to operate automatically, syncing all SharePoint sites, OneDrive files, and Exchange
+  attachments every 6 hours, with hourly indexing to ensure all content is searchable in TypingMind.
 
 ---
 
-**🎊 CONGRATULATIONS! ALL OBJECTIVES ACHIEVED! 🎊**
+## 🎊 CONGRATULATIONS! ALL OBJECTIVES ACHIEVED! 🎊

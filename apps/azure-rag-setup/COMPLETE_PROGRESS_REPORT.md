@@ -10,7 +10,7 @@
 
 ### ✅ **PHASE 1: INFRASTRUCTURE (100% COMPLETE)**
 
-**Azure AI Search:**
+## Azure AI Search:
 
 - ✅ Service: `typingmind-search-danizhaky`
 - ✅ Index: `training-data-index`
@@ -18,7 +18,7 @@
 - ✅ Storage: 49.4 MB
 - ✅ Status: Operational
 
-**Azure Blob Storage:**
+## Azure Blob Storage:
 
 - ✅ Account: `tmstorage0731039`
 - ✅ Container: `training-data`
@@ -30,14 +30,14 @@
 
 ### ✅ **PHASE 2: M365 INTEGRATION (100% COMPLETE)**
 
-**SharePoint (42 sites):**
+## SharePoint (42 sites):
 
 - ✅ Sites discovered: 42
 - ✅ Documents syncing: Active
 - ✅ Sample files: Benefits, Marketing, Employee Resources
 - ✅ Status: 15+ documents uploaded and growing
 
-**OneDrive (ALL users):**
+## OneDrive (ALL users):
 
 - ✅ User enumeration: Working
 - ✅ Files syncing: Active
@@ -46,7 +46,7 @@
 - ✅ Sample files: OSHA logs, supplier details, team files
 - ✅ Status: Actively syncing entire tenant
 
-**Exchange (ALL users):**
+## Exchange (ALL users):
 
 - ✅ User enumeration: Working
 - ✅ Attachments syncing: Active
@@ -58,7 +58,7 @@
 
 ### ✅ **PHASE 3: AUTHENTICATION (100% COMPLETE)**
 
-**Azure AD App:**
+## Azure AD App:
 
 - ✅ App Name: M365 RAG Indexer Delegated
 - ✅ App ID: d642ba9c-258e-45ca-bfcd-b6fe99ab7154
@@ -66,7 +66,7 @@
 - ✅ Method: Interactive browser flow (delegated permissions)
 - ✅ Status: Working and authenticated
 
-**Token Management:**
+## Token Management:
 
 - ✅ Token caching: Active
 - ✅ Silent refresh: Working
@@ -76,7 +76,7 @@
 
 ### ✅ **PHASE 4: AUTOMATION (100% COMPLETE)**
 
-**Cron Jobs Installed:**
+## Cron Jobs Installed:
 
 1. **Full M365 Sync (Every 6 hours):**
 
@@ -98,13 +98,15 @@
    - ✅ Updates search index
 
 3. **Daily Health Check (9 AM):**
+
    ```
    0 9 * * * python3 maintenance.py --non-interactive --action health
    ```
+
    - ✅ Generates reports
    - ✅ Monitors system
 
-**Scripts Created:**
+## Scripts Created:
 
 - ✅ `m365_sync_cron.sh` - Main sync orchestration
 - ✅ `setup_cron.sh` - Cron installation helper
@@ -114,13 +116,13 @@
 
 ### ✅ **PHASE 5: SECURITY (100% COMPLETE)**
 
-**1Password Integration:**
+## 1Password Integration:
 
 - ✅ Item created: "Azure AI Search - TypingMind RAG"
 - ✅ Vault: Private (Employee)
 - ✅ Item ID: 7c4x36zlnyjri2wg3ctzq7cg7u
 
-**Stored Credentials:**
+## Stored Credentials:
 
 - ✅ Azure Search Service Name
 - ✅ Azure Search Admin Key (hidden)
@@ -131,7 +133,7 @@
 - ✅ Azure Storage Key (hidden)
 - ✅ Container Name: training-data
 
-**M365 Credentials:**
+## M365 Credentials:
 
 - ✅ Client ID stored
 - ✅ Tenant ID stored
@@ -141,7 +143,7 @@
 
 ### ✅ **PHASE 6: TYPINGMIND CONFIGURATION (95% COMPLETE)**
 
-**Issue Identified and Resolved:**
+## Issue Identified and Resolved:
 
 - ✅ Root cause: Wrong index name in configuration
 - ✅ Correct index identified: `training-data-index`
@@ -149,7 +151,8 @@
 - ✅ Documentation created
 - ✅ 1Password updated with correct values
 
-**Correct Configuration:**
+## Correct Configuration:
+
 | Field | Value |
 |-------|-------|
 | Search Service Name | `typingmind-search-danizhaky` |
@@ -157,7 +160,7 @@
 | Query Key | (stored in 1Password) |
 | API Version | `2023-11-01` |
 
-**⚠️ Remaining Action:**
+## ⚠️ Remaining Action:
 
 - 🔴 User needs to update TypingMind plugin settings
 - 🔴 Change Index Name from `ust-info1` to `training-data-index`
@@ -196,7 +199,8 @@
 
 **Timeline:** 4-12 hours for complete sync
 
-**Expected Volumes:**
+## Expected Volumes:
+
 | Data Source | Current | Expected Final |
 |-------------|---------|----------------|
 | SharePoint | 15 docs | 500-2,000 docs |
@@ -305,23 +309,29 @@
 ### Check Sync Progress
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 m365_indexer.py status
 python3 check_storage.py
+
 ```
 
 ### View Logs
 
 ```bash
+
 tail -f logs/m365_sync_*.log
 tail -f logs/indexer_cron.log
 tail -f logs/health_cron.log
+
 ```
 
 ### Get Credentials
 
 ```bash
+
 op item get "Azure AI Search - TypingMind RAG" --vault Private
+
 ```
 
 ---
@@ -364,7 +374,7 @@ op item get "Azure AI Search - TypingMind RAG" --vault Private
 
 **Overall Completion:** 95%
 
-**What's Complete:**
+## What's Complete:
 
 - ✅ Infrastructure (100%)
 - ✅ M365 Integration (100%)
@@ -373,12 +383,12 @@ op item get "Azure AI Search - TypingMind RAG" --vault Private
 - ✅ Security (100%)
 - ✅ Documentation (100%)
 
-**What's Pending:**
+## What's Pending:
 
 - 🔴 TypingMind plugin update (user action required)
 - 🔄 Full M365 sync completion (automatic, in progress)
 
-**System State:**
+## System State:
 
 - ✅ Production ready
 - ✅ Self-sustaining
@@ -388,6 +398,8 @@ op item get "Azure AI Search - TypingMind RAG" --vault Private
 
 ---
 
-**The M365 RAG integration is COMPLETE and OPERATIONAL. Only one user action remains: Update TypingMind plugin with the correct index name!**
+**The M365 RAG integration is COMPLETE and OPERATIONAL. Only one user action remains: Update TypingMind plugin with the
+  correct index name!**
 
-**Once TypingMind is updated, you'll have full RAG access to your entire M365 knowledge base (SharePoint, OneDrive, Exchange) with 4,000-10,000+ documents! 🚀**
+**Once TypingMind is updated, you'll have full RAG access to your entire M365 knowledge base (SharePoint, OneDrive,
+  Exchange) with 4,000-10,000+ documents! 🚀**

@@ -2,7 +2,8 @@
 
 ## 🎯 What We've Built
 
-A complete Microsoft 365 Graph API integration system that can index SharePoint, OneDrive, and Exchange data into your Azure AI Search RAG system.
+A complete Microsoft 365 Graph API integration system that can index SharePoint, OneDrive, and Exchange data into your
+  Azure AI Search RAG system.
 
 ## ✅ Completed Components
 
@@ -59,6 +60,7 @@ A complete Microsoft 365 Graph API integration system that can index SharePoint,
 ## 🏗️ Architecture Overview
 
 ```
+
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
 │   M365 Tenant   │    │  Azure Blob      │    │  Azure AI       │
 │                 │    │  Storage         │    │  Search         │
@@ -77,6 +79,7 @@ A complete Microsoft 365 Graph API integration system that can index SharePoint,
 │ │ (All Users) │ │    │   (future)     │ │    │                 │ │
 │ └─────────────┘ │    │                  │    │                 │ │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
+
 ```
 
 ## 📊 Current Status
@@ -101,37 +104,53 @@ A complete Microsoft 365 Graph API integration system that can index SharePoint,
 ### 1. Setup (One-time)
 
 ```bash
+
 # Install dependencies
+
 pip install -r requirements.txt
 
 # Set up Azure AD app (see M365_INTEGRATION_GUIDE.md)
-# Add credentials to .env file:
+
+# Add credentials to .env file
+
 # M365_CLIENT_ID=your_app_id
+
 # M365_CLIENT_SECRET=your_secret
+
 # M365_TENANT_ID=your_tenant_id
+
 ```
 
 ### 2. Test Everything
 
 ```bash
+
 # Test authentication
+
 python3 m365_indexer.py test-auth
 
 # Estimate data volume
+
 python3 m365_indexer.py estimate
 
 # Check system status
+
 python3 m365_indexer.py status
+
 ```
 
 ### 3. Start Indexing
 
 ```bash
+
 # Index SharePoint (MVP ready)
+
 python3 m365_indexer.py sync-sharepoint
 
 # Or limit to a few sites for testing
+
 python3 m365_indexer.py sync-sharepoint --limit 3
+
 ```
 
 ## 📈 Expected Results
@@ -222,11 +241,16 @@ python3 m365_indexer.py sync-sharepoint --limit 3
 All components have been tested and verified:
 
 ```bash
+
 # Run the test suite
+
 python3 test_m365_modules.py
 
-# Expected output:
-# ✅ All tests passed! M365 integration is ready.
+# Expected output
+
+# ✅ All tests passed! M365 integration is ready
+
 ```
 
-The system is ready for production use with SharePoint indexing. OneDrive and Exchange integration can be added as needed in future phases.
+The system is ready for production use with SharePoint indexing. OneDrive and Exchange integration can be added as
+  needed in future phases.

@@ -2,18 +2,24 @@
 
 ## Overview
 
-This document describes the monitoring and alerting configuration for the M365 RAG System to enhance security beyond the existing deployment. It includes log aggregation setup, intrusion detection system recommendations, security event monitoring, and automated security scanning to provide comprehensive security visibility and threat detection.
+This document describes the monitoring and alerting configuration for the M365 RAG System to enhance security beyond the
+existing deployment. It includes log aggregation setup, intrusion detection system recommendations
+, security event monitoring, and automated security scanning to provide comprehensive security visibility and threat
+  detection.
 
 ## 1. Log Aggregation Setup
 
 ### 1.1 Centralized Logging Architecture
 
-The M365 RAG System will implement a centralized logging solution using the ELK stack (Elasticsearch, Logstash, Kibana) to aggregate logs from all system components.
+The M365 RAG System will implement a centralized logging solution using the ELK stack (Elasticsearch, Logstash, Kibana)
+  to aggregate logs from all system components.
 
 ### 1.2 Log Sources
 
 #### Docker Container Logs
+
 All Docker containers in the system generate logs that need to be collected:
+
 - Elasticsearch service logs
 - PostgreSQL database logs
 - Redis cache logs
@@ -25,7 +31,9 @@ All Docker containers in the system generate logs that need to be collected:
 - Grafana visualization logs
 
 #### System Logs
+
 Critical system logs that need monitoring:
+
 - Authentication logs (/var/log/auth.log)
 - System logs (/var/log/syslog)
 - Kernel logs (/var/log/kern.log)
@@ -35,28 +43,41 @@ Critical system logs that need monitoring:
 ### 1.3 Logstash Configuration
 
 #### Create Logstash Pipeline Configuration
+
 ```bash
+
 # Create Logstash configuration directory
+
 sudo mkdir -p /data/m365-rag/config/logstash
 
 # Create main Logstash configuration
+
 sudo nano /data/m365-rag/config/logstash/logstash.yml
+
 ```
 
 ```yaml
+
 # Logstash Configuration
+
 http.host: "0.0.0.0"
 path.config: /usr/share/logstash/pipeline
 xpack.monitoring.enabled: false
+
 ```
 
-#### Create Logstash Pipeline Configuration
+#### Create Logstash Pipeline Configuration (2)
+
 ```bash
+
 # Create pipeline configuration
+
 sudo nano /data/m365-rag/config/logstash/pipeline/m365-rag.conf
+
 ```
 
 ```ruby
+
 input {
   # Docker container logs
   file {
@@ -66,7 +87,7 @@ input {
     codec => "json"
     type => "docker"
   }
-  
+
   # System logs
   file {
     path => "/var/log/auth.log"
@@ -74,7 +95,7 @@ input {
     sincedb_path => "/dev/null"
     type => "auth"
   }
-  
+
   # Syslog
   file {
     path => "/var/log/syslog"
@@ -82,7 +103,7 @@ input {
     sincedb_path => "/dev/null"
     type => "syslog"
   }
-  
+
   # Firewall logs
   file {
     path => "/var/log/ufw.log"
@@ -90,7 +111,7 @@ input {
     sincedb_path => "/dev/null"
     type => "firewall"
   }
-  
+
   # Fail2Ban logs
   file {
     path => "/var/log/fail2ban.log"
@@ -106,26 +127,27 @@ filter {
     json {
       source => "message"
     }
-    
+
     date {
       match => [ "time", "ISO8601" ]
       target => "@timestamp"
     }
   }
-  
+
   # Parse authentication logs
   if [type] == "auth" {
     grok {
-      match => { "message" => "%{SYSLOGTIMESTAMP:timestamp} %{SYSLOGHOST:hostname} %{DATA:program}(?:\[%{POSINT:pid}\])?: %{GREEDYDATA:syslog_message}" }
+match => { "message" => "%{SYSLOGTIMESTAMP:timestamp} %{SYSLOGHOST:hostname} %{DATA:program}(?:\[%{POSINT:pid}\])?
+  : %{GREEDYDATA:syslog_message}" }
     }
-    
+
     # Detect failed login attempts
     if [syslog_message] =~ /Failed password/ {
       mutate {
         add_tag => [ "failed_login" ]
       }
     }
-    
+
     # Detect successful logins
     if [syslog_message] =~ /Accepted/ {
       mutate {
@@ -133,13 +155,14 @@ filter {
       }
     }
   }
-  
+
   # Parse firewall logs
   if [type] == "firewall" {
     grok {
-      match => { "message" => "%{SYSLOGTIMESTAMP:timestamp} %{SYSLOGHOST:hostname} %{DATA:program}\[%{POSINT:pid}\]: \[%{NUMBER:rule_id}\] %{WORD:action} %{WORD:protocol} src=%{IP:src_ip} dst=%{IP:dst_ip} .*" }
+match => { "message" => "%{SYSLOGTIMESTAMP:timestamp} %{SYSLOGHOST:hostname} %{DATA:program}\[%{POSINT:pid}\]:
+  \[%{NUMBER:rule_id}\] %{WORD:action} %{WORD:protocol} src=%{IP:src_ip} dst=%{IP:dst_ip} .*" }
     }
-    
+
     # Detect blocked connections
     if [action] == "BLOCK" {
       mutate {
@@ -147,7 +170,7 @@ filter {
       }
     }
   }
-  
+
   # Add geolocation data for IP addresses
   if [src_ip] {
     geoip {
@@ -167,7 +190,7 @@ output {
     ssl_certificate_verification => false
     index => "m365-rag-logs-%{+YYYY.MM.dd}"
   }
-  
+
   # Send security events to separate index
   if "failed_login" in [tags] or "blocked_connection" in [tags] {
     elasticsearch {
@@ -180,32 +203,44 @@ output {
     }
   }
 }
+
 ```
 
 ### 1.4 Docker Compose Integration
 
 #### Add Logstash Service to Docker Compose
+
 ```yaml
+
 # Add to docker-compose.yml services section
+
   logstash:
     image: docker.elastic.co/logstash/logstash:8.15.0
     container_name: logstash
     environment:
+
       - ELASTIC_USER=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD:-changeme}
+
     volumes:
+
       - ./config/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./config/logstash/pipeline:/usr/share/logstash/pipeline:ro
       - ./logs:/data/m365-rag/logs:ro
       - /var/log:/host/var/log:ro
+
     ports:
+
       - "5044:5044"
       - "9600:9600"
+
     networks:
       rag-network:
         ipv4_address: 172.28.0.40
     depends_on:
+
       - elasticsearch
+
     restart: unless-stopped
     deploy:
       resources:
@@ -213,24 +248,35 @@ output {
           memory: 1G
         reservations:
           memory: 512M
+
 ```
 
 #### Update Volume Configuration
+
 ```yaml
+
 # Add to volumes section
+
   logstash-data:
+
 ```
 
 ### 1.5 Log Rotation and Retention
 
 #### Configure Log Rotation
+
 ```bash
+
 # Create logrotate configuration
+
 sudo nano /etc/logrotate.d/m365-rag
+
 ```
 
 ```bash
+
 # M365 RAG System log rotation
+
 /data/m365-rag/logs/*.log {
     daily
     missingok
@@ -253,6 +299,7 @@ sudo nano /etc/logrotate.d/m365-rag
     notifempty
     create 644 root root
 }
+
 ```
 
 ## 2. Intrusion Detection System Recommendations
@@ -260,8 +307,11 @@ sudo nano /etc/logrotate.d/m365-rag
 ### 2.1 Host-Based Intrusion Detection System (HIDS)
 
 #### Install and Configure OSSEC/Wazuh
+
 ```bash
+
 # Install Wazuh manager (on separate monitoring server or locally)
+
 docker run -d --name wazuh-manager \
   --hostname wazuh-manager \
   -p 1514:1514/udp \
@@ -271,19 +321,26 @@ docker run -d --name wazuh-manager \
   -v /data/m365-rag/logs:/var/ossec/logs:rw \
   -v /data/m365-rag/etc:/var/ossec/etc:rw \
   wazuh/wazuh-manager:4.7.3
+
 ```
 
 #### Configure Wazuh Agent
+
 ```bash
+
 # Install Wazuh agent on the M365 RAG system
+
 curl -so wazuh-agent.deb https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.7.3-1_amd64.deb
 sudo dpkg -i wazuh-agent.deb
 
 # Configure agent
+
 sudo nano /var/ossec/etc/ossec.conf
+
 ```
 
 ```xml
+
 <!-- Wazuh Agent Configuration -->
 <ossec_config>
   <client>
@@ -362,47 +419,68 @@ sudo nano /var/ossec/etc/ossec.conf
     <location>/var/log/fail2ban.log</location>
   </localfile>
 </ossec_config>
+
 ```
 
 #### Start Wazuh Agent
+
 ```bash
+
 # Enable and start Wazuh agent
+
 sudo systemctl enable wazuh-agent
 sudo systemctl start wazuh-agent
 
 # Check agent status
+
 sudo systemctl status wazuh-agent
+
 ```
 
 ### 2.2 Network-Based Intrusion Detection System (NIDS)
 
 #### Install and Configure Suricata
+
 ```bash
+
 # Install Suricata
+
 sudo apt update
 sudo apt install suricata
 
 # Configure Suricata
+
 sudo nano /etc/suricata/suricata.yaml
+
 ```
 
 #### Configure Network Interface Monitoring
+
 ```yaml
+
 # In suricata.yaml
+
 af-packet:
+
   - interface: eth0
+
     threads: 2
     cluster-id: 99
     cluster-type: cluster_flow
     defrag: yes
     use-mmap: yes
     tpacket-v3: yes
+
 ```
 
 #### Configure Rules
+
 ```yaml
+
 # Enable relevant rule sets
+
 rule-files:
+
   - botcc.rules
   - ciarmy.rules
   - compromised.rules
@@ -443,19 +521,26 @@ rule-files:
   - emerging-web_specific_apps.rules
   - emerging-worm.rules
   - tor.rules
+
 ```
 
 #### Start Suricata
+
 ```bash
+
 # Enable and start Suricata
+
 sudo systemctl enable suricata
 sudo systemctl start suricata
 
 # Update rules
+
 sudo suricata-update
 
 # Test configuration
+
 sudo suricata -T -c /etc/suricata/suricata.yaml
+
 ```
 
 ## 3. Security Event Monitoring
@@ -463,8 +548,11 @@ sudo suricata -T -c /etc/suricata/suricata.yaml
 ### 3.1 Elasticsearch Security Index Configuration
 
 #### Create Security Index Template
+
 ```bash
-# Create security index template
+
+# Create security index template (2)
+
 curl -X PUT "localhost:9200/_index_template/m365-rag-security" \
   -u "elastic:$ELASTIC_PASSWORD" \
   -H 'Content-Type: application/json' \
@@ -516,13 +604,17 @@ curl -X PUT "localhost:9200/_index_template/m365-rag-security" \
       }
     }
   }'
+
 ```
 
 ### 3.2 Security Event Correlation Rules
 
 #### Create Watcher Alerts in Elasticsearch
+
 ```bash
+
 # Create alert for multiple failed login attempts
+
 curl -X PUT "localhost:9200/_watcher/watch/failed_login_alert" \
   -u "elastic:$ELASTIC_PASSWORD" \
   -H 'Content-Type: application/json' \
@@ -592,11 +684,15 @@ curl -X PUT "localhost:9200/_watcher/watch/failed_login_alert" \
       }
     }
   }'
+
 ```
 
 #### Create Alert for Suspicious Network Activity
+
 ```bash
+
 # Create alert for blocked firewall connections
+
 curl -X PUT "localhost:9200/_watcher/watch/blocked_connections_alert" \
   -u "elastic:$ELASTIC_PASSWORD" \
   -H 'Content-Type: application/json' \
@@ -653,11 +749,13 @@ curl -X PUT "localhost:9200/_watcher/watch/blocked_connections_alert" \
         "email": {
           "to": "security@m365-rag.local",
           "subject": "High Volume of Blocked Connections Detected",
-          "body": "A high volume of blocked connections has been detected. Please investigate potential scanning or attack activity."
+"body": "A high volume of blocked connections has been detected. Please investigate potential scanning or
+  attack activity."
         }
       }
     }
   }'
+
 ```
 
 ## 4. Automated Security Scanning
@@ -665,16 +763,23 @@ curl -X PUT "localhost:9200/_watcher/watch/blocked_connections_alert" \
 ### 4.1 Vulnerability Scanning
 
 #### Implement Daily Vulnerability Scanning
+
 ```bash
+
 # Create vulnerability scanning script
+
 sudo nano /usr/local/bin/vulnerability-scan.sh
+
 ```
 
 ```bash
+
 #!/bin/bash
+
 # M365 RAG System Vulnerability Scanner
 
 # Scan Docker images
+
 echo "Scanning Docker images for vulnerabilities..."
 docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
@@ -687,6 +792,7 @@ docker run --rm \
   infiniflow/ragflow:latest
 
 # Scan system packages
+
 echo "Scanning system packages for vulnerabilities..."
 docker run --rm \
   -v /:/host:ro \
@@ -699,6 +805,7 @@ docker run --rm \
   /host
 
 # Check results and alert if critical vulnerabilities found
+
 CRITICAL_COUNT=$(jq '[.Results[].Vulnerabilities[] | select(.Severity=="CRITICAL")] | length' /tmp/trivy-results.json)
 HIGH_COUNT=$(jq '[.Results[].Vulnerabilities[] | select(.Severity=="HIGH")] | length' /tmp/trivy-results.json)
 
@@ -706,36 +813,49 @@ if [ "$CRITICAL_COUNT" -gt 0 ] || [ "$HIGH_COUNT" -gt 5 ]; then
   echo "Critical or high vulnerabilities detected:"
   echo "Critical: $CRITICAL_COUNT"
   echo "High: $HIGH_COUNT"
-  
+
   # Send alert (implement your preferred notification method)
   # Example: send email, Slack notification, etc.
-  echo "Vulnerability scan detected critical issues. Please check /tmp/trivy-results.json" | mail -s "Vulnerability Alert" security@m365-rag.local
+echo "Vulnerability scan detected critical issues. Please check /tmp/trivy-results.json" | mail -s "Vulnerability
+  Alert" security@m365-rag.local
 fi
 
 echo "Vulnerability scan completed."
+
 ```
 
 ```bash
+
 # Make script executable
+
 sudo chmod +x /usr/local/bin/vulnerability-scan.sh
 
 # Add to crontab for daily scanning
+
 echo "0 3 * * * /usr/local/bin/vulnerability-scan.sh >> /var/log/vulnerability-scan.log 2>&1" | sudo crontab -
+
 ```
 
 ### 4.2 Configuration Auditing
 
 #### Implement CIS Benchmark Scanning
+
 ```bash
+
 # Create CIS benchmark scanning script
+
 sudo nano /usr/local/bin/cis-benchmark-scan.sh
+
 ```
 
 ```bash
+
 #!/bin/bash
+
 # M365 RAG System CIS Benchmark Scanner
 
 # Run Docker Bench Security
+
 echo "Running Docker Bench Security..."
 docker run --rm \
   --net host \
@@ -751,93 +871,128 @@ docker run --rm \
   docker/docker-bench-security > /tmp/docker-bench-results.txt
 
 # Run Lynis security audit
+
 echo "Running Lynis security audit..."
 sudo lynis audit system --quick > /tmp/lynis-results.txt
 
 # Check for critical findings
+
 if grep -q "Critical" /tmp/docker-bench-results.txt || grep -q "Critical" /tmp/lynis-results.txt; then
   echo "Critical security issues detected in configuration audit."
-  
+
   # Send alert
-  echo "CIS benchmark scan detected critical configuration issues. Please check audit results." | mail -s "Configuration Audit Alert" security@m365-rag.local
+echo "CIS benchmark scan detected critical configuration issues. Please check audit results." | mail -s "Configuration
+  Audit Alert" security@m365-rag.local
 fi
 
 echo "CIS benchmark scan completed."
+
 ```
 
 ```bash
+
 # Install Lynis
+
 sudo apt install lynis
 
-# Make script executable
+# Make script executable (2)
+
 sudo chmod +x /usr/local/bin/cis-benchmark-scan.sh
 
 # Add to crontab for weekly scanning
+
 echo "0 4 * * 0 /usr/local/bin/cis-benchmark-scan.sh >> /var/log/cis-benchmark-scan.log 2>&1" | sudo crontab -
+
 ```
 
 ### 4.3 File Integrity Monitoring
 
 #### Implement AIDE for File Integrity Monitoring
+
 ```bash
+
 # Install AIDE
+
 sudo apt install aide
 
 # Initialize AIDE database
+
 sudo aideinit
 
 # Configure AIDE
+
 sudo nano /etc/aide/aide.conf
+
 ```
 
 #### Configure AIDE Rules
+
 ```bash
+
 # In /etc/aide/aide.conf
+
 # Define rules
+
 AllRules = p+i+n+u+g+s+m+c+acl+selinux+xattrs+sha512
 
 # Define monitored directories
+
 /etc AllRules
 /bin AllRules
 /sbin AllRules
 /usr/bin AllRules
 /usr/sbin AllRules
 /data/m365-rag AllRules
+
 ```
 
 #### Create AIDE Check Script
+
 ```bash
-# Create AIDE check script
+
+# Create AIDE check script (2)
+
 sudo nano /usr/local/bin/aide-check.sh
+
 ```
 
 ```bash
+
 #!/bin/bash
+
 # M365 RAG System File Integrity Check
 
 echo "Running AIDE file integrity check..."
 sudo aide --check > /tmp/aide-results.txt 2>&1
 
 # Check for changes
-if grep -q "Changed" /tmp/aide-results.txt || grep -q "Added" /tmp/aide-results.txt || grep -q "Removed" /tmp/aide-results.txt; then
+
+if grep -q "Changed" /tmp/aide-results.txt || grep -q "Added" /tmp/aide-results.txt || grep -q "Removed"
+  /tmp/aide-results.txt; then
   echo "File integrity violations detected:"
   grep -E "(Changed|Added|Removed)" /tmp/aide-results.txt
-  
+
   # Send alert
-  echo "File integrity violations detected. Please check /tmp/aide-results.txt" | mail -s "File Integrity Alert" security@m365-rag.local
+echo "File integrity violations detected. Please check /tmp/aide-results.txt" | mail -s "File Integrity Alert"
+  security@m365-rag.local
 else
   echo "No file integrity violations detected."
 fi
 
 echo "AIDE check completed."
+
 ```
 
 ```bash
-# Make script executable
+
+# Make script executable (3)
+
 sudo chmod +x /usr/local/bin/aide-check.sh
 
 # Add to crontab for daily checking
+
 echo "0 5 * * * /usr/local/bin/aide-check.sh >> /var/log/aide-check.log 2>&1" | sudo crontab -
+
 ```
 
 ## 5. Monitoring Dashboard Configuration
@@ -845,6 +1000,7 @@ echo "0 5 * * * /usr/local/bin/aide-check.sh >> /var/log/aide-check.log 2>&1" | 
 ### 5.1 Kibana Security Dashboard
 
 #### Create Security Dashboard in Kibana
+
 1. Access Kibana at `http://YOUR_SERVER_IP:5601`
 2. Navigate to Analytics > Dashboard
 3. Create a new dashboard named "M365 RAG Security Overview"
@@ -858,12 +1014,17 @@ echo "0 5 * * * /usr/local/bin/aide-check.sh >> /var/log/aide-check.log 2>&1" | 
 ### 5.2 Grafana Security Dashboard
 
 #### Create Grafana Dashboard for Security Metrics
+
 ```bash
+
 # Create Grafana dashboard configuration
+
 sudo nano /data/m365-rag/config/grafana/dashboards/security-dashboard.json
+
 ```
 
 ```json
+
 {
   "dashboard": {
     "id": null,
@@ -937,6 +1098,7 @@ sudo nano /data/m365-rag/config/grafana/dashboards/security-dashboard.json
     ]
   }
 }
+
 ```
 
 ## 6. Alerting Configuration
@@ -944,30 +1106,43 @@ sudo nano /data/m365-rag/config/grafana/dashboards/security-dashboard.json
 ### 6.1 Email Alerting Setup
 
 #### Configure Email Notifications
+
 ```bash
+
 # Create email configuration for alerts
+
 sudo nano /etc/ssmtp/ssmtp.conf
+
 ```
 
 ```bash
+
 # SSMTP Configuration
+
 root=security@m365-rag.local
 mailhub=smtp.your-email-provider.com:587
 AuthUser=security@m365-rag.local
 AuthPass=your-email-password
 UseSTARTTLS=YES
+
 ```
 
 ### 6.2 Slack Alerting Setup
 
 #### Create Slack Webhook Integration
+
 ```bash
+
 # Create Slack alert script
+
 sudo nano /usr/local/bin/slack-alert.sh
+
 ```
 
 ```bash
+
 #!/bin/bash
+
 # Slack Alert Script
 
 WEBHOOK_URL="https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
@@ -976,40 +1151,49 @@ MESSAGE="$1"
 curl -X POST -H 'Content-type: application/json' \
   --data "{\"text\":\"$MESSAGE\"}" \
   $WEBHOOK_URL
+
 ```
 
 ```bash
-# Make script executable
+
+# Make script executable (4)
+
 sudo chmod +x /usr/local/bin/slack-alert.sh
+
 ```
 
 ## 7. Implementation Checklist
 
 ### 7.1 Log Aggregation
+
 - [ ] Logstash service added to docker-compose.yml
 - [ ] Logstash pipeline configuration created
 - [ ] Log rotation configured
 - [ ] Container logs properly routed to Logstash
 
 ### 7.2 Intrusion Detection
+
 - [ ] Wazuh agent installed and configured
 - [ ] Suricata installed and configured
 - [ ] Network interface monitoring enabled
 - [ ] Security rules updated and active
 
 ### 7.3 Security Event Monitoring
+
 - [ ] Elasticsearch security index template created
 - [ ] Watcher alerts configured for failed logins
 - [ ] Watcher alerts configured for blocked connections
 - [ ] Kibana security dashboard created
 
 ### 7.4 Automated Security Scanning
+
 - [ ] Daily vulnerability scanning implemented
 - [ ] Weekly CIS benchmark scanning implemented
 - [ ] Daily file integrity monitoring implemented
 - [ ] Alerting configured for critical findings
 
 ### 7.5 Monitoring Dashboards
+
 - [ ] Kibana security dashboard configured
 - [ ] Grafana security dashboard configured
 - [ ] Alerting channels configured (email, Slack)
@@ -1019,27 +1203,32 @@ sudo chmod +x /usr/local/bin/slack-alert.sh
 ### 8.1 Test Procedures
 
 #### Log Aggregation Testing
+
 1. Verify Logstash is receiving logs from all sources
 2. Check Elasticsearch indices for proper log data
 3. Validate log parsing and field extraction
 4. Test log rotation and retention policies
 
 #### Intrusion Detection Testing
+
 1. Simulate failed login attempts to test HIDS alerts
 2. Generate network traffic to test NIDS detection
 3. Verify alert notifications are working
 4. Check false positive rates and adjust rules as needed
 
 #### Security Event Monitoring Testing
+
 1. Trigger failed login scenarios to test alerts
 2. Simulate blocked connections to test firewall alerts
 3. Verify dashboard visualizations are updating correctly
 4. Test alert escalation procedures
 
 #### Automated Security Scanning Testing
+
 1. Run vulnerability scans manually to verify functionality
 2. Check CIS benchmark scan results
 3. Verify file integrity monitoring detects changes
 4. Test alert notifications for critical findings
 
-This monitoring and alerting configuration provides comprehensive security visibility for the M365 RAG System, enabling rapid detection and response to security threats while maintaining detailed audit trails for compliance purposes.
+This monitoring and alerting configuration provides comprehensive security visibility for the M365 RAG System, enabling
+  rapid detection and response to security threats while maintaining detailed audit trails for compliance purposes.

@@ -1,15 +1,15 @@
 # 🖥️ Hetzner Server Setup Guide
 
-**Date:** 2025-10-19  
-**Status:** ✅ Account Verified - Ready to Order Server  
+**Date:** 2025-10-19
+**Status:** ✅ Account Verified - Ready to Order Server
 **Account:** dizhaky@gmail.com
 
 ---
 
 ## ✅ Account Status
 
-**Login Successful:** https://robot.hetzner.com  
-**Client Number:** K1057581625  
+**Login Successful:** https://robot.hetzner.com
+**Client Number:** K1057581625
 **Current Servers:** 0 (No active servers)
 
 **Action Required:** Order AX52 Dedicated Server
@@ -25,7 +25,8 @@
 
 ### Step 2: Select AX52 Configuration
 
-**Recommended Specifications:**
+## Recommended Specifications:
+
 - **Model:** AX52
 - **CPU:** AMD Ryzen 9 5950X (16 cores / 32 threads)
 - **RAM:** 128GB DDR4 ECC
@@ -35,15 +36,18 @@
 
 ### Step 3: Configuration Options
 
-**Operating System:**
+## Operating System:
+
 - Select: **Ubuntu 24.04 LTS** (64-bit)
 - Reason: Best compatibility with deployment scripts
 
-**Datacenter Location:**
+## Datacenter Location:
+
 - Recommended: **Falkenstein (FSN)** or **Helsinki (HEL)**
 - Reason: Best connectivity for Europe/US
 
-**Additional Options:**
+## Additional Options:
+
 - ✅ Add SSH key (highly recommended)
 - ✅ Enable rescue system
 - ❌ Skip additional IPs (not needed initially)
@@ -51,20 +55,28 @@
 
 ### Step 4: SSH Key Setup (Recommended)
 
-**Generate SSH Key on Windows:**
+## Generate SSH Key on Windows:
+
 ```powershell
+
 # Open PowerShell
+
 ssh-keygen -t ed25519 -C "hetzner-m365-rag"
 
 # Default location: C:\Users\YourName\.ssh\id_ed25519
+
 # Press Enter for default location
+
 # Set a passphrase (optional but recommended)
 
 # Display public key
+
 Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
+
 ```
 
-**Add to Hetzner:**
+## Add to Hetzner:
+
 1. In server order form, find "SSH Keys" section
 2. Click "Add SSH key"
 3. Paste the public key content
@@ -84,13 +96,15 @@ Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
 
 After provisioning, you'll receive an email with:
 
-**Server Details:**
+## Server Details:
+
 - Server IP address
 - Root password (if no SSH key)
 - Server name
 - Datacenter location
 
-**Save These Details:**
+## Save These Details:
+
 - IP Address: `___________________`
 - Root Password: `___________________`
 - Server Name: `___________________`
@@ -102,34 +116,49 @@ After provisioning, you'll receive an email with:
 ### Option A: SSH with Key (Recommended)
 
 ```powershell
+
 # From Windows PowerShell
+
 ssh root@SERVER_IP
+
 ```
 
 ### Option B: SSH with Password
 
 ```powershell
-# From Windows PowerShell
+
+# From Windows PowerShell (2)
+
 ssh root@SERVER_IP
+
 # Enter root password when prompted
+
 ```
 
 ### Verify Access
 
 ```bash
+
 # Once connected, verify system
+
 uname -a
+
 # Expected: Linux ... x86_64 GNU/Linux
 
 # Check resources
+
 free -h
+
 # Expected: ~128GB total memory
 
 df -h
+
 # Expected: ~7TB total storage
 
 lscpu | grep "Model name"
+
 # Expected: AMD Ryzen 9 5950X
+
 ```
 
 ---
@@ -140,50 +169,67 @@ Once you have server access, follow these steps:
 
 ### 1. Prepare Deployment Package
 
-**On Windows:**
+## On Windows:
+
 ```powershell
+
 cd C:\Dev\ZepCloud\apps\hetzner-m365-rag
 
 # Ensure .env is updated with Azure AD credentials
+
 notepad .env
 
 # Create deployment archive
+
 wsl tar -czf ../hetzner-deploy.tar.gz .
+
 ```
 
 ### 2. Upload to Server
 
 ```powershell
+
 # Upload deployment package
+
 scp C:\Dev\ZepCloud\apps\hetzner-deploy.tar.gz root@SERVER_IP:/tmp/
 
 # Verify upload
+
 ssh root@SERVER_IP "ls -lh /tmp/hetzner-deploy.tar.gz"
+
 ```
 
 ### 3. Deploy on Server
 
 ```bash
+
 # SSH into server
+
 ssh root@SERVER_IP
 
 # Extract deployment files
+
 cd /tmp
 tar -xzf hetzner-deploy.tar.gz -C /opt/
 mv /opt/hetzner-m365-rag /opt/m365-rag
 
 # Verify files
+
 ls -la /opt/m365-rag/
 
 # Make scripts executable
+
 cd /opt/m365-rag
 chmod +x scripts/*.sh
 
 # Run deployment script
+
 ./scripts/deploy.sh
+
 ```
 
-**Deployment Script Will:**
+## Deployment Script Will:
+
 1. Update system packages
 2. Install Docker & Docker Compose
 3. Configure firewall (UFW)
@@ -197,17 +243,23 @@ chmod +x scripts/*.sh
 ### 4. Verify Deployment
 
 ```bash
+
 # Check all services are running
+
 docker compose ps
 
 # Test API health
+
 curl http://localhost:8000/health
 
 # Test Elasticsearch
+
 curl -k -u elastic:$(grep ELASTIC_PASSWORD /opt/m365-rag/.env | cut -d= -f2) https://localhost:9200/_cluster/health
 
 # View logs
+
 docker compose logs -f
+
 ```
 
 ---
@@ -225,9 +277,12 @@ After successful deployment:
 | Prometheus | http://SERVER_IP:9090 | - |
 | MinIO Console | http://SERVER_IP:9001 | minioadmin / [from .env] |
 
-**Find Grafana Password:**
+## Find Grafana Password:
+
 ```bash
+
 grep GRAFANA_PASSWORD /opt/m365-rag/.env
+
 ```
 
 ---
@@ -237,9 +292,11 @@ grep GRAFANA_PASSWORD /opt/m365-rag/.env
 ### 1. Authenticate with M365
 
 ```bash
+
 curl -X POST http://SERVER_IP:8000/m365/auth \
   -H "Content-Type: application/json" \
   -d '{"auth_type":"interactive"}'
+
 ```
 
 Follow the URL in the response to complete authentication.
@@ -247,16 +304,19 @@ Follow the URL in the response to complete authentication.
 ### 2. Sync SharePoint Content
 
 ```bash
+
 curl -X POST http://SERVER_IP:8000/m365/sync/sharepoint \
   -H "Content-Type: application/json" \
   -d '{
     "site_url": "https://yourtenant.sharepoint.com/sites/yoursite"
   }'
+
 ```
 
 ### 3. Test Search
 
 ```bash
+
 curl -X POST http://SERVER_IP:8000/search \
   -H "Content-Type: application/json" \
   -d '{
@@ -264,6 +324,7 @@ curl -X POST http://SERVER_IP:8000/search \
     "filters": {"source": "sharepoint"},
     "limit": 5
   }'
+
 ```
 
 ---
@@ -273,49 +334,69 @@ curl -X POST http://SERVER_IP:8000/search \
 ### 1. Change Root Password
 
 ```bash
+
 passwd root
+
 # Enter new strong password twice
+
 ```
 
 ### 2. Create Deploy User
 
 ```bash
+
 # Already created by deployment script
+
 # User: deploy
+
 # Groups: sudo, docker
+
 ```
 
 ### 3. Disable Root SSH (Optional)
 
 ```bash
+
 # Edit SSH config
+
 nano /etc/ssh/sshd_config
 
 # Change: PermitRootLogin yes
+
 # To: PermitRootLogin no
 
 # Restart SSH
+
 systemctl restart sshd
+
 ```
 
 ### 4. Enable HTTPS
 
 ```bash
+
 # Install Certbot
+
 apt-get install -y certbot python3-certbot-nginx
 
 # Get SSL certificate (requires domain)
+
 certbot --nginx -d rag.yourdomain.com
+
 ```
 
 ### 5. Configure Backups
 
 ```bash
+
 # Add to crontab
+
 crontab -e
 
 # Add daily backup at 2 AM
+
 0 2 * * * /opt/m365-rag/scripts/backup.sh >> /var/log/m365-rag-backup.log 2>&1
+
 ```
 
 ---
@@ -326,7 +407,8 @@ crontab -e
 
 Access: http://SERVER_IP:3000
 
-**Default Dashboards:**
+## Default Dashboards:
+
 - Elasticsearch cluster health
 - API performance metrics
 - System resource usage
@@ -336,7 +418,8 @@ Access: http://SERVER_IP:3000
 
 Access: http://SERVER_IP:9090
 
-**Key Metrics:**
+## Key Metrics:
+
 - Query latency (p50, p95, p99)
 - Document indexing rate
 - Cache hit/miss ratio
@@ -345,20 +428,27 @@ Access: http://SERVER_IP:9090
 ### System Monitoring
 
 ```bash
+
 # Check service status
+
 docker compose ps
 
-# View logs
+# View logs (2)
+
 docker compose logs -f api
 
 # System resources
+
 htop
 
 # Disk usage
+
 df -h
 
 # Docker stats
+
 docker stats
+
 ```
 
 ---
@@ -368,56 +458,75 @@ docker stats
 ### Deployment Script Fails
 
 ```bash
+
 # View full logs
+
 ./scripts/deploy.sh 2>&1 | tee deploy.log
 
 # Check specific service
+
 docker compose logs elasticsearch
 docker compose logs api
+
 ```
 
 ### Out of Memory
 
 ```bash
+
 # Check memory usage
+
 free -h
 docker stats
 
 # Adjust limits in docker-compose.yml
+
 nano docker-compose.yml
+
 # Reduce: ES_JAVA_OPTS from -Xmx16g to -Xmx8g
+
 docker compose restart
+
 ```
 
 ### Services Won't Start
 
 ```bash
+
 # Restart all services
+
 cd /opt/m365-rag
 docker compose down
 docker compose up -d
 
 # Check Docker network
+
 docker network ls
 docker network inspect hetzner-m365-rag_m365-rag-network
+
 ```
 
 ### Firewall Blocking Access
 
 ```bash
+
 # Check UFW status
+
 ufw status
 
 # Allow specific port
+
 ufw allow 8000/tcp
 ufw reload
+
 ```
 
 ---
 
 ## 💰 Cost Summary
 
-**Monthly Costs:**
+## Monthly Costs:
+
 - Hetzner AX52: €108 (~$117 USD)
 - Bandwidth: Included (unlimited @ 1 Gbit/s)
 - Support: Free community support
@@ -467,7 +576,6 @@ ufw reload
 
 ---
 
-**Status:** Ready to order server  
-**Next Action:** Order AX52 server at https://www.hetzner.com/dedicated-rootserver/matrix-ax  
+**Status:** Ready to order server
+**Next Action:** Order AX52 server at https://www.hetzner.com/dedicated-rootserver/matrix-ax
 **Estimated Total Time:** 3-4 hours (including provisioning wait)
-

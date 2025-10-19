@@ -43,6 +43,7 @@
 
   ```
   Multimodal Content:
+
   - has_tables (Boolean, filterable)
   - has_equations (Boolean, filterable)
   - has_images (Boolean, filterable)
@@ -55,6 +56,7 @@
   - enhanced_text (String, searchable)
 
   Graph Relationships:
+
   - relationship_score (Double, sortable)
   - cites_count (Int32, sortable)
   - related_docs_count (Int32, sortable)
@@ -62,6 +64,7 @@
   - relationship_data (String, searchable)
   - graph_relationships (Collection<String>)
   - related_documents (Collection<String>)
+
   ```
 
 #### **5. Testing & Validation**
@@ -100,12 +103,14 @@
 ### **Graph Statistics**
 
 ```json
+
 {
   "total_documents": 69,
   "total_entities": 3,
   "total_topics": 0,
   "total_citations": 60
 }
+
 ```
 
 ### **Documents Processed**
@@ -141,34 +146,43 @@
 #### 1. **Multimodal Content Search**
 
 ```python
+
 # Example: Find documents with tables
+
 query = {
     "search": "budget",
     "filter": "has_tables eq true",
     "select": "metadata_storage_name,tables_count"
 }
+
 ```
 
 #### 2. **Relationship-Based Discovery**
 
 ```python
+
 # Example: Find related documents
+
 query = {
     "search": "employee benefits",
     "filter": "relationship_score gt 5.0",
     "orderby": "relationship_score desc"
 }
+
 ```
 
 #### 3. **Citation Tracking**
 
 ```python
+
 # Example: Find highly cited documents
+
 query = {
     "filter": "cites_count gt 3",
     "orderby": "cites_count desc",
     "select": "metadata_storage_name,cites_count"
 }
+
 ```
 
 ### **TypingMind Integration**
@@ -180,13 +194,14 @@ Your existing TypingMind integration now has access to:
 - ✅ Improved Office document parsing
 - ✅ All existing Azure AI Search features
 
-**No changes required to TypingMind configuration!**
+## No changes required to TypingMind configuration!
 
 ---
 
 ## 📁 File Structure
 
 ```
+
 azure-rag-setup/
 ├── raganything-processor/
 │   ├── graph_builder.py              # Graph relationship builder
@@ -206,9 +221,10 @@ azure-rag-setup/
 ├── DEPLOYMENT_GUIDE.md               # Production deployment
 ├── CODE_QUALITY_REPORT.md            # Quality metrics
 └── INSTALLATION_COMPLETE.md          # This file
+
 ```
 
-**Total Code Created:**
+## Total Code Created:
 
 - **11 new files**
 - **2,233 lines of code**
@@ -222,36 +238,48 @@ azure-rag-setup/
 ### **Check System Status**
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 orchestrate_rag_anything.py --status
+
 ```
 
 ### **Run SharePoint Sync**
 
 ```bash
+
 # Test sync (2 sites)
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 2
 
 # Full sync (all 42 sites)
+
 python3 orchestrate_rag_anything.py --source sharepoint
+
 ```
 
 ### **Update Azure Schema**
 
 ```bash
+
 python3 update_azure_schema_enhanced.py
+
 ```
 
 ### **Run Tests**
 
 ```bash
+
 python3 -m pytest test_rag_anything_integration.py -v
+
 ```
 
 ### **View Graph Data**
 
 ```bash
+
 cat sharepoint_graph.json | python3 -m json.tool
+
 ```
 
 ---
@@ -261,20 +289,25 @@ cat sharepoint_graph.json | python3 -m json.tool
 ### **Environment Variables Required**
 
 ```bash
+
 # Azure AI Search
+
 AZURE_SEARCH_SERVICE_NAME=your-service
 AZURE_SEARCH_ADMIN_KEY=your-key
 AZURE_SEARCH_INDEX_NAME=training-data-index
 
 # Azure Storage
+
 AZURE_STORAGE_ACCOUNT_NAME=your-storage
 AZURE_STORAGE_ACCOUNT_KEY=your-key
 AZURE_STORAGE_CONTAINER_NAME=training-data
 
 # M365 Authentication
+
 M365_CLIENT_ID=your-app-id
 M365_CLIENT_SECRET=your-secret
 M365_TENANT_ID=your-tenant-id
+
 ```
 
 ### **Automated Sync (Optional)**
@@ -282,11 +315,15 @@ M365_TENANT_ID=your-tenant-id
 Update your cron job to use the orchestrator:
 
 ```bash
+
 # Old command
+
 # 0 3 * * * cd /path/to/project && python3 m365_sharepoint_indexer.py
 
 # New command
+
 0 3 * * * cd /path/to/project && python3 orchestrate_rag_anything.py --source sharepoint
+
 ```
 
 ---
@@ -333,7 +370,8 @@ Update your cron job to use the orchestrator:
 
 ### **1. Parser-Agnostic Architecture** ⭐
 
-Instead of direct `raganything` library integration (Python 3.14 compatibility issues), we built a **flexible, production-ready system** using:
+Instead of direct `raganything` library integration (Python 3.14 compatibility issues), we built a **flexible,
+  production-ready system** using:
 
 - **Azure Cognitive Services** for multimodal extraction
 - **Custom graph builder** for relationship mapping
@@ -414,11 +452,15 @@ Enhanced the existing M365 → Azure → TypingMind pipeline with:
 ### **Testing**
 
 ```bash
+
 # Run all tests
+
 python3 -m pytest test_rag_anything_integration.py -v
 
 # Run specific test
+
 python3 -m pytest test_rag_anything_integration.py::TestRAGAnythingIntegration::test_1_graph_builder -v
+
 ```
 
 ---
@@ -439,7 +481,8 @@ python3 -m pytest test_rag_anything_integration.py::TestRAGAnythingIntegration::
 
 ## 📝 Summary
 
-The RAG-Anything M365 integration is **successfully installed and operational**. The system enhances your existing Azure AI Search + TypingMind setup with:
+The RAG-Anything M365 integration is **successfully installed and operational**. The system enhances your existing Azure
+  AI Search + TypingMind setup with:
 
 - ✅ **Multimodal content extraction** (tables, equations, images)
 - ✅ **Document relationship graphs** (citations, entities, topics)

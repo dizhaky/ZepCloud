@@ -11,7 +11,8 @@
 
 ### What Was Built
 
-A complete **document relationship and multimodal content extraction system** integrated with your existing M365 Azure AI Search RAG infrastructure.
+A complete **document relationship and multimodal content extraction system** integrated with your existing M365 Azure
+  AI Search RAG infrastructure.
 
 ### Key Features Delivered
 
@@ -73,7 +74,7 @@ A complete **document relationship and multimodal content extraction system** in
 
 ## 🎯 Architecture Decisions
 
-### Why NOT RAG-Anything Package Directly?
+### Why NOT RAG-Anything Package Directly
 
 **Problem:** Python 3.14 incompatibility with RAG-Anything dependencies
 
@@ -99,6 +100,7 @@ A complete **document relationship and multimodal content extraction system** in
 ### Test Suite: 100% Pass Rate
 
 ```
+
 ============================================================
 RAG-Anything Integration Test Suite
 ============================================================
@@ -126,6 +128,7 @@ Results:
   ❌ Failed:  0
   ⚠️  Warnings: 0
   Pass Rate: 100.0%
+
 ```
 
 ---
@@ -139,28 +142,28 @@ Results:
 
 ### New Searchable Fields
 
-**Multimodal Flags:**
+## Multimodal Flags:
 
 - `has_tables` (Boolean)
 - `has_equations` (Boolean)
 - `has_images` (Boolean)
 - `tables_count` (Integer)
 
-**Graph Relationships:**
+## Graph Relationships:
 
 - `relationship_score` (Double)
 - `cites_count` (Integer)
 - `related_docs_count` (Integer)
 - `has_relationships` (Boolean)
 
-**Searchable Content:**
+## Searchable Content:
 
 - `tables_content` (String, searchable)
 - `equations_content` (String, searchable)
 - `images_descriptions` (String, searchable)
 - `enhanced_text` (String, searchable)
 
-**Relationship Collections:**
+## Relationship Collections:
 
 - `graph_relationships` (Collection<String>)
 - `related_documents` (Collection<String>)
@@ -193,6 +196,7 @@ Results:
    ```
 
 4. **Content-Type Filtering**
+
    ```
    Query: "Find documents with tables"
    Filter: has_tables eq true
@@ -268,7 +272,7 @@ Results:
 
 **Status:** ✅ **READY TO DEPLOY**
 
-**Next Steps:**
+## Next Steps:
 
 1. Review `DEPLOYMENT_GUIDE.md`
 2. Run initial production sync

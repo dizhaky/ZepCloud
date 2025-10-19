@@ -2,7 +2,8 @@
 
 ## Overview
 
-This document describes the backup configuration for the M365 RAG System in a production environment. Regular backups are essential for data protection and disaster recovery.
+This document describes the backup configuration for the M365 RAG System in a production environment. Regular backups
+  are essential for data protection and disaster recovery.
 
 ## Backup Strategy
 
@@ -20,7 +21,9 @@ The M365 RAG System implements a comprehensive backup strategy that includes:
 Elasticsearch data is backed up using the snapshot feature:
 
 ```bash
+
 # Create Elasticsearch snapshot
+
 docker exec elasticsearch curl -X PUT "localhost:9200/_snapshot/backup/$BACKUP_DATE?wait_for_completion=true" \
     -u "elastic:$ELASTIC_PASSWORD" \
     -H 'Content-Type: application/json' \
@@ -29,6 +32,7 @@ docker exec elasticsearch curl -X PUT "localhost:9200/_snapshot/backup/$BACKUP_D
         "ignore_unavailable": true,
         "include_global_state": false
     }'
+
 ```
 
 ### 2. PostgreSQL Database
@@ -36,8 +40,11 @@ docker exec elasticsearch curl -X PUT "localhost:9200/_snapshot/backup/$BACKUP_D
 PostgreSQL database is backed up using pg_dump:
 
 ```bash
+
 # Backup PostgreSQL database
+
 docker exec -t postgres pg_dump -U raguser m365_rag | gzip > "$BACKUP_DIR/$DATE/postgres.sql.gz"
+
 ```
 
 ### 3. Redis Data
@@ -45,9 +52,12 @@ docker exec -t postgres pg_dump -U raguser m365_rag | gzip > "$BACKUP_DIR/$DATE/
 Redis data is backed up by copying the dump file:
 
 ```bash
+
 # Backup Redis data
+
 docker exec redis redis-cli SAVE
 docker cp redis:/data/dump.rdb "$BACKUP_DIR/$DATE/redis_dump.rdb"
+
 ```
 
 ### 4. MinIO Configuration
@@ -55,9 +65,12 @@ docker cp redis:/data/dump.rdb "$BACKUP_DIR/$DATE/redis_dump.rdb"
 MinIO configuration is backed up:
 
 ```bash
+
 # Backup MinIO configuration
+
 docker exec minio mc alias set local http://localhost:9000 $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD
 docker exec minio mc admin config export local > "$BACKUP_DIR/$DATE/minio_config.json"
+
 ```
 
 ### 5. Configuration Files
@@ -65,12 +78,15 @@ docker exec minio mc admin config export local > "$BACKUP_DIR/$DATE/minio_config
 Application configuration files are backed up:
 
 ```bash
+
 # Backup configuration files
+
 tar -czf "$BACKUP_DIR/$DATE/configs.tar.gz" \
     -C /data/m365-rag \
     config/ \
     docker-compose.yml \
     .env
+
 ```
 
 ### 6. Scripts
@@ -78,10 +94,13 @@ tar -czf "$BACKUP_DIR/$DATE/configs.tar.gz" \
 Backup scripts are also backed up:
 
 ```bash
+
 # Backup scripts
+
 tar -czf "$BACKUP_DIR/$DATE/scripts.tar.gz" \
     -C /data/m365-rag \
     scripts/
+
 ```
 
 ## Backup Directory Structure
@@ -89,6 +108,7 @@ tar -czf "$BACKUP_DIR/$DATE/scripts.tar.gz" \
 Backups are stored in the following directory structure:
 
 ```
+
 /backup/m365-rag/
 ├── 20251019_020000/
 │   ├── postgres.sql.gz
@@ -100,6 +120,7 @@ Backups are stored in the following directory structure:
 ├── 20251018_020000/
 │   └── ...
 └── ...
+
 ```
 
 ## Automated Backup Script
@@ -115,9 +136,12 @@ The system includes an automated backup script (`scripts/backup.sh`) that:
 ### Running Backups Manually
 
 ```bash
+
 # Run backup manually
+
 cd /data/m365-rag
 ./scripts/backup.sh
+
 ```
 
 ## Backup Retention Policy
@@ -125,8 +149,11 @@ cd /data/m365-rag
 The system implements a 30-day backup retention policy:
 
 ```bash
+
 # Clean up backups older than 30 days
+
 find "$BACKUP_DIR" -type d -mtime +30 -exec rm -rf {} + 2>/dev/null || true
+
 ```
 
 ## Off-site Backup Recommendations
@@ -136,25 +163,34 @@ For production environments, it's recommended to implement off-site backups:
 ### Hetzner Storage Box
 
 ```bash
+
 # Mount Hetzner Storage Box
+
 sudo mount -t cifs //SERVER.storagebox.de/backup /mnt/storagebox \
     -o username=USERNAME,password=PASSWORD,uid=1000,gid=1000
 
 # Copy backups to Storage Box
+
 rsync -avz /backup/m365-rag/ /mnt/storagebox/m365-rag-backups/
+
 ```
 
 ### AWS S3
 
 ```bash
+
 # Install AWS CLI
+
 sudo apt install awscli
 
 # Configure AWS credentials
+
 aws configure
 
 # Copy backups to S3
+
 aws s3 sync /backup/m365-rag/ s3://your-backup-bucket/m365-rag-backups/
+
 ```
 
 ## Backup Verification
@@ -162,14 +198,19 @@ aws s3 sync /backup/m365-rag/ s3://your-backup-bucket/m365-rag-backups/
 Regular backup verification is essential to ensure backups are valid:
 
 ```bash
+
 # Verify PostgreSQL backup
+
 gunzip < "$BACKUP_DIR/$DATE/postgres.sql.gz" | head -20
 
 # Verify Redis backup
+
 file "$BACKUP_DIR/$DATE/redis_dump.rdb"
 
 # Verify configuration backup
+
 tar -tzf "$BACKUP_DIR/$DATE/configs.tar.gz" | head -10
+
 ```
 
 ## Restore Procedure
@@ -177,9 +218,12 @@ tar -tzf "$BACKUP_DIR/$DATE/configs.tar.gz" | head -10
 The system includes a restore script (`scripts/restore.sh`) that can restore from any backup:
 
 ```bash
+
 # Restore from specific backup
+
 cd /data/m365-rag
 ./scripts/restore.sh 20251019_020000
+
 ```
 
 ## Monitoring and Alerts
@@ -187,22 +231,30 @@ cd /data/m365-rag
 ### Backup Status Monitoring
 
 ```bash
+
 # Check backup logs
+
 tail -f /var/log/m365-rag-backup.log
 
 # Check last backup success
+
 ls -la /backup/m365-rag/ | tail -5
+
 ```
 
 ### Health Checks
 
 ```bash
+
 # Verify backup directory exists and has content
+
 df -h /backup
 ls -la /backup/m365-rag/
 
 # Check cron job status
+
 crontab -l
+
 ```
 
 ## Disaster Recovery Plan
@@ -210,7 +262,7 @@ crontab -l
 ### RTO (Recovery Time Objective)
 
 - **Target**: 2 hours for full system recovery
-- **Components**: 
+- **Components**:
   - 30 minutes for infrastructure provisioning
   - 60 minutes for data restoration
   - 30 minutes for service validation
@@ -225,11 +277,15 @@ crontab -l
 Regular testing of backup and restore procedures is essential:
 
 ```bash
+
 # Test restore to temporary location
+
 ./scripts/restore.sh 20251019_020000
 
 # Verify restored data
+
 docker exec postgres psql -U raguser m365_rag -c "SELECT count(*) FROM documents;"
+
 ```
 
 ## Security Considerations
@@ -239,11 +295,15 @@ docker exec postgres psql -U raguser m365_rag -c "SELECT count(*) FROM documents
 For sensitive environments, consider encrypting backups:
 
 ```bash
+
 # Encrypt backup with GPG
+
 gpg --symmetric --cipher-algo AES256 postgres.sql.gz
 
 # Decrypt backup
+
 gpg postgres.sql.gz.gpg
+
 ```
 
 ### Access Control
@@ -251,9 +311,12 @@ gpg postgres.sql.gz.gpg
 Ensure backup directories have proper permissions:
 
 ```bash
+
 # Set proper ownership and permissions
+
 chown -R deploy:deploy /backup/m365-rag
 chmod 700 /backup/m365-rag
+
 ```
 
 ## Performance Considerations
@@ -270,9 +333,12 @@ The backup process should be scheduled during low-usage periods:
 Monitor resource usage during backup:
 
 ```bash
+
 # Monitor backup process resource usage
+
 htop
 iotop -o
+
 ```
 
 ## Troubleshooting
@@ -280,18 +346,21 @@ iotop -o
 ### Common Issues
 
 1. **Backup fails due to insufficient disk space**:
+
    ```bash
    # Check disk space
    df -h /backup
    ```
 
 2. **PostgreSQL backup fails**:
+
    ```bash
    # Check PostgreSQL logs
    docker logs postgres
    ```
 
 3. **Elasticsearch snapshot fails**:
+
    ```bash
    # Check Elasticsearch logs
    docker logs elasticsearch
@@ -300,14 +369,19 @@ iotop -o
 ### Diagnostic Commands
 
 ```bash
+
 # Check backup script execution
+
 sudo tail -f /var/log/m365-rag-backup.log
 
 # Verify cron job execution
+
 grep CRON /var/log/syslog | grep backup
 
 # Check backup directory permissions
+
 ls -la /backup/
+
 ```
 
 ## Best Practices
@@ -320,4 +394,5 @@ ls -la /backup/
 6. **Retention**: Implement appropriate retention policies
 7. **Validation**: Regularly validate backup integrity
 
-This backup configuration ensures your M365 RAG System data is protected and can be recovered in case of failures or disasters.
+This backup configuration ensures your M365 RAG System data is protected and can be recovered in case of failures or
+  disasters.

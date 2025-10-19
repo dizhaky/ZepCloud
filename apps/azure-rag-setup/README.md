@@ -8,7 +8,9 @@
 
 ## 🎯 Project Overview
 
-A comprehensive Azure AI Search RAG (Retrieval-Augmented Generation) system that transforms your Microsoft 365 data into a powerful, searchable knowledge base. This solution integrates multiple data sources, provides advanced document relationships, and delivers enterprise-grade search capabilities through TypingMind.
+A comprehensive Azure AI Search RAG (Retrieval-Augmented Generation) system that transforms your Microsoft 365 data into
+a powerful, searchable knowledge base. This solution integrates multiple data sources, provides advanced document
+  relationships, and delivers enterprise-grade search capabilities through TypingMind.
 
 ### 🏆 Key Achievements
 
@@ -23,6 +25,7 @@ A comprehensive Azure AI Search RAG (Retrieval-Augmented Generation) system that
 ## 🏗️ System Architecture
 
 ```
+
 ┌─────────────────────────────────────────────────────────────────┐
 │                        Azure RAG Setup                          │
 ├─────────────────────────────────────────────────────────────────┤
@@ -53,6 +56,7 @@ A comprehensive Azure AI Search RAG (Retrieval-Augmented Generation) system that
 │  🖥️ User Interface                                             │
 │  └── TypingMind (AI-Powered Search Interface)                  │
 └─────────────────────────────────────────────────────────────────┘
+
 ```
 
 ---
@@ -69,57 +73,79 @@ A comprehensive Azure AI Search RAG (Retrieval-Augmented Generation) system that
 ### 1. Environment Setup
 
 ```bash
+
 # Clone and navigate to project
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 
 # Install dependencies
+
 pip install -r requirements.txt
 
 # Validate environment
+
 python3 validate_environment.py
+
 ```
 
 ### 2. Azure Configuration
 
 ```bash
+
 # Set up Azure AD app and store credentials securely
+
 ./scripts/1password/setup-azure-ad.sh
 
 # Test authentication
+
 ./scripts/1password/get-m365-credentials.sh
+
 ```
 
 ### 3. Initial Sync
 
 ```bash
+
 # Estimate data volume and costs
+
 python3 m365_indexer.py estimate
 
 # Start with SharePoint (recommended)
+
 python3 m365_indexer.py sync-sharepoint
 
 # Check status
+
 python3 m365_indexer.py status
+
 ```
 
 ### 4. Enhanced Features (Optional)
 
 ```bash
+
 # Enable document relationships and multimodal detection
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 2
 
 # Update Azure schema with enhanced fields
+
 python3 update_azure_schema_enhanced.py
+
 ```
 
 ### 5. TypingMind Integration
 
 ```bash
+
 # Generate TypingMind configuration
+
 python3 generate-typingmind-config.py
 
 # Follow setup instructions
+
 cat typingmind-setup-instructions.md
+
 ```
 
 ---
@@ -222,37 +248,51 @@ cat typingmind-setup-instructions.md
 ### Daily Operations
 
 ```bash
+
 # Check system health
+
 python3 maintenance.py --non-interactive --action health
 
 # Check sync status
+
 python3 m365_indexer.py status
 
 # View recent activity
+
 tail -f /tmp/rag_sync.log
+
 ```
 
 ### Weekly Sync
 
 ```bash
+
 # Full M365 sync
+
 python3 m365_indexer.py sync
 
 # Enhanced features sync
+
 python3 orchestrate_rag_anything.py --source sharepoint
+
 ```
 
 ### Troubleshooting
 
 ```bash
+
 # Validate all components
+
 python3 validate_complete_system.py
 
-# Test authentication
+# Test authentication (2)
+
 python3 m365_indexer.py test-auth
 
 # Check Azure connectivity
+
 python3 maintenance.py --non-interactive --action health --output json
+
 ```
 
 ---
@@ -319,15 +359,19 @@ python3 maintenance.py --non-interactive --action health --output json
 ### Commands
 
 ```bash
+
 # Get help
+
 python3 maintenance.py --help
 python3 m365_indexer.py --help
 python3 orchestrate_rag_anything.py --help
 
 # View documentation
+
 cat EXECUTIVE_SUMMARY.md
 cat FINAL_SUCCESS_REPORT.md
 cat CRITICAL_FIXES_SUMMARY.md
+
 ```
 
 ### External Resources
@@ -362,4 +406,4 @@ cat CRITICAL_FIXES_SUMMARY.md
 **Grade:** A+ (98/100)
 **Completion:** 99.5%
 
-**🏆 All objectives achieved and exceeded! 🎉**
+## 🏆 All objectives achieved and exceeded! 🎉

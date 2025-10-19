@@ -85,6 +85,7 @@
 ### **Data Flow Architecture**
 
 ```
+
 Microsoft 365 Data Sources
     ↓
 Microsoft Graph API (with rate limiting & retry logic)
@@ -98,6 +99,7 @@ Azure AI Search (indexing, OCR, AI enrichment)
 TypingMind Interface (user queries)
     ↓
 Search Results (semantic + full-text)
+
 ```
 
 ---
@@ -294,6 +296,7 @@ Search Results (semantic + full-text)
 #### **Python Packages**
 
 ```
+
 azure-storage-blob==12.19.0
 azure-search-documents==11.4.0
 azure-identity==1.15.0
@@ -303,11 +306,13 @@ tqdm==4.66.1
 msal==1.26.0
 msgraph-core==1.0.0
 pyyaml==6.0.1
+
 ```
 
 #### **Environment Variables**
 
 ```
+
 AZURE_SEARCH_SERVICE_NAME=typingmind-search-danizhaky
 AZURE_SEARCH_ADMIN_KEY=<key>
 AZURE_SEARCH_ENDPOINT=https://typingmind-search-danizhaky.search.windows.net
@@ -316,6 +321,7 @@ AZURE_STORAGE_ACCOUNT_KEY=<key>
 M365_CLIENT_ID=<app_id>
 M365_CLIENT_SECRET=<secret>
 M365_TENANT_ID=<tenant_id>
+
 ```
 
 ---
@@ -388,7 +394,7 @@ M365_TENANT_ID=<tenant_id>
 - **Entity extraction** and key phrase detection
 - **Faceted search** and filtering capabilities
 
-#### **M365 Integration**
+#### **M365 Integration** (2)
 
 - **Microsoft Graph API** integration
 - **OAuth 2.0 authentication** (delegated permissions)
@@ -459,26 +465,32 @@ M365_TENANT_ID=<tenant_id>
 ### **Environment Configuration**
 
 ```bash
+
 # Azure AI Search
+
 AZURE_SEARCH_SERVICE_NAME=typingmind-search-danizhaky
 AZURE_SEARCH_ADMIN_KEY=<admin_key>
 AZURE_SEARCH_ENDPOINT=https://typingmind-search-danizhaky.search.windows.net
 AZURE_SEARCH_INDEX_NAME=training-data-index
 
 # Azure Storage
+
 AZURE_STORAGE_ACCOUNT_NAME=typingmindragstorage
 AZURE_STORAGE_ACCOUNT_KEY=<storage_key>
 AZURE_STORAGE_CONTAINER_NAME=training-data
 
 # Microsoft 365
+
 M365_CLIENT_ID=<app_registration_id>
 M365_CLIENT_SECRET=<client_secret>
 M365_TENANT_ID=<tenant_id>
 M365_USE_DELEGATED_AUTH=true
 
 # Cognitive Services
+
 AZURE_COGNITIVE_SERVICES_KEY=<cognitive_key>
 AZURE_COGNITIVE_SERVICES_ENDPOINT=<cognitive_endpoint>
+
 ```
 
 ### **Azure Resource Configuration**
@@ -498,6 +510,7 @@ AZURE_COGNITIVE_SERVICES_ENDPOINT=<cognitive_endpoint>
 ### **MCP Server Configuration**
 
 ```json
+
 {
   "mcpServers": {
     "chrome-devtools": {
@@ -511,19 +524,25 @@ AZURE_COGNITIVE_SERVICES_ENDPOINT=<cognitive_endpoint>
     }
   }
 }
+
 ```
 
 ### **Cron Job Schedules**
 
 ```bash
+
 # M365 Sync (daily at 2 AM)
+
 0 2 * * * /path/to/m365_sync_cron.sh
 
 # Health Check (every 6 hours)
+
 0 */6 * * * /path/to/check_errors_now.sh
 
 # Maintenance (weekly on Sunday at 3 AM)
+
 0 3 * * 0 /path/to/maintenance.py --action health
+
 ```
 
 ---
@@ -592,7 +611,7 @@ AZURE_COGNITIVE_SERVICES_ENDPOINT=<cognitive_endpoint>
 
 ### **Search Engine Requirements**
 
-#### **Core Search Features**
+#### **Core Search Features** (2)
 
 - **Full-text search** with boolean operators
 - **Fuzzy matching** and typo tolerance
@@ -619,7 +638,7 @@ AZURE_COGNITIVE_SERVICES_ENDPOINT=<cognitive_endpoint>
 - **Language detection** and multi-language support
 - **Sentiment analysis** and content classification
 
-### **Integration Requirements**
+### **Integration Requirements** (2)
 
 #### **Microsoft Graph API Integration**
 
@@ -637,7 +656,7 @@ AZURE_COGNITIVE_SERVICES_ENDPOINT=<cognitive_endpoint>
 - **Authentication** (API keys, OAuth, etc.)
 - **Rate limiting** and quota management
 
-### **Performance Requirements**
+### **Performance Requirements** (2)
 
 #### **Scale Requirements**
 
@@ -716,7 +735,9 @@ AZURE_COGNITIVE_SERVICES_ENDPOINT=<cognitive_endpoint>
 
 ### **Current Situation**
 
-The M365 RAG integration is technically complete and functional, but the costs are significantly higher than anticipated due to Azure AI Search's premium pricing model. The system can process 1.2M documents with advanced AI search capabilities, but at a cost of $600-1,200 per month.
+The M365 RAG integration is technically complete and functional, but the costs are significantly higher than anticipated
+due to Azure AI Search's premium pricing model. The system can process 1.2M documents with advanced AI search
+  capabilities, but at a cost of $600-1,200 per month.
 
 ### **Key Findings**
 
@@ -742,4 +763,5 @@ The M365 RAG integration is technically complete and functional, but the costs a
 
 ---
 
-**This comprehensive documentation provides all the technical details, cost analysis, and requirements needed to evaluate alternative solutions and make an informed decision about the future of the M365 RAG integration.**
+**This comprehensive documentation provides all the technical details, cost analysis, and requirements needed to
+  evaluate alternative solutions and make an informed decision about the future of the M365 RAG integration.**

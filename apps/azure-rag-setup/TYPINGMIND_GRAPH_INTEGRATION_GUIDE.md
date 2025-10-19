@@ -8,7 +8,7 @@
 
 ## 🎯 **WHAT YOU CAN DO NOW**
 
-**YES! You can connect Microsoft Graph API to TypingMind!**
+## YES! You can connect Microsoft Graph API to TypingMind!
 
 ✅ **Microsoft Graph API** - Fully working and authenticated
 ✅ **Local Storage** - 178 documents indexed on external drive
@@ -22,15 +22,17 @@
 ### **Step 1: Start the Local Search Server**
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 typingmind_simple_search.py
+
 ```
 
 **Server will start on:** `http://localhost:5001`
 
 ### **Step 2: Configure TypingMind**
 
-**In TypingMind, use these settings:**
+## In TypingMind, use these settings:
 
 | Setting            | Value                          |
 | ------------------ | ------------------------------ |
@@ -41,7 +43,7 @@ python3 typingmind_simple_search.py
 
 ### **Step 3: Test the Connection**
 
-**Test URLs:**
+## Test URLs:
 
 - **Health Check:** `http://localhost:5001/health`
 - **Search:** `http://localhost:5001/search`
@@ -92,9 +94,11 @@ python3 typingmind_simple_search.py
 ### **Architecture:**
 
 ```
+
 TypingMind ← → Local Search Server ← → SQLite Database ← → External Drive
      ↓                    ↓                    ↓              ↓
 User Interface    Flask API Server    M365 Data Storage    /Volumes/Express 1M2
+
 ```
 
 ### **Components:**
@@ -132,7 +136,9 @@ User Interface    Flask API Server    M365 Data Storage    /Volumes/Express 1M2
 ### **1. Start the Server:**
 
 ```bash
+
 python3 typingmind_simple_search.py
+
 ```
 
 ### **2. Configure TypingMind:**
@@ -158,35 +164,43 @@ python3 typingmind_simple_search.py
 
 ### **To Index More Data:**
 
-**OneDrive:**
+## OneDrive:
 
 ```bash
+
 python3 m365_local_indexer.py
+
 ```
 
-**Exchange (Emails):**
+## Exchange (Emails):
 
 ```bash
+
 python3 m365_local_indexer.py
+
 ```
 
-**Teams:**
+## Teams:
 
 ```bash
+
 python3 m365_local_indexer.py
+
 ```
 
-**All M365 Services:**
+## All M365 Services:
 
 ```bash
+
 python3 m365_local_indexer.py
+
 ```
 
 ---
 
 ## 🎉 **SUCCESS!**
 
-**You now have:**
+## You now have:
 
 - ✅ **Microsoft Graph API** connected to TypingMind
 - ✅ **178 documents** searchable through TypingMind
@@ -220,4 +234,4 @@ python3 m365_local_indexer.py
 
 ---
 
-**🎊 CONGRATULATIONS! You've successfully connected Microsoft Graph API to TypingMind with zero cloud costs!**
+## 🎊 CONGRATULATIONS! You've successfully connected Microsoft Graph API to TypingMind with zero cloud costs!

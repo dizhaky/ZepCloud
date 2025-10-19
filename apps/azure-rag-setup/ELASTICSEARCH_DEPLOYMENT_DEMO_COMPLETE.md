@@ -36,59 +36,85 @@
 ### **Phase 1: Infrastructure Deployment**
 
 ```bash
+
 # Start Docker services
+
 docker-compose up -d
 
 # Wait for services to initialize
+
 sleep 60
 
 # Verify services are running
+
 curl -u elastic:YourStrongPassword123! http://localhost:9200
 curl http://localhost:5601  # Kibana
 curl http://localhost:9998/tika  # Apache Tika
+
 ```
 
 ### **Phase 2: Index Creation**
 
 ```bash
+
 # Create Elasticsearch index with RAG-Anything mappings
+
 python elasticsearch_setup.py
+
 ```
 
 ### **Phase 3: Testing**
 
 ```bash
+
 # Run comprehensive integration test suite
+
 python test_elasticsearch_integration.py
 
-# Expected results:
+# Expected results
+
 # ✅ Elasticsearch Connection - PASSED
+
 # ✅ Apache Tika Connection - PASSED
+
 # ✅ API Server Health - PASSED
+
 # ✅ Search Functionality - PASSED
+
 # ✅ Enhanced Features - PASSED
+
 # ✅ Multimodal Search - PASSED
+
 # ✅ Entity Search - PASSED
+
 # ✅ Statistics Endpoint - PASSED
+
 ```
 
 ### **Phase 4: API Server**
 
 ```bash
+
 # Start Flask REST API
+
 python api_server.py
 
 # API will be available at http://localhost:5000
+
 ```
 
 ### **Phase 5: Data Synchronization**
 
 ```bash
+
 # Synchronize M365 data to Elasticsearch
+
 python m365_sync_elasticsearch.py
 
 # Monitor progress
+
 tail -f m365_sync.log
+
 ```
 
 ### **Phase 6: TypingMind Integration**
@@ -96,6 +122,7 @@ tail -f m365_sync.log
 Update TypingMind configuration:
 
 ```json
+
 {
   "name": "M365 Elasticsearch with RAG-Anything",
   "endpoints": {
@@ -104,6 +131,7 @@ Update TypingMind configuration:
     "health": "/health"
   }
 }
+
 ```
 
 ## 🔌 **API Endpoints Available**
@@ -209,27 +237,27 @@ The following screenshots were captured during the demonstration:
 
 The Elasticsearch + RAG-Anything + OlmoCR system has been successfully demonstrated with:
 
-**✅ Complete Implementation**
+## ✅ Complete Implementation
 
 - 22 files implemented and validated
 - 100% validation passed (10/10 checks)
 - Production-ready infrastructure
 - Enhanced multimodal processing capabilities
 
-**✅ Comprehensive Documentation**
+## ✅ Comprehensive Documentation
 
 - Setup guide with step-by-step instructions
 - Testing guide with 6 phases of testing
 - Deployment checklist with production procedures
 - Agent handoff summary for seamless transition
 
-**✅ Cost Savings Achieved**
+## ✅ Cost Savings Achieved
 
 - 80-90% cost reduction compared to Azure AI Search
 - Annual savings of $5,748-$13,116
 - Enhanced capabilities beyond basic search
 
-**✅ Ready for Production**
+## ✅ Ready for Production
 
 - All components validated and tested
 - Complete deployment procedures documented
@@ -238,10 +266,12 @@ The Elasticsearch + RAG-Anything + OlmoCR system has been successfully demonstra
 
 ## 🚀 **Ready for Immediate Deployment!**
 
-The system is now ready for production deployment with complete infrastructure, comprehensive testing, and significant cost savings compared to Azure AI Search.
+The system is now ready for production deployment with complete infrastructure, comprehensive testing, and significant
+  cost savings compared to Azure AI Search.
 
 **Next Action:** Start Docker and run the deployment commands to begin production deployment!
 
 ---
 
-_This demonstration shows a complete, production-ready Elasticsearch-based RAG system with advanced multimodal processing capabilities that exceed the original Azure AI Search functionality while providing 80-90% cost savings._
+_This demonstration shows a complete, production-ready Elasticsearch-based RAG system with advanced multimodal
+  processing capabilities that exceed the original Azure AI Search functionality while providing 80-90% cost savings._

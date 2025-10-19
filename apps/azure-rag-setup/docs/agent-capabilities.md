@@ -43,14 +43,19 @@
 ### Start Browser Control
 
 ```bash
+
 # Start Comet with debugging
+
 /Applications/Comet.app/Contents/MacOS/Comet --remote-debugging-port=9222
 
 # Test connection
+
 curl -s http://localhost:9222/json/version
 
 # Use MCP server
+
 BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolated
+
 ```
 
 ### Capabilities Summary
@@ -100,17 +105,23 @@ BROWSER="Comet" CHROME_DEBUG_PORT="9222" npx chrome-devtools-mcp@latest --isolat
 ### Debug Commands
 
 ```bash
+
 # Check running browsers
+
 ps aux | grep -i comet
 
 # Test DevTools connection
+
 curl -s http://localhost:9222/json/version
 
 # List available tabs
+
 curl -s http://localhost:9222/json
 
 # Test MCP server
+
 npx chrome-devtools-mcp@latest --help
+
 ```
 
 ## Success Indicators

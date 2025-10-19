@@ -2,7 +2,8 @@
 
 ## Executive Summary
 
-Successfully implemented **all 3 critical fixes** to improve the Azure AI Search RAG system from 85% to **production-ready status (95/100)**.
+Successfully implemented **all 3 critical fixes** to improve the Azure AI Search RAG system from 85% to
+  **production-ready status (95/100)**.
 
 ---
 
@@ -31,7 +32,7 @@ Successfully implemented **all 3 critical fixes** to improve the Azure AI Search
 
 **Status:** ✅ Complete
 
-**Changes Made:**
+## Changes Made:
 
 - Reduced batch size: `100 → 25` for better error tolerance
 - Increased error tolerance:
@@ -48,7 +49,7 @@ Successfully implemented **all 3 critical fixes** to improve the Azure AI Search
   - `failOnUnprocessableDocument`: `false`
 - Added hourly indexing schedule (`PT1H`)
 
-**Results:**
+## Results:
 
 - Indexing completion: **18.6% → 87%** ✅
 - Documents indexed: **371 → 1,964** ✅
@@ -62,7 +63,7 @@ Successfully implemented **all 3 critical fixes** to improve the Azure AI Search
 
 **Status:** ✅ Complete
 
-**New Features:**
+## New Features:
 
 1. **Retry Logic:**
 
@@ -82,7 +83,7 @@ Successfully implemented **all 3 critical fixes** to improve the Azure AI Search
    - Duplicate prevention
    - Comprehensive error reporting
 
-**Results:**
+## Results: (2)
 
 - Upload success rate: **90% → 99%+** (estimated) ✅
 - Resumable uploads enabled ✅
@@ -96,7 +97,7 @@ Successfully implemented **all 3 critical fixes** to improve the Azure AI Search
 
 **Status:** ✅ Complete
 
-**New Features:**
+## New Features: (2)
 
 1. **Command-Line Interface:**
 
@@ -121,7 +122,7 @@ Successfully implemented **all 3 critical fixes** to improve the Azure AI Search
    - No user prompts
    - Structured output for monitoring
 
-**Results:**
+## Results: (3)
 
 - Automation support enabled ✅
 - Scriptable operations ✅
@@ -148,7 +149,8 @@ Successfully implemented **all 3 critical fixes** to improve the Azure AI Search
 - Azure connectivity testing
 - File structure validation
 
-**Results:**
+## Results: (4)
+
 ✅ All validation checks passing
 ✅ Environment ready for production
 
@@ -159,15 +161,19 @@ Successfully implemented **all 3 critical fixes** to improve the Azure AI Search
 ### Indexer Configuration Optimization
 
 ```python
+
 # Before
+
 "batchSize": 100,
 "maxFailedItems": 10,
 "maxFailedItemsPerBatch": 5
 
 # After
+
 "batchSize": 25,  # Better error handling
 "maxFailedItems": 100,  # More tolerant
 "maxFailedItemsPerBatch": 20,  # Resilient to failures
+
 ```
 
 ### Error Handling Improvements
@@ -180,8 +186,10 @@ Successfully implemented **all 3 critical fixes** to improve the Azure AI Search
 ### Dependencies Added
 
 ```txt
+
 tenacity==8.2.3  # Retry logic
 tqdm==4.66.1     # Progress bars
+
 ```
 
 ---
@@ -192,7 +200,7 @@ tqdm==4.66.1     # Progress bars
 
 **Overall:** ✅ Healthy (75/100)
 
-**Components:**
+## Components:
 
 - ✅ **Indexer:** Running successfully
 - ✅ **Index:** 1,964 documents (40.93 MB)
@@ -200,7 +208,7 @@ tqdm==4.66.1     # Progress bars
 - ✅ **Search:** All tests passed (4/4)
 - ✅ **Azure Connectivity:** Active
 
-**File Type Distribution:**
+## File Type Distribution:
 
 - PDF: 1,765 files
 - DOCX: 184 files
@@ -218,32 +226,42 @@ tqdm==4.66.1     # Progress bars
 ### 1. Check System Health
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 maintenance.py --non-interactive --action health
+
 ```
 
 ### 2. Run Indexer Manually
 
 ```bash
+
 python3 maintenance.py --non-interactive --action run-indexer
+
 ```
 
 ### 3. Check Indexer Status (JSON)
 
 ```bash
+
 python3 maintenance.py --non-interactive --action status --output json
+
 ```
 
 ### 4. Upload Documents with Retry
 
 ```bash
+
 python3 upload_with_retry.py
+
 ```
 
 ### 5. Validate Environment
 
 ```bash
+
 python3 validate_environment.py
+
 ```
 
 ---
@@ -348,27 +366,38 @@ python3 validate_environment.py
 ### Common Commands
 
 ```bash
+
 # Full system health check
+
 python3 maintenance.py --non-interactive --action health
 
 # Quick indexer status
+
 python3 maintenance.py --non-interactive --action status
 
 # Validate environment
+
 python3 validate_environment.py
 
 # Upload new documents
+
 python3 upload_with_retry.py
 
 # Clean old documents (30+ days)
+
 python3 maintenance.py --non-interactive --action clean --days 30
+
 ```
 
 ### Health Monitoring
 
 ```bash
+
 # Add to cron for daily health checks (9 AM)
-0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action health --output json >> logs/daily_health.log
+
+0 9 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && python3 maintenance.py --non-interactive --action health
+  --output json >> logs/daily_health.log
+
 ```
 
 ### Troubleshooting
@@ -422,4 +451,4 @@ All **3 critical fixes** have been successfully implemented and tested:
 
 ---
 
-**🚀 Your Azure RAG system is now production-ready and performing at peak efficiency!**
+## 🚀 Your Azure RAG system is now production-ready and performing at peak efficiency!

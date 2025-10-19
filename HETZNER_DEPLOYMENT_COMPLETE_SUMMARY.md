@@ -1,7 +1,7 @@
 # 🎯 Hetzner M365 RAG Server Setup - Complete Summary
 
-**Date:** 2025-10-19  
-**Prepared By:** Kilo Code AI Agent  
+**Date:** 2025-10-19
+**Prepared By:** Kilo Code AI Agent
 **Status:** ✅ **PREPARATION COMPLETE - READY FOR FINAL DEPLOYMENT**
 
 ---
@@ -67,26 +67,30 @@ These require manual completion:
 
 ### Configuration Files
 
-**`apps/hetzner-m365-rag/.env`**
+## `apps/hetzner-m365-rag/.env`
+
 - Complete environment configuration
 - Secure passwords for all services
 - OpenAI API key configured
 - Placeholders for Azure AD (to be filled)
 
-**`apps/hetzner-m365-rag/PASSWORDS_GENERATED.txt`**
+## `apps/hetzner-m365-rag/PASSWORDS_GENERATED.txt`
+
 - Reference file with all generated passwords
 - ⚠️ Keep secure - do not commit to git!
 
 ### Documentation Files
 
-**`apps/hetzner-m365-rag/DEPLOYMENT_READY_GUIDE.md`**
+## `apps/hetzner-m365-rag/DEPLOYMENT_READY_GUIDE.md`
+
 - Complete step-by-step deployment guide
 - Azure AD app registration tutorial
 - Upload and deployment instructions
 - Post-deployment verification
 - Troubleshooting guide
 
-**`apps/hetzner-m365-rag/DEPLOYMENT_STATUS.md`**
+## `apps/hetzner-m365-rag/DEPLOYMENT_STATUS.md`
+
 - Current deployment status
 - Task completion tracking
 - Timeline and estimates
@@ -94,7 +98,8 @@ These require manual completion:
 
 ### Automation Scripts
 
-**`apps/hetzner-m365-rag/scripts/prepare-env.ps1`**
+## `apps/hetzner-m365-rag/scripts/prepare-env.ps1`
+
 - Automated environment setup
 - Password generation
 - 1Password integration
@@ -106,14 +111,16 @@ These require manual completion:
 
 ### From 1Password
 
-**Hetzner Account:**
+## Hetzner Account:
+
 - Vault: Employee
 - Item: "Hetzner"
 - Email: dizhaky@gmail.com
 - Password: (in 1Password)
 - URL: https://accounts.hetzner.com
 
-**OpenAI API Key:**
+## OpenAI API Key:
+
 - Vault: Employee
 - Item: "OpenAI API Key"
 - Status: ✅ Retrieved and configured in .env
@@ -121,6 +128,7 @@ These require manual completion:
 ### Generated Passwords
 
 All stored in `.env` and `PASSWORDS_GENERATED.txt`:
+
 - ✅ Elasticsearch password (32 chars)
 - ✅ PostgreSQL password (32 chars)
 - ✅ MinIO password (32 chars)
@@ -131,7 +139,8 @@ All stored in `.env` and `PASSWORDS_GENERATED.txt`:
 
 ### Still Needed
 
-**Azure AD App Registration:**
+## Azure AD App Registration:
+
 - M365_CLIENT_ID (from Azure Portal)
 - M365_CLIENT_SECRET (from Azure Portal)
 - M365_TENANT_ID (from Azure Portal)
@@ -169,32 +178,43 @@ All stored in `.env` and `PASSWORDS_GENERATED.txt`:
 Edit: `C:\Dev\ZepCloud\apps\hetzner-m365-rag\.env`
 
 Replace these lines:
+
 ```bash
+
 M365_CLIENT_ID=YOUR_AZURE_APP_CLIENT_ID_HERE
 M365_CLIENT_SECRET=YOUR_AZURE_APP_CLIENT_SECRET_HERE
 M365_TENANT_ID=YOUR_AZURE_TENANT_ID_HERE
+
 ```
 
 With your actual Azure AD values from Step 1.
 
 ### Step 3: Access Hetzner & Deploy (35 min)
 
-**3a. Login to Hetzner:**
+## 3a. Login to Hetzner:
+
 ```
+
 URL: https://accounts.hetzner.com/login
 Email: dizhaky@gmail.com
 Password: (from 1Password Employee vault)
+
 ```
 
-**3b. Upload Project Files:**
+## 3b. Upload Project Files:
+
 ```powershell
+
 cd C:\Dev\ZepCloud\apps\hetzner-m365-rag
 wsl tar -czf ../hetzner-deploy.tar.gz .
 scp ../hetzner-deploy.tar.gz root@SERVER_IP:/tmp/
+
 ```
 
-**3c. Deploy on Server:**
+## 3c. Deploy on Server:
+
 ```bash
+
 ssh root@SERVER_IP
 cd /tmp
 tar -xzf hetzner-deploy.tar.gz -C /opt/
@@ -202,12 +222,16 @@ mv /opt/hetzner-m365-rag /opt/m365-rag
 cd /opt/m365-rag
 chmod +x scripts/*.sh
 ./scripts/deploy.sh
+
 ```
 
-**3d. Verify Deployment:**
+## 3d. Verify Deployment:
+
 ```bash
+
 docker compose ps
 curl http://localhost:8000/health
+
 ```
 
 ---
@@ -256,6 +280,7 @@ curl http://localhost:8000/health
 ### Post-Deployment Security (Recommended)
 
 1. **Enable HTTPS with Let's Encrypt**
+
    ```bash
    certbot --nginx -d rag.yourdomain.com
    ```
@@ -265,6 +290,7 @@ curl http://localhost:8000/health
    - Review logs regularly
 
 3. **Test Disaster Recovery**
+
    ```bash
    ./scripts/backup.sh
    ./scripts/restore.sh [backup-date]
@@ -325,6 +351,7 @@ curl http://localhost:8000/health
 ## ⏱️ Time Estimates
 
 ### Completed Work
+
 - Credential retrieval: 5 minutes ✅
 - Password generation: 5 minutes ✅
 - Environment setup: 10 minutes ✅
@@ -332,6 +359,7 @@ curl http://localhost:8000/health
 - **Total Preparation:** 40 minutes ✅
 
 ### Remaining Work
+
 - Azure AD setup: 15 minutes ⏳
 - Update .env: 2 minutes ⏳
 - Hetzner access: 5 minutes ⏳
@@ -348,30 +376,36 @@ curl http://localhost:8000/health
 
 ### Issue: Hetzner Login Rate Limited
 
-**Solution:** Wait 10 minutes and retry  
+**Solution:** Wait 10 minutes and retry
 **Status:** May occur if multiple login attempts made
 
 ### Issue: Azure AD Permissions Not Showing
 
-**Solution:** Ensure admin consent is granted  
+**Solution:** Ensure admin consent is granted
 **Check:** All permissions show "Granted" status in green
 
 ### Issue: Elasticsearch Won't Start
 
-**Solution:**
+## Solution:
+
 ```bash
+
 sudo sysctl -w vm.max_map_count=262144
 echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 docker compose restart elasticsearch
+
 ```
 
 ### Issue: Services Can't Connect
 
-**Solution:**
+## Solution: (2)
+
 ```bash
+
 docker compose down
 docker compose up -d
 docker network inspect hetzner-m365-rag_m365-rag-network
+
 ```
 
 ---
@@ -416,16 +450,16 @@ docker network inspect hetzner-m365-rag_m365-rag-network
 
 ### Quick Help
 
-**Question:** How do I create the Azure AD app?  
+**Question:** How do I create the Azure AD app?
 **Answer:** See `DEPLOYMENT_READY_GUIDE.md` Step 1
 
-**Question:** Where are the passwords?  
+**Question:** Where are the passwords?
 **Answer:** In `.env` file and `PASSWORDS_GENERATED.txt`
 
-**Question:** How do I deploy?  
+**Question:** How do I deploy?
 **Answer:** See `DEPLOYMENT_READY_GUIDE.md` Steps 3-5
 
-**Question:** What if something fails?  
+**Question:** What if something fails?
 **Answer:** Check troubleshooting section in `DEPLOYMENT_READY_GUIDE.md`
 
 ### Files to Reference
@@ -454,9 +488,9 @@ Before you begin deployment:
 
 ---
 
-## 🚀 Ready to Deploy!
+## 🚀 Ready to Deploy
 
-**Everything is prepared and ready. Follow these final steps:**
+## Everything is prepared and ready. Follow these final steps:
 
 1. **Create Azure AD App Registration** (15 min)
    - Portal: https://portal.azure.com
@@ -473,10 +507,9 @@ Before you begin deployment:
 
 ---
 
-**Status:** ✅ Preparation Complete - Ready for Final Deployment  
-**Last Updated:** 2025-10-19  
-**Agent:** Kilo Code  
+**Status:** ✅ Preparation Complete - Ready for Final Deployment
+**Last Updated:** 2025-10-19
+**Agent:** Kilo Code
 **Next Action:** Create Azure AD App Registration
 
 🎉 **Good luck with the deployment!**
-

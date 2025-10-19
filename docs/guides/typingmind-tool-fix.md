@@ -3,7 +3,9 @@
 ## 🚨 **Your Error:**
 
 ```
+
 OpenAI API Error: 'tools' : maximum number of items is 128
+
 ```
 
 ## 🎯 **Quick Fix for TypingMind Users**
@@ -21,6 +23,7 @@ OpenAI API Error: 'tools' : maximum number of items is 128
 In TypingMind's MCP settings, use this **optimized** configuration:
 
 ```json
+
 {
   "mcpServers": {
     "memory": {
@@ -37,9 +40,10 @@ In TypingMind's MCP settings, use this **optimized** configuration:
     }
   }
 }
+
 ```
 
-**⚠️ Remove these if you have them (they add many tools):**
+## ⚠️ Remove these if you have them (they add many tools):
 
 - `puppeteer` (adds ~50 tools)
 - `sequential-thinking` (adds ~30 tools)
@@ -56,7 +60,9 @@ In TypingMind's MCP settings, use this **optimized** configuration:
 Add this to your code to monitor tool count:
 
 ```python
+
 # Add this before sending to Groq
+
 def check_tool_limit(tools):
     tool_count = len(tools)
     print(f"🔍 Tool count: {tool_count}")
@@ -70,9 +76,11 @@ def check_tool_limit(tools):
         return True
 
 # Use before API call
+
 if check_tool_limit(your_tools):
     # Proceed with Groq API call
     response = groq_client.chat.completions.create(...)
+
 ```
 
 ## 🎯 **Advanced Solutions**
@@ -80,6 +88,7 @@ if check_tool_limit(your_tools):
 ### **Solution A: Dynamic Tool Loading**
 
 ```python
+
 def load_tools_by_context(user_query):
     """Load only relevant tools based on query"""
     base_tools = [
@@ -96,11 +105,13 @@ def load_tools_by_context(user_query):
         base_tools.append("filesystem")
 
     return base_tools
+
 ```
 
 ### **Solution B: Tool Batching**
 
 ```python
+
 def batch_tools_for_groq(tools, batch_size=100):
     """Split tools into smaller batches"""
     batches = []
@@ -108,6 +119,7 @@ def batch_tools_for_groq(tools, batch_size=100):
         batch = tools[i:i + batch_size]
         batches.append(batch)
     return batches
+
 ```
 
 ## 🔍 **Debugging Steps**
@@ -115,11 +127,14 @@ def batch_tools_for_groq(tools, batch_size=100):
 ### **1. Count Your Current Tools**
 
 ```python
+
 # Add this to your code
+
 print(f"Total tools: {len(tools)}")
 for i, tool in enumerate(tools):
     name = tool.get('name', f'tool_{i}')
     print(f"  {i+1}. {name}")
+
 ```
 
 ### **2. Check TypingMind Logs**

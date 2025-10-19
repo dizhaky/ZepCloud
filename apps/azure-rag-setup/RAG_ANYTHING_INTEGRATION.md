@@ -28,6 +28,7 @@ This integration enhances your M365 RAG system with:
 ## 🏗️ Architecture
 
 ```
+
 M365 Data Sources
     ↓
 Enhanced Indexers (with Graph Builder)
@@ -37,6 +38,7 @@ Azure Blob Storage (with enhanced metadata)
 Azure AI Search (40 fields including graph relationships)
     ↓
 TypingMind (with relationship-based queries)
+
 ```
 
 ### Components
@@ -56,17 +58,21 @@ TypingMind (with relationship-based queries)
 ### 1. Install Dependencies
 
 ```bash
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 pip install -r raganything-processor/requirements.txt
+
 ```
 
 ### 2. Update Azure Index Schema
 
 ```bash
+
 python3 update_azure_schema_enhanced.py
+
 ```
 
-**Expected Output:**
+## Expected Output:
 
 - ✅ 15 new fields added to Azure AI Search index
 - ✅ Schema updated without downtime
@@ -75,10 +81,12 @@ python3 update_azure_schema_enhanced.py
 ### 3. Run Integration Tests
 
 ```bash
+
 python3 test_rag_anything_integration.py
+
 ```
 
-**Expected Output:**
+## Expected Output: (2)
 
 - ✅ All 6 tests pass
 - ✅ 100% pass rate
@@ -87,11 +95,14 @@ python3 test_rag_anything_integration.py
 ### 4. Run First Sync
 
 ```bash
+
 # Sync 2 SharePoint sites to test
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 2
+
 ```
 
-**What Happens:**
+## What Happens:
 
 1. Downloads documents from SharePoint
 2. Extracts entities, topics, citations
@@ -102,11 +113,15 @@ python3 orchestrate_rag_anything.py --source sharepoint --limit 2
 ### 5. Check Results
 
 ```bash
+
 # View relationship graph
+
 cat sharepoint_graph.json | jq '.stats'
 
 # Check orchestrator status
+
 python3 orchestrate_rag_anything.py --status
+
 ```
 
 ---
@@ -116,17 +131,23 @@ python3 orchestrate_rag_anything.py --status
 ### Enhanced SharePoint Sync
 
 ```bash
+
 # Sync all sites (production)
+
 python3 orchestrate_rag_anything.py --source sharepoint
 
 # Sync limited sites (testing)
+
 python3 orchestrate_rag_anything.py --source sharepoint --limit 5
 
 # Sync specific site
+
 python3 orchestrate_rag_anything.py --source sharepoint --site-id SITE_ID
 
 # Check status
+
 python3 orchestrate_rag_anything.py --status
+
 ```
 
 ### Query Examples (TypingMind / Azure AI Search)
@@ -134,32 +155,40 @@ python3 orchestrate_rag_anything.py --status
 #### Find Documents with Tables
 
 ```
+
 filter: has_tables eq true
 select: metadata_storage_name, tables_count
 orderby: tables_count desc
+
 ```
 
 #### Find Highly Connected Documents
 
 ```
+
 filter: relationship_score gt 5.0
 select: metadata_storage_name, relationship_score, related_documents
 orderby: relationship_score desc
+
 ```
 
 #### Find Related Documents
 
 ```
+
 filter: has_relationships eq true
 select: metadata_storage_name, graph_relationships
+
 ```
 
 #### Find Documents Mentioning Same People
 
 ```
+
 search: "Dan Izhaky"
 filter: has_relationships eq true
 select: metadata_storage_name, people, related_documents
+
 ```
 
 ---
@@ -171,21 +200,26 @@ select: metadata_storage_name, people, related_documents
 All configuration is in `.env`:
 
 ```bash
+
 # Azure AI Search
+
 AZURE_SEARCH_SERVICE_NAME=typingmind-search-danizhaky
 AZURE_SEARCH_ADMIN_KEY=your_admin_key
 AZURE_SEARCH_ENDPOINT=https://typingmind-search-danizhaky.search.windows.net
 AZURE_SEARCH_INDEX_NAME=training-data-index
 
 # Azure Storage
+
 AZURE_STORAGE_ACCOUNT_NAME=tmstorage0731039
 AZURE_STORAGE_ACCOUNT_KEY=your_storage_key
 AZURE_STORAGE_CONTAINER_NAME=training-data
 
 # M365 Authentication
+
 M365_CLIENT_ID=your_client_id
 M365_CLIENT_SECRET=your_client_secret
 M365_TENANT_ID=your_tenant_id
+
 ```
 
 ### Processing Options
@@ -193,54 +227,70 @@ M365_TENANT_ID=your_tenant_id
 Edit `raganything-processor/env.example`:
 
 ```bash
+
 # Multimodal detection
+
 ENABLE_TABLE_EXTRACTION=true
 ENABLE_EQUATION_EXTRACTION=true
 ENABLE_IMAGE_PROCESSING=true
 
 # Relationship building
+
 ENABLE_GRAPH_RELATIONSHIPS=true
 
 # Batch size
+
 RAG_ANYTHING_BATCH_SIZE=25
+
 ```
 
 ---
 
 ## 📊 Monitoring
 
-### Check Status
+### Check Status (2)
 
 ```bash
+
 python3 orchestrate_rag_anything.py --status
+
 ```
 
-**Output:**
+## Output:
 
 - Last sync time
 - Documents processed
 - Relationships created
 - Graph statistics
 
-### View Relationship Graph
+### View Relationship Graph (2)
 
 ```bash
+
 # Full graph
+
 cat sharepoint_graph.json
 
 # Statistics only
+
 cat sharepoint_graph.json | jq '.stats'
 
 # Most connected entities
-cat sharepoint_graph.json | jq '.entity_index | to_entries | map({entity: .key, docs: (.value | length)}) | sort_by(.docs) | reverse | .[0:10]'
+
+cat sharepoint_graph.json | jq '.entity_index | to_entries | map({entity: .key, docs: (.value | length)}) |
+  sort_by(.docs) | reverse | .[0:10]'
+
 ```
 
 ### Azure AI Search Monitoring
 
 ```bash
+
 # Check index statistics
+
 curl -X GET "https://typingmind-search-danizhaky.search.windows.net/indexes/training-data-index/stats?api-version=2023-11-01" \
   -H "api-key: YOUR_ADMIN_KEY"
+
 ```
 
 ---
@@ -252,14 +302,20 @@ curl -X GET "https://typingmind-search-danizhaky.search.windows.net/indexes/trai
 Edit existing cron job or create new one:
 
 ```bash
+
 crontab -e
+
 ```
 
 Add/update:
 
 ```bash
+
 # Enhanced M365 sync - every 6 hours
-0 */6 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && /usr/local/bin/python3 orchestrate_rag_anything.py --source all >> /tmp/rag-anything-sync.log 2>&1
+
+0 */6 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && /usr/local/bin/python3 orchestrate_rag_anything.py
+  --source all >> /tmp/rag-anything-sync.log 2>&1
+
 ```
 
 ### Manual Sync Script
@@ -267,12 +323,14 @@ Add/update:
 Create `sync_enhanced.sh`:
 
 ```bash
+
 #!/bin/bash
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 
 echo "Starting enhanced M365 sync: $(date)"
 
 # Run orchestrator
+
 python3 orchestrate_rag_anything.py --source all
 
 if [ $? -eq 0 ]; then
@@ -285,6 +343,7 @@ else
     echo "Sync failed: $(date)"
     exit 1
 fi
+
 ```
 
 ---
@@ -296,14 +355,17 @@ fi
 Python example:
 
 ```python
+
 from graph_builder import GraphBuilder
 
 # Load graph
+
 graph = GraphBuilder()
 with open('sharepoint_graph.json', 'r') as f:
     graph_data = json.load(f)
 
 # Find documents related to a person
+
 person = "Dan Izhaky"
 related_docs = []
 for doc_id, doc_data in graph_data['documents'].items():
@@ -311,24 +373,29 @@ for doc_id, doc_data in graph_data['documents'].items():
         related_docs.append(doc_id)
 
 print(f"Documents mentioning {person}: {len(related_docs)}")
+
 ```
 
 ### Export Graph for Visualization
 
 ```bash
+
 # Export to CSV for Excel/Tableau
+
 python3 -c "
 import json
 with open('sharepoint_graph.json', 'r') as f:
     data = json.load(f)
 
 # Create CSV
+
 print('doc_id,relationship_score,related_count')
 for doc_id, doc in data['documents'].items():
     score = doc.get('relationships', {}).get('relationship_score', 0)
     related = len(doc.get('relationships', {}).get('relationships', {}).get('similar_topics', []))
     print(f'{doc_id},{score},{related}')
 " > graph_export.csv
+
 ```
 
 ---
@@ -337,22 +404,28 @@ for doc_id, doc in data['documents'].items():
 
 ### Issue: "Authentication failed"
 
-**Solution:**
+## Solution:
 
 ```bash
+
 # Refresh M365 authentication
+
 python3 m365_auth.py
 
 # Or check credentials
+
 source ./get_m365_credentials.sh
+
 ```
 
 ### Issue: "Schema update failed"
 
-**Solution:**
+## Solution: (2)
 
 ```bash
+
 # Check current schema
+
 python3 -c "
 import os, requests
 from dotenv import load_dotenv
@@ -369,19 +442,22 @@ response = requests.get(
 print(f'Status: {response.status_code}')
 print(f'Fields: {len(response.json()[\"fields\"])}')
 "
+
 ```
 
 ### Issue: "Graph not building relationships"
 
-**Solution:**
+## Solution: (3)
 
 1. Check that documents have entity metadata
 2. Verify Azure AI enrichment is enabled
 3. Run test to verify graph builder:
 
 ```bash
+
 cd raganything-processor
 python3 graph_builder.py
+
 ```
 
 ---

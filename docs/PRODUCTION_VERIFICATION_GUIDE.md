@@ -1,6 +1,7 @@
 # Production Verification Guide
 
-This guide explains how to use the comprehensive verification scripts to ensure both applications (Hetzner M365 RAG and Azure RAG Setup) are running correctly in production.
+This guide explains how to use the comprehensive verification scripts to ensure both applications (Hetzner M365 RAG and
+  Azure RAG Setup) are running correctly in production.
 
 ## Overview
 
@@ -15,11 +16,15 @@ The verification system consists of three scripts:
 ### Comprehensive Verification (Both Applications)
 
 ```bash
+
 # From the project root directory
+
 ./scripts/verify-production.sh
+
 ```
 
 This script will:
+
 - Verify Hetzner M365 RAG deployment (Docker services, endpoints, resources)
 - Verify Azure RAG Setup deployment (Python environment, Azure connectivity, M365 auth)
 - Generate comprehensive status report
@@ -28,12 +33,16 @@ This script will:
 ### Hetzner-Specific Verification
 
 ```bash
+
 # On the Hetzner server
+
 cd /data/m365-rag
 ./scripts/verify-production.sh
+
 ```
 
 This script will:
+
 - Check Docker services status
 - Verify all endpoints are accessible
 - Check system resources (disk, memory, CPU)
@@ -44,12 +53,16 @@ This script will:
 ### Azure-Specific Verification
 
 ```bash
+
 # On the local machine
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 ./verify-production.sh
+
 ```
 
 This script will:
+
 - Check Python environment and dependencies
 - Verify environment variables configuration
 - Test Azure services connectivity
@@ -140,6 +153,7 @@ All scripts provide colored output with clear status indicators:
 ## Sample Output
 
 ```
+
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║              Comprehensive Production Verification                            ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -199,6 +213,7 @@ All scripts provide colored output with clear status indicators:
 
 ℹ️  Verification log available at: /var/log/comprehensive-production-verify.log
 ℹ️  For detailed information, check the generated status report
+
 ```
 
 ## Troubleshooting
@@ -208,52 +223,70 @@ All scripts provide colored output with clear status indicators:
 #### Docker Services Not Running (Hetzner)
 
 ```bash
+
 # Check Docker status
+
 systemctl status docker
 
 # Start Docker service
+
 sudo systemctl start docker
 
 # Check service logs
+
 cd /data/m365-rag
 docker compose logs elasticsearch
 docker compose logs api
+
 ```
 
 #### Azure Connectivity Issues
 
 ```bash
+
 # Check environment variables
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 cat .env
 
 # Test Azure Search connectivity manually
+
 curl -H "api-key: $AZURE_SEARCH_ADMIN_KEY" \
   "https://$AZURE_SEARCH_SERVICE_NAME.search.windows.net/indexes?api-version=2023-11-01"
+
 ```
 
 #### M365 Authentication Failures
 
 ```bash
+
 # Run authentication test
+
 cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup
 python3 m365_indexer.py test-auth
 
 # Check credentials in .env file
+
 # Ensure M365_CLIENT_ID, M365_CLIENT_SECRET, M365_TENANT_ID are correct
+
 ```
 
 #### High Resource Usage
 
 ```bash
+
 # Check disk usage
+
 df -h
 
 # Check memory usage
+
 free -h
 
 # Check Docker container resource usage
+
 docker stats
+
 ```
 
 ## Automation
@@ -263,11 +296,15 @@ docker stats
 Add to crontab for automated daily checks:
 
 ```bash
+
 # Edit crontab
+
 sudo crontab -e
 
 # Add daily verification at 6 AM
+
 0 6 * * * /data/m365-rag/scripts/verify-production.sh >> /var/log/m365-rag-daily-verify.log 2>&1
+
 ```
 
 ### Cron Job Setup (Azure)
@@ -275,11 +312,16 @@ sudo crontab -e
 Add to crontab for automated daily checks:
 
 ```bash
-# Edit crontab
+
+# Edit crontab (2)
+
 crontab -e
 
-# Add daily verification at 6 AM
-0 6 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && ./verify-production.sh >> /tmp/azure-rag-daily-verify.log 2>&1
+# Add daily verification at 6 AM (2)
+
+0 6 * * * cd /Users/danizhaky/Dev/ZepCloud/azure-rag-setup && ./verify-production.sh >> /tmp/azure-rag-daily-verify.log
+  2>&1
+
 ```
 
 ## Log Files
@@ -313,17 +355,21 @@ The verification scripts can be integrated with existing monitoring systems:
 ### Nagios/Icinga
 
 ```bash
+
 # Check command definition
+
 define command {
     command_name    check_m365_rag
     command_line    $USER1$/check_script.sh $ARG1$
 }
 
 # Service definition
+
 define service {
     service_description    M365 RAG Status
     check_command          check_m365_rag!/data/m365-rag/scripts/verify-production.sh
 }
+
 ```
 
 ### Prometheus

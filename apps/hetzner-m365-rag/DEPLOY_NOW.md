@@ -7,19 +7,25 @@
 ### Option A: Deploy to Hetzner Server (Production)
 
 ```bash
+
 # 1. Copy project to Hetzner server
+
 scp -r . root@YOUR_SERVER_IP:/opt/m365-rag/
 
 # 2. SSH into server
+
 ssh root@YOUR_SERVER_IP
 
 # 3. Run automated deployment
+
 cd /opt/m365-rag
 chmod +x scripts/deploy.sh
 ./scripts/deploy.sh
+
 ```
 
 **That's it!** The script handles everything:
+
 - ✅ System dependencies
 - ✅ Docker & Docker Compose
 - ✅ SSL certificates generation
@@ -32,26 +38,34 @@ chmod +x scripts/deploy.sh
 ### Option B: Local Docker Development (Windows/Mac/Linux)
 
 #### Prerequisites
+
 1. **Install Docker Desktop**: https://www.docker.com/products/docker-desktop
 2. **Install WSL2** (Windows only): https://docs.microsoft.com/en-us/windows/wsl/install
 
 #### Deploy Locally
 
 ```bash
+
 # 1. Create environment file
+
 cp .env.example .env
 
 # 2. Edit .env with your credentials
+
 # Required: M365_CLIENT_ID, M365_CLIENT_SECRET, M365_TENANT_ID, OPENAI_API_KEY
 
 # 3. Generate SSL certificates
+
 bash scripts/generate-es-certs.sh
 
 # 4. Start all services
+
 docker-compose up -d
 
 # 5. Check health
+
 curl http://localhost:8000/health
+
 ```
 
 ---
@@ -65,21 +79,26 @@ curl http://localhost:8000/health
 Edit `.env` file with your actual values:
 
 ```bash
+
 # REQUIRED - Microsoft 365
+
 M365_CLIENT_ID=<your-azure-app-client-id>
 M365_CLIENT_SECRET=<your-azure-app-client-secret>
 M365_TENANT_ID=<your-azure-tenant-id>
 
 # REQUIRED - OpenAI
+
 OPENAI_API_KEY=<your-openai-api-key>
 
 # REQUIRED - Change all default passwords
+
 ELASTIC_PASSWORD=<strong-password>
 POSTGRES_PASSWORD=<strong-password>
 REDIS_PASSWORD=<strong-password>
 MINIO_ROOT_PASSWORD=<strong-password>
 GRAFANA_ADMIN_PASSWORD=<strong-password>
 JWT_SECRET_KEY=<min-32-character-secret>
+
 ```
 
 #### 1.2 **Azure App Registration**
@@ -108,13 +127,16 @@ If you haven't registered an Azure app yet:
 #### 1.3 **Verify File Integrity**
 
 ```bash
+
 # Check all required files exist
+
 ls -la docker-compose.yml
 ls -la scripts/deploy.sh
 ls -la scripts/backup.sh
 ls -la scripts/restore.sh
 ls -la scripts/generate-es-certs.sh
 ls -la .env
+
 ```
 
 ---
@@ -124,16 +146,21 @@ ls -la .env
 #### 2.1 **Upload Project Files**
 
 ```bash
+
 # From your local machine
+
 rsync -avz --exclude 'venv' --exclude '__pycache__' --exclude '*.pyc' \
   . root@YOUR_SERVER_IP:/opt/m365-rag/
+
 ```
 
 #### 2.2 **SSH to Server**
 
 ```bash
+
 ssh root@YOUR_SERVER_IP
 cd /opt/m365-rag
+
 ```
 
 ---
@@ -143,11 +170,14 @@ cd /opt/m365-rag
 #### 3.1 **Run Deployment Script**
 
 ```bash
+
 chmod +x scripts/*.sh
 ./scripts/deploy.sh
+
 ```
 
-**The script will:**
+## The script will:
+
 1. ✅ Update system packages
 2. ✅ Install Docker & Docker Compose
 3. ✅ Create data directories with correct permissions
@@ -167,48 +197,67 @@ chmod +x scripts/*.sh
 #### 4.1 **Check Service Health**
 
 ```bash
+
 # All services should be "healthy" or "Up"
+
 docker-compose ps
 
 # Check API health endpoint
+
 curl http://localhost:8000/health
 
-# Expected response:
-# {"status":"healthy","version":"1.0.0","services":{"elasticsearch":"connected","postgres":"connected","redis":"connected"}}
+# Expected response
+
+# {"status":"healthy","version":"1.0.0","services":{"elasticsearch":"connected","postgres":"connected"
+
+  ,"redis":"connected"}}
+
 ```
 
 #### 4.2 **Check Elasticsearch SSL**
 
 ```bash
+
 # This should work with HTTPS
+
 curl -k -u elastic:$ELASTIC_PASSWORD https://localhost:9200/_cluster/health
 
 # Expected: {"status":"green","cluster_name":"m365-rag"}
+
 ```
 
 #### 4.3 **Check Monitoring**
 
 ```bash
+
 # Prometheus metrics
+
 curl http://localhost:9090/metrics
 
 # Grafana (login with admin / GRAFANA_ADMIN_PASSWORD)
+
 curl http://localhost:3000
 
 # Elasticsearch metrics
+
 curl http://localhost:9114/metrics
+
 ```
 
 #### 4.4 **Check Logs**
 
 ```bash
+
 # View all logs
+
 docker-compose logs -f
 
 # View specific service logs
+
 docker-compose logs -f api
 docker-compose logs -f elasticsearch
 docker-compose logs -f ragflow
+
 ```
 
 ---
@@ -218,30 +267,39 @@ docker-compose logs -f ragflow
 #### 5.1 **Test M365 Authentication**
 
 ```bash
+
 # Interactive browser auth (opens browser)
+
 curl -X POST http://localhost:8000/m365/auth \
   -H "Content-Type: application/json" \
   -d '{"auth_type":"interactive"}'
 
 # Follow the URL in the response to complete authentication
+
 ```
 
 #### 5.2 **Sync M365 Data**
 
 ```bash
+
 # Sync SharePoint
+
 curl -X POST http://localhost:8000/m365/sync/sharepoint
 
 # Sync OneDrive
+
 curl -X POST http://localhost:8000/m365/sync/onedrive
 
 # Check sync status
+
 curl http://localhost:8000/m365/sync/status
+
 ```
 
 #### 5.3 **Test Search**
 
 ```bash
+
 curl -X POST http://localhost:8000/search \
   -H "Content-Type: application/json" \
   -d '{
@@ -249,6 +307,7 @@ curl -X POST http://localhost:8000/search \
     "filters": {"source": "sharepoint"},
     "limit": 5
   }'
+
 ```
 
 #### 5.4 **Access RAGFlow UI**
@@ -265,13 +324,17 @@ curl -X POST http://localhost:8000/search \
 #### 6.1 **Enable HTTPS with Let's Encrypt**
 
 ```bash
+
 # Install Certbot
+
 apt-get install -y certbot python3-certbot-nginx
 
 # Get SSL certificate (requires domain pointing to server)
+
 certbot --nginx -d rag.yourdomain.com
 
 # Auto-renewal is set up automatically
+
 ```
 
 #### 6.2 **Configure Production Elasticsearch Certificates**
@@ -279,33 +342,47 @@ certbot --nginx -d rag.yourdomain.com
 Replace self-signed certificates with CA-signed ones:
 
 ```bash
+
 # 1. Get certificates from your CA
+
 # 2. Copy to: config/elasticsearch/certs/
+
 # 3. Update docker-compose.yml to set ES_VERIFY_CERTS=true
+
 # 4. Restart: docker-compose restart elasticsearch api
+
 ```
 
 #### 6.3 **Enable Automated Backups**
 
 ```bash
+
 # Add to crontab
+
 crontab -e
 
 # Add this line for daily backups at 2 AM
+
 0 2 * * * /opt/m365-rag/scripts/backup.sh >> /var/log/m365-rag-backup.log 2>&1
+
 ```
 
 #### 6.4 **Monitor Disk Usage**
 
 ```bash
+
 # Check disk space (AX52 has 2x 512GB NVMe)
+
 df -h
 
 # Check Docker volumes
+
 docker system df
 
 # Clean up old images (if needed)
+
 docker system prune -a
+
 ```
 
 ---
@@ -315,56 +392,78 @@ docker system prune -a
 ### Issue: Elasticsearch won't start
 
 ```bash
+
 # Check logs
+
 docker-compose logs elasticsearch
 
 # Common fix: Increase vm.max_map_count
+
 sudo sysctl -w vm.max_map_count=262144
 echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+
 ```
 
 ### Issue: SSL certificate errors
 
 ```bash
+
 # Regenerate certificates
+
 ./scripts/generate-es-certs.sh
 
 # Restart services
+
 docker-compose restart elasticsearch api
+
 ```
 
 ### Issue: Out of memory
 
 ```bash
+
 # Check memory usage
+
 free -h
 docker stats
 
 # Adjust resource limits in docker-compose.yml
+
 # Elasticsearch: reduce mem_limit to 8g if needed
+
 # RAGFlow: reduce to 2g if needed
+
 ```
 
 ### Issue: M365 authentication fails
 
 ```bash
+
 # Check Azure app permissions
+
 # Verify client ID, secret, tenant ID in .env
+
 # Ensure redirect URI matches: http://localhost:8000
 
 # Test authentication manually
+
 docker-compose exec api python -c "from api.m365_auth import M365Auth; print(M365Auth().get_access_token())"
+
 ```
 
 ### Issue: Services can't connect
 
 ```bash
+
 # Check Docker network
+
 docker network inspect hetzner-m365-rag_m365-rag-network
 
 # Restart all services
+
 docker-compose down
 docker-compose up -d
+
 ```
 
 ---
@@ -376,27 +475,37 @@ docker-compose up -d
 Edit `docker-compose.yml`:
 
 ```yaml
+
 # Increase Elasticsearch heap (if you have >32GB RAM)
+
 elasticsearch:
   environment:
+
     - "ES_JAVA_OPTS=-Xms16g -Xmx16g"  # Change from 8g to 16g
 
 # Increase API workers
+
 api:
   environment:
+
     - API_WORKERS=8  # Change from 4 to 8
+
 ```
 
 ### For Large Document Collections
 
 ```yaml
+
 # Increase PostgreSQL connections
+
 postgres:
   command: postgres -c max_connections=200  # Default: 100
 
 # Increase Redis memory
+
 redis:
   command: redis-server --maxmemory 8gb  # Default: 4gb
+
 ```
 
 ---
@@ -442,10 +551,13 @@ redis:
 ### Create Manual Backup
 
 ```bash
+
 ./scripts/backup.sh
+
 ```
 
 **Backup includes**:
+
 - Elasticsearch indices
 - PostgreSQL database
 - Redis data
@@ -457,17 +569,22 @@ redis:
 ### Restore from Backup
 
 ```bash
+
 ./scripts/restore.sh /opt/backups/m365-rag-20250119-020000
+
 ```
 
 ### Backup to Remote Storage
 
 ```bash
+
 # Add to .env
+
 BACKUP_S3_BUCKET=my-backup-bucket
 BACKUP_S3_ENDPOINT=s3.amazonaws.com
 
 # Backups will automatically sync to S3
+
 ```
 
 ---
@@ -475,6 +592,7 @@ BACKUP_S3_ENDPOINT=s3.amazonaws.com
 ## System Architecture
 
 ```
+
 ┌─────────────────────────────────────────────────────────────┐
 │                     HETZNER AX52 SERVER                      │
 │  CPU: AMD Ryzen 9 5950X (16C/32T) | RAM: 128GB | Disk: 2x512GB NVMe  │
@@ -510,6 +628,7 @@ BACKUP_S3_ENDPOINT=s3.amazonaws.com
                      │  RAG-Anything   │
                      │ (Multimodal)    │
                      └─────────────────┘
+
 ```
 
 ---
@@ -554,7 +673,6 @@ BACKUP_S3_ENDPOINT=s3.amazonaws.com
 
 **Status**: 🚀 **READY TO DEPLOY**
 
-**Last Updated**: 2025-01-19  
-**System Version**: 1.0.0  
+**Last Updated**: 2025-01-19
+**System Version**: 1.0.0
 **Bugs Fixed**: 18/18 ✅
-

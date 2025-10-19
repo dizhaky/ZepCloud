@@ -23,21 +23,24 @@
 **Status:** PASS
 **Duration:** < 1 second
 
-**Results:**
+## Results:
 
 - ✅ Graph Creation: Documents added successfully
 - ✅ Entity Mapping: 3 entities tracked
 - ✅ Statistics: 2 test documents processed
 - ⚠️ Relationship Discovery: Expected behavior (simple test data)
 
-**Validation:**
+## Validation:
 
 ```python
+
 graph = GraphBuilder()
 graph.add_document("doc1", content, metadata)
 graph.extract_and_map_entities("doc1", entities, topics)
 graph.discover_relationships()
+
 # Result: Graph operational ✅
+
 ```
 
 ---
@@ -47,16 +50,17 @@ graph.discover_relationships()
 **Status:** PASS
 **Duration:** < 1 second
 
-**Results:**
+## Results: (2)
 
 - ✅ Enhanced Fields: All 17 fields present
 - ✅ Total Fields: 40 (baseline 23 + enhanced 17)
 - ✅ Field Types: Boolean, Int32, Double, String, Collection
 - ✅ Capabilities: Filterable, Sortable, Searchable
 
-**Enhanced Fields Verified:**
+## Enhanced Fields Verified:
 
 ```
+
 Multimodal Content:
   ✅ has_tables (Boolean, filterable)
   ✅ has_equations (Boolean, filterable)
@@ -77,6 +81,7 @@ Graph Relationships:
   ✅ relationship_data (String, searchable)
   ✅ graph_relationships (Collection<String>)
   ✅ related_documents (Collection<String>)
+
 ```
 
 ---
@@ -86,7 +91,7 @@ Graph Relationships:
 **Status:** PASS
 **Duration:** < 2 seconds
 
-**Results:**
+## Results: (3)
 
 - ✅ Initialization: Indexer created successfully
 - ✅ Graph Builder: Integrated and operational
@@ -94,15 +99,22 @@ Graph Relationships:
 - ✅ Azure Storage: Connected to training-data container
 - ✅ Status: 69 documents loaded from previous sync
 
-**Components Verified:**
+## Components Verified:
 
 ```python
+
 indexer = SharePointIndexerEnhanced()
+
 # Result: All components initialized ✅
+
 # - M365 authentication: Working
+
 # - Azure Blob Storage: Connected
+
 # - Graph Builder: Integrated
+
 # - Progress Tracking: Operational
+
 ```
 
 ---
@@ -112,15 +124,16 @@ indexer = SharePointIndexerEnhanced()
 **Status:** PASS
 **Duration:** < 1 second
 
-**Results:**
+## Results: (4)
 
 - ✅ Initialization: Orchestrator created successfully
 - ✅ Status Command: Retrieved system status
 - ✅ Multi-Source Support: SharePoint/OneDrive/Exchange ready
 
-**Status Output:**
+## Status Output:
 
 ```
+
 📁 SharePoint:
    Last Sync: 2025-10-18T08:48:11.342669
    Sites: 1
@@ -132,6 +145,7 @@ indexer = SharePointIndexerEnhanced()
    Total entities: 3
    Total topics: 0
    Avg connections/doc: 0.00
+
 ```
 
 ---
@@ -141,22 +155,26 @@ indexer = SharePointIndexerEnhanced()
 **Status:** PASS
 **Duration:** < 1 second
 
-**Results:**
+## Results: (5)
 
 - ✅ Table Detection: Working (Excel/CSV files)
 - ✅ Image Detection: Working (PDF/Word files)
 - ✅ Metadata Enrichment: Applied to Azure Blob Storage
 
-**Detection Logic Verified:**
+## Detection Logic Verified:
 
 ```python
+
 # Spreadsheet files → has_tables = true
+
 has_tables = '.xlsx' in filename or '.csv' in filename
 
 # PDF/Word files → has_images = true
+
 has_images = '.pdf' in filename or '.docx' in filename
 
 # Result: Multimodal flags correctly set ✅
+
 ```
 
 ---
@@ -166,16 +184,17 @@ has_images = '.pdf' in filename or '.docx' in filename
 **Status:** PASS
 **Duration:** < 1 second
 
-**Results:**
+## Results: (6)
 
 - ✅ M365 Auth: Available and configured
 - ✅ Graph Builder: Available and operational
 - ✅ Enhanced Indexer: Available and ready
 - ✅ Orchestrator: Available and coordinating
 
-**Data Flow Verified:**
+## Data Flow Verified:
 
 ```
+
 M365 (SharePoint/OneDrive/Exchange)
   ↓ (Enhanced Indexer)
 Graph Builder (relationship extraction)
@@ -185,6 +204,7 @@ Azure Blob Storage (enhanced metadata)
 Azure AI Search (17 enhanced fields)
   ↓ (TypingMind queries)
 End User
+
 ```
 
 ---
@@ -195,9 +215,10 @@ End User
 
 **Status:** PASS
 
-**Current State:**
+## Current State:
 
 ```
+
 📊 Graph Statistics:
    Documents: 69
    Entities: 3
@@ -211,6 +232,7 @@ End User
    • Marketing newsletters (.pdf)
    • Benefits documents (.pdf)
    • Company policies (.pdf)
+
 ```
 
 **File Location:** `sharepoint_graph.json`
@@ -223,9 +245,10 @@ End User
 
 **Status:** PASS
 
-**Index Details:**
+## Index Details:
 
 ```
+
 🔍 Azure AI Search Index:
    Name: training-data-index
    Total Fields: 40
@@ -239,6 +262,7 @@ End User
    ✅ graph_relationships
    ✅ related_documents
    ✅ tables_content
+
 ```
 
 **All 17 enhanced fields verified in production index** ✅
@@ -252,19 +276,21 @@ End User
 **Test Query:** Documents with tables
 
 ```python
+
 {
   "search": "*",
   "filter": "has_tables eq true",
   "select": "metadata_storage_name,has_tables,has_images",
   "top": 3
 }
+
 ```
 
 **Result:** Query executed successfully
 **Documents Found:** Multiple documents with table flags set
 **Response Time:** < 1 second
 
-**Sample Results:**
+## Sample Results:
 
 - UST Expense Report 2023.xlsx (Tables: true, Images: false)
 - Other spreadsheet documents identified correctly
@@ -383,7 +409,7 @@ End User
 
 ✅ **READY FOR PRODUCTION**
 
-**Recommended Next Steps:**
+## Recommended Next Steps:
 
 1. Run full SharePoint sync (all 42 sites)
 2. Enable OneDrive indexing

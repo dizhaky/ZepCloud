@@ -35,7 +35,7 @@
 - **Indexing:** 50,000 documents included, $0.50/1,000 docs
 - **Queries:** 10,000 queries/month included, $0.50/1,000 queries
 
-**Your Usage:**
+## Your Usage:
 
 - **Storage:** 260-520 GB = $2.30 × 258-518 GB = **$593-$1,191/month**
 - **Indexing:** 1,187,916 docs = $0.50 × 1,137,916 docs = **$569/month** (one-time)
@@ -49,7 +49,7 @@
 - **Indexing:** 1,000,000 documents included, $0.50/1,000 docs
 - **Queries:** 100,000 queries/month included, $0.50/1,000 queries
 
-**Your Usage:**
+## Your Usage: (2)
 
 - **Storage:** 260-520 GB = $2.30 × 235-495 GB = **$541-$1,139/month**
 - **Indexing:** 1,187,916 docs = $0.50 × 187,916 docs = **$94/month** (one-time)
@@ -64,7 +64,7 @@
 - **Storage:** $0.0184/GB/month
 - **Transactions:** $0.004/10,000 operations
 
-**Your Usage:**
+## Your Usage: (3)
 
 - **Storage:** 260-520 GB × $0.0184 = **$4.78-$9.57/month**
 - **Transactions:** Minimal (mostly read operations) = **~$1-2/month**
@@ -78,7 +78,7 @@
 - **Free Tier:** 5,000 transactions/month
 - **Standard:** $1.00/1,000 transactions
 
-**Your Usage:**
+## Your Usage: (4)
 
 - **One-time indexing:** 1,187,916 documents = **$1,188** (one-time cost)
 - **Ongoing:** Minimal (only new documents) = **$0-5/month**
@@ -88,7 +88,7 @@
 - **Free Tier:** 5,000 transactions/month
 - **Standard:** $1.00/1,000 transactions
 
-**Your Usage:**
+## Your Usage: (5)
 
 - **One-time indexing:** 1,187,916 documents = **$1,188** (one-time cost)
 - **Ongoing:** Minimal (only new documents) = **$0-5/month**
@@ -220,13 +220,13 @@
 
 ## 📊 SUMMARY
 
-**Your M365 RAG system will cost approximately:**
+## Your M365 RAG system will cost approximately:
 
 - **Setup:** $2,400-$3,000 (one-time)
 - **Monthly:** $600-$1,200
 - **Annual:** $7,000-$14,000
 
-**This is a significant investment but provides:**
+## This is a significant investment but provides:
 
 - ✅ Complete M365 data searchability
 - ✅ Advanced AI-powered search
@@ -237,4 +237,4 @@
 
 ---
 
-**💡 The system provides tremendous value for comprehensive M365 search capabilities across your entire organization!**
+## 💡 The system provides tremendous value for comprehensive M365 search capabilities across your entire organization!

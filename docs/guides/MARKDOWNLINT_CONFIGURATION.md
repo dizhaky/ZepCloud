@@ -23,7 +23,7 @@ The project root contains `.markdownlint.json` with these customizations:
 - **MD013**: Line length increased to 120 characters (from 80)
   - Code blocks and tables exempt from line length rules
   - Headings exempt from line length rules
-  
+
 - **MD034**: Bare URLs allowed (useful for documentation)
 
 - **MD040**: Code blocks without language specification allowed
@@ -39,6 +39,7 @@ The project root contains `.markdownlint.json` with these customizations:
 ### HTML Elements
 
 Limited HTML is allowed for enhanced documentation:
+
 - `<br>` - Line breaks
 - `<details>` / `<summary>` - Collapsible sections
 - `<img>` - Images with attributes
@@ -49,26 +50,32 @@ Limited HTML is allowed for enhanced documentation:
 ### Disable Rules for Specific Sections
 
 ```markdown
+
 <!-- markdownlint-disable MD013 MD033 -->
 This section can have long lines and HTML elements.
 <!-- markdownlint-enable MD013 MD033 -->
+
 ```
 
 ### Disable Rules for Single Line
 
 ```markdown
+
 <!-- markdownlint-disable-next-line MD013 -->
 This is an exceptionally long line that exceeds the normal character limit but is necessary for documentation purposes.
+
 ```
 
 ### Disable Rules for Entire File
 
 ```markdown
+
 <!-- markdownlint-disable-file MD013 -->
 
 # Document Title
 
 All content in this file can have long lines.
+
 ```
 
 ## VS Code Workspace Settings
@@ -76,6 +83,7 @@ All content in this file can have long lines.
 For project-specific VS Code settings, add to `.vscode/settings.json`:
 
 ```json
+
 {
   "markdownlint.config": {
     "MD003": { "style": "atx_closed" },
@@ -84,6 +92,7 @@ For project-specific VS Code settings, add to `.vscode/settings.json`:
   "markdownlint.focusMode": false,
   "markdownlint.run": "onType"
 }
+
 ```
 
 ## Common Rule Reference
@@ -115,17 +124,21 @@ For project-specific VS Code settings, add to `.vscode/settings.json`:
 Focus mode reduces distractions by hiding linting issues near the cursor:
 
 ```json
+
 {
   "markdownlint.focusMode": true  // Hide issues on current line
 }
+
 ```
 
 Or ignore N lines above and below:
 
 ```json
+
 {
   "markdownlint.focusMode": 2  // Ignore 2 lines above and below cursor
 }
+
 ```
 
 ## Run Mode
@@ -133,17 +146,21 @@ Or ignore N lines above and below:
 Control when linting occurs:
 
 ```json
+
 {
   "markdownlint.run": "onType"   // Default: lint as you type
 }
+
 ```
 
 Or lint only on save:
 
 ```json
+
 {
   "markdownlint.run": "onSave"   // Lint only when saving
 }
+
 ```
 
 ## Custom Configuration Files
@@ -153,6 +170,7 @@ Or lint only on save:
 The extension also supports `.markdownlint-cli2.jsonc` for advanced configuration:
 
 ```jsonc
+
 {
   "config": {
     "MD013": {
@@ -168,6 +186,7 @@ The extension also supports `.markdownlint-cli2.jsonc` for advanced configuratio
     "**/CHANGELOG.md"
   ]
 }
+
 ```
 
 ### Configuration File Priority
@@ -201,53 +220,74 @@ Use these snippets in markdown files (press `Ctrl+Space` for IntelliSense):
 
 ### MD022: Headings should be surrounded by blank lines
 
-**Problem:**
+## Problem:
+
 ```markdown
+
 ## Section Title
+
 Content immediately after heading.
+
 ```
 
-**Fix:**
+## Fix:
+
 ```markdown
-## Section Title
+
+## Section Title (2)
 
 Content with blank line after heading.
+
 ```
 
 ### MD032: Lists should be surrounded by blank lines
 
-**Problem:**
+## Problem: (2)
+
 ```markdown
+
 Some text.
+
 - List item 1
 - List item 2
+
 More text.
+
 ```
 
-**Fix:**
+## Fix: (2)
+
 ```markdown
+
 Some text.
 
 - List item 1
 - List item 2
 
 More text.
+
 ```
 
 ### MD040: Fenced code blocks should have a language specified
 
-**Problem:**
+## Problem: (3)
+
 ```markdown
+
 \`\`\`
 code here
 \`\`\`
+
 ```
 
-**Fix:**
+## Fix: (3)
+
 ```markdown
+
 \`\`\`javascript
 code here
 \`\`\`
+
 ```
 
 Or disable the rule in `.markdownlint.json`.
@@ -263,11 +303,13 @@ Or disable the rule in `.markdownlint.json`.
 Enable auto-fix in VS Code settings:
 
 ```json
+
 {
   "editor.codeActionsOnSave": {
     "source.fixAll.markdownlint": "explicit"
   }
 }
+
 ```
 
 ## Workspace-Specific Configuration
@@ -284,10 +326,12 @@ For the ZepCloud project, we use:
 Create `.markdownlintignore` to exclude files:
 
 ```
+
 node_modules/
 vendor/
 **/CHANGELOG.md
 **/.git/
+
 ```
 
 ## Command Palette Commands
@@ -319,10 +363,12 @@ vendor/
 If linting is slow:
 
 ```json
+
 {
   "markdownlint.run": "onSave",
   "markdownlint.focusMode": true
 }
+
 ```
 
 ## Best Practices
@@ -341,6 +387,5 @@ If linting is slow:
 
 ---
 
-**Last Updated**: October 19, 2025  
+**Last Updated**: October 19, 2025
 **Configuration Version**: 1.0
-

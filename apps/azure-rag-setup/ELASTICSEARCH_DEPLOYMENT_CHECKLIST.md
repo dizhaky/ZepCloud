@@ -2,7 +2,8 @@
 
 ## 🎯 Deployment Overview
 
-This checklist ensures a smooth transition from Azure AI Search to the Elasticsearch-based RAG system with comprehensive validation and rollback procedures.
+This checklist ensures a smooth transition from Azure AI Search to the Elasticsearch-based RAG system with comprehensive
+  validation and rollback procedures.
 
 ## 📋 Pre-Deployment Checklist
 
@@ -65,9 +66,11 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
 #### Python Dependencies
 
 - [ ] **Requirements installed:**
+
   ```bash
   pip install -r requirements-elasticsearch.txt
   ```
+
 - [ ] **All packages installed successfully**
 - [ ] **No version conflicts** detected
 - [ ] **Virtual environment** activated (recommended)
@@ -75,6 +78,7 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
 #### Optional Dependencies
 
 - [ ] **OlmoCR installed** (for advanced PDF processing):
+
   ```bash
   git clone https://github.com/allenai/olmocr.git
   cd olmocr
@@ -90,14 +94,18 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
 #### Docker Services
 
 - [ ] **Start infrastructure:**
+
   ```bash
   docker-compose up -d
   sleep 60
   ```
+
 - [ ] **Verify all containers running:**
+
   ```bash
   docker-compose ps
   ```
+
 - [ ] **Check container health:**
   - [ ] Elasticsearch: `curl -u elastic:password http://localhost:9200/_cluster/health`
   - [ ] Kibana: `curl http://localhost:5601`
@@ -106,14 +114,19 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
 #### Elasticsearch Setup
 
 - [ ] **Create index:**
+
   ```bash
   python elasticsearch_setup.py
   ```
+
 - [ ] **Verify index created:**
+
   ```bash
   curl -u elastic:password http://localhost:9200/m365-documents
   ```
+
 - [ ] **Check mappings configured:**
+
   ```bash
   curl -u elastic:password http://localhost:9200/m365-documents/_mapping
   ```
@@ -123,14 +136,19 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
 #### API Server
 
 - [ ] **Start API server:**
+
   ```bash
   python api_server.py
   ```
+
 - [ ] **Test health endpoint:**
+
   ```bash
   curl http://localhost:5000/health
   ```
+
 - [ ] **Run comprehensive test suite:**
+
   ```bash
   python test_elasticsearch_integration.py
   ```
@@ -152,23 +170,30 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
 #### M365 Authentication
 
 - [ ] **Test Graph API connection:**
+
   ```bash
   python -c "from utils.graph_client import GraphClientWrapper; GraphClientWrapper()"
   ```
+
 - [ ] **Verify tenant access**
 - [ ] **Check permissions granted**
 
 #### Data Sync Testing
 
 - [ ] **Start sync process:**
+
   ```bash
   python m365_sync_elasticsearch.py
   ```
+
 - [ ] **Monitor sync progress:**
+
   ```bash
   tail -f m365_sync.log
   ```
+
 - [ ] **Verify documents indexed:**
+
   ```bash
   curl -u elastic:password http://localhost:9200/m365-documents/_count
   ```
@@ -176,11 +201,13 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
 #### Search Functionality Testing
 
 - [ ] **Test basic search:**
+
   ```bash
   curl -X POST http://localhost:5000/search \
     -H "Content-Type: application/json" \
     -d '{"query": "test", "size": 5}'
   ```
+
 - [ ] **Test advanced search**
 - [ ] **Test multimodal search**
 - [ ] **Test entity search**
@@ -209,6 +236,7 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
 
 - [ ] **Backup current TypingMind config**
 - [ ] **Create Elasticsearch config:**
+
   ```json
   {
     "name": "M365 Elasticsearch with RAG-Anything",
@@ -219,6 +247,7 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
     }
   }
   ```
+
 - [ ] **Test TypingMind connection** to Elasticsearch
 - [ ] **Verify search functionality** in TypingMind
 
@@ -234,9 +263,11 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
 #### Full Data Sync
 
 - [ ] **Complete M365 data sync:**
+
   ```bash
   python m365_sync_elasticsearch.py
   ```
+
 - [ ] **Verify all data sources synced:**
   - [ ] SharePoint sites and documents
   - [ ] OneDrive files
@@ -259,10 +290,14 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
 #### Performance Tuning
 
 - [ ] **Elasticsearch memory optimized:**
+
   ```yaml
   # In docker-compose.yml
+
   - "ES_JAVA_OPTS=-Xms8g -Xmx8g" # Adjust based on system
+
   ```
+
 - [ ] **Batch size optimized** for system performance
 - [ ] **Index settings tuned** for production workload
 - [ ] **API server configured** for production
@@ -483,11 +518,12 @@ This checklist ensures a smooth transition from Azure AI Search to the Elasticse
 
 ---
 
-## 🎉 Deployment Complete!
+## 🎉 Deployment Complete
 
-Once all checklist items are completed, you'll have successfully deployed a cost-effective, feature-rich alternative to Azure AI Search with enhanced multimodal processing capabilities.
+Once all checklist items are completed, you'll have successfully deployed a cost-effective, feature-rich alternative to
+  Azure AI Search with enhanced multimodal processing capabilities.
 
-**Key Achievements:**
+## Key Achievements:
 
 - ✅ **80-90% cost savings** compared to Azure AI Search
 - ✅ **Enhanced search capabilities** with multimodal processing
@@ -495,7 +531,7 @@ Once all checklist items are completed, you'll have successfully deployed a cost
 - ✅ **Production-ready** infrastructure with monitoring
 - ✅ **Comprehensive documentation** and support procedures
 
-**Next Steps:**
+## Next Steps:
 
 1. **Monitor system performance** for 30 days
 2. **Collect user feedback** and optimize
@@ -504,4 +540,5 @@ Once all checklist items are completed, you'll have successfully deployed a cost
 
 ---
 
-_This deployment checklist ensures a successful transition to the Elasticsearch-based RAG system with comprehensive validation and rollback procedures._
+_This deployment checklist ensures a successful transition to the Elasticsearch-based RAG system with comprehensive
+  validation and rollback procedures._

@@ -8,11 +8,13 @@
 
 ## 🎯 Overview
 
-The Azure RAG Core provides the foundational functionality for Azure AI Search integration, document upload, and system monitoring. This component forms the base layer that all other components build upon.
+The Azure RAG Core provides the foundational functionality for Azure AI Search integration, document upload, and system
+  monitoring. This component forms the base layer that all other components build upon.
 
 ## 🏗️ Architecture
 
 ```
+
 ┌─────────────────────────────────────────────────────────────────┐
 │                        Azure RAG Core                          │
 ├─────────────────────────────────────────────────────────────────┤
@@ -31,6 +33,7 @@ The Azure RAG Core provides the foundational functionality for Azure AI Search i
 │  ├── logger.py (Centralized Logging)                           │
 │  └── requirements.txt (Dependencies)                            │
 └─────────────────────────────────────────────────────────────────┘
+
 ```
 
 ---
@@ -53,11 +56,15 @@ The Azure RAG Core provides the foundational functionality for Azure AI Search i
 #### Usage
 
 ```bash
+
 # Configure index and indexer
+
 python3 configure-indexer.py
 
 # Check configuration status
+
 python3 maintenance.py --non-interactive --action status
+
 ```
 
 #### Configuration Details
@@ -73,7 +80,7 @@ python3 maintenance.py --non-interactive --action status
 **Purpose:** Resilient document upload with retry logic
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (2)
 
 - **Exponential Backoff:** 2-30 second delays, 3 attempts
 - **Resume Capability:** Progress tracking and resume
@@ -81,14 +88,18 @@ python3 maintenance.py --non-interactive --action status
 - **Real-time Progress:** Progress bars with ETA
 - **Error Reporting:** Detailed error messages
 
-#### Usage
+#### Usage (2)
 
 ```bash
+
 # Upload documents with retry
+
 python3 upload_with_retry.py
 
 # Check upload progress
+
 cat upload_progress.json
+
 ```
 
 #### Performance Metrics
@@ -104,7 +115,7 @@ cat upload_progress.json
 **Purpose:** System health monitoring and maintenance
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (3)
 
 - **Health Checks:** Comprehensive system health monitoring
 - **Status Reporting:** Real-time system status
@@ -112,20 +123,25 @@ cat upload_progress.json
 - **Cleanup Operations:** Remove old data and logs
 - **Non-interactive Mode:** CLI automation support
 
-#### Usage
+#### Usage (3)
 
 ```bash
+
 # Interactive mode
+
 python3 maintenance.py
 
 # Non-interactive modes
+
 python3 maintenance.py --non-interactive --action health
 python3 maintenance.py --non-interactive --action status
 python3 maintenance.py --non-interactive --action run-indexer
 python3 maintenance.py --non-interactive --action clean --days 30
 
 # JSON output
+
 python3 maintenance.py --non-interactive --action health --output json
+
 ```
 
 #### Health Metrics
@@ -141,7 +157,7 @@ python3 maintenance.py --non-interactive --action health --output json
 **Purpose:** Pre-flight environment validation
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (4)
 
 - **Environment Variables:** Validate all required variables
 - **Python Packages:** Check all dependencies
@@ -149,15 +165,19 @@ python3 maintenance.py --non-interactive --action health --output json
 - **File Structure:** Validate project structure
 - **Credential Validation:** Test authentication
 
-#### Usage
+#### Usage (4)
 
 ```bash
+
 # Validate environment
+
 python3 validate_environment.py
 
 # Check specific components
+
 python3 validate_environment.py --component azure
 python3 validate_environment.py --component m365
+
 ```
 
 #### Validation Checks
@@ -178,7 +198,7 @@ python3 validate_environment.py --component m365
 **Purpose:** Centralized logging utility for all components
 **Status:** ✅ Production Ready
 
-#### Key Features
+#### Key Features (5)
 
 - **Structured Logging:** JSON format for easy parsing
 - **Log Levels:** DEBUG, INFO, WARNING, ERROR, CRITICAL
@@ -186,15 +206,17 @@ python3 validate_environment.py --component m365
 - **Console Output:** Colored console output
 - **Context Information:** Request IDs, timestamps, component names
 
-#### Usage
+#### Usage (5)
 
 ```python
+
 from logger import get_logger
 
 logger = get_logger(__name__)
 
 logger.info("Starting document processing")
 logger.error("Upload failed", extra={"document_id": "doc123"})
+
 ```
 
 #### Log Configuration
@@ -213,35 +235,46 @@ logger.error("Upload failed", extra={"document_id": "doc123"})
 #### Core Dependencies
 
 ```txt
+
 # Azure SDK packages
+
 azure-storage-blob==12.19.0
 azure-search-documents==11.4.0
 azure-identity==1.15.0
 azure-core==1.29.5
 
 # Environment and configuration
+
 python-dotenv==1.0.0
 
 # HTTP requests and utilities
+
 requests==2.31.0
 urllib3==2.0.7
 
 # Data processing
+
 pathlib2==2.3.7.post1
 
 # Retry and progress tracking
+
 tenacity==8.2.3
 tqdm==4.66.1
+
 ```
 
 #### Installation
 
 ```bash
+
 # Install all dependencies
+
 pip install -r requirements.txt
 
 # Install specific components
+
 pip install azure-storage-blob azure-search-documents
+
 ```
 
 ---
@@ -284,32 +317,41 @@ pip install azure-storage-blob azure-search-documents
 #### Required Variables
 
 ```bash
+
 # Azure AI Search
+
 AZURE_SEARCH_SERVICE_NAME=your-search-service
 AZURE_SEARCH_ADMIN_KEY=your-admin-key
 AZURE_SEARCH_INDEX_NAME=training-data-index
 
 # Azure Blob Storage
+
 AZURE_STORAGE_ACCOUNT_NAME=your-storage-account
 AZURE_STORAGE_ACCOUNT_KEY=your-storage-key
 AZURE_STORAGE_CONTAINER_NAME=training-data
 
 # Azure Cognitive Services
+
 AZURE_COGNITIVE_SERVICES_KEY=your-cognitive-key
 AZURE_COGNITIVE_SERVICES_ENDPOINT=your-cognitive-endpoint
+
 ```
 
 #### Optional Variables
 
 ```bash
+
 # Logging
+
 LOG_LEVEL=INFO
 LOG_FILE=m365_indexer.log
 
 # Upload settings
+
 UPLOAD_BATCH_SIZE=25
 UPLOAD_MAX_RETRIES=3
 UPLOAD_TIMEOUT=300
+
 ```
 
 ### Configuration Files
@@ -333,41 +375,57 @@ UPLOAD_TIMEOUT=300
 ### 1. Environment Setup
 
 ```bash
+
 # Install dependencies
+
 pip install -r requirements.txt
 
-# Validate environment
+# Validate environment (2)
+
 python3 validate_environment.py
+
 ```
 
 ### 2. Azure Configuration
 
 ```bash
-# Configure index and indexer
+
+# Configure index and indexer (2)
+
 python3 configure-indexer.py
 
 # Check configuration
+
 python3 maintenance.py --non-interactive --action status
+
 ```
 
 ### 3. Document Upload
 
 ```bash
+
 # Upload documents
+
 python3 upload_with_retry.py
 
 # Check upload status
+
 python3 maintenance.py --non-interactive --action health
+
 ```
 
 ### 4. System Monitoring
 
 ```bash
+
 # Check system health
+
 python3 maintenance.py --non-interactive --action health
 
 # View system status
+
 python3 maintenance.py --non-interactive --action status
+
 ```
 
 ---
@@ -379,45 +437,62 @@ python3 maintenance.py --non-interactive --action status
 #### Issue: Authentication Failed
 
 ```bash
+
 # Check credentials
+
 grep AZURE_SEARCH_SERVICE_NAME .env
 grep AZURE_SEARCH_ADMIN_KEY .env
 
 # Test connectivity
+
 python3 validate_environment.py
+
 ```
 
 #### Issue: Upload Failures
 
 ```bash
-# Check upload progress
+
+# Check upload progress (2)
+
 cat upload_progress.json
 
 # Retry failed uploads
+
 python3 upload_with_retry.py
+
 ```
 
 #### Issue: Indexing Issues
 
 ```bash
+
 # Check indexer status
+
 python3 maintenance.py --non-interactive --action status
 
 # Run indexer manually
+
 python3 maintenance.py --non-interactive --action run-indexer
+
 ```
 
 ### Debug Commands
 
 ```bash
+
 # Validate all components
+
 python3 validate_environment.py
 
-# Check system health
+# Check system health (2)
+
 python3 maintenance.py --non-interactive --action health --output json
 
 # View logs
+
 tail -f m365_indexer.log
+
 ```
 
 ---
@@ -465,10 +540,13 @@ tail -f m365_indexer.log
 ### Commands
 
 ```bash
+
 # Get help
+
 python3 maintenance.py --help
 python3 upload_with_retry.py --help
 python3 validate_environment.py --help
+
 ```
 
 ### External Resources
@@ -485,5 +563,4 @@ python3 validate_environment.py --help
 **Grade:** A+ (98/100)
 **Completion:** 99.5%
 
-**🏆 All objectives achieved and exceeded! 🎉**
-
+## 🏆 All objectives achieved and exceeded! 🎉
