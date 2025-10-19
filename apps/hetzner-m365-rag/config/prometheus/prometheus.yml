@@ -1,0 +1,52 @@
+# Prometheus Configuration
+# M365 RAG System Monitoring
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'm365-rag-hetzner'
+    environment: 'production'
+
+# Alertmanager configuration (optional)
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets: ['alertmanager:9093']
+
+# Load rules once and periodically evaluate them
+# rule_files:
+#   - "alerts/*.yml"
+
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Elasticsearch metrics
+  - job_name: 'elasticsearch'
+    static_configs:
+      - targets: ['elasticsearch-exporter:9114']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'elasticsearch'
+
+  # API application metrics (if exposed)
+  - job_name: 'api'
+    static_configs:
+      - targets: ['api:8000']
+    metrics_path: '/metrics'
+
+  # RAGFlow metrics (if exposed)
+  - job_name: 'ragflow'
+    static_configs:
+      - targets: ['ragflow:9380']
+    metrics_path: '/metrics'
+
+  # Node exporter (for server metrics - add if needed)
+  # - job_name: 'node'
+  #   static_configs:
+  #     - targets: ['node-exporter:9100']
+
