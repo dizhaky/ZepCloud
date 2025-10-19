@@ -1,9 +1,9 @@
 # Microsoft Graph
 msgraph-sdk==1.5.4
-azure-identity==1.15.0
+azure-identity==1.16.1
 
 # MongoDB
-pymongo==4.6.1
+pymongo==4.6.3
 motor==3.3.2
 
 # AI
@@ -17,7 +17,7 @@ pydantic-settings==2.1.0
 
 # Utilities
 python-dotenv==1.0.0
-python-multipart==0.0.9
+python-multipart==0.0.18
 httpx==0.26.0
 tenacity==8.2.3
 loguru==0.7.2
